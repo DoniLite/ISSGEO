@@ -6,16 +6,22 @@
   "scripts": {
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
-    "build": "bun run build.ts"
+    "build": "bun run build.ts",
+    "generate": "bunx @tanstack/router-cli generate"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@tanstack/react-router": "^1.131.27",
+    "@tanstack/router-devtools": "^1.131.27",
     "bun-plugin-tailwind": "^0.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.525.0",
+    "lucide-react": "^0.541.0",
     "react": "^19",
     "react-dom": "^19",
     "tailwind-merge": "^3.3.1",
@@ -24,6 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.4",
+    "@tanstack/router-cli": "^1.131.27",
     "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19"
