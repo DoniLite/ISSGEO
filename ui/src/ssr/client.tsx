@@ -1,5 +1,5 @@
 import { App } from '@/App';
-import { elem } from '@/frontend';
+import elem from '@/root';
 import { hydrateRoot } from 'react-dom/client';
 
 hydrateRoot(elem, App);
