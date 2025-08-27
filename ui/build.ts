@@ -45,7 +45,11 @@ const parseValue = (value: string): any => {
   if (/^\d+$/.test(value)) return parseInt(value, 10);
   if (/^\d*\.\d+$/.test(value)) return parseFloat(value);
 
-  if (value.includes(',')) return value.split(',').map((v) => v.trim()).filter((v) => v.length > 0);
+  if (value.includes(','))
+    return value
+      .split(',')
+      .map((v) => v.trim())
+      .filter((v) => v.length > 0);
 
   return value;
 };
@@ -124,10 +128,11 @@ if (existsSync(outdir)) {
 const start = performance.now();
 
 const entrypoints =
-  (cliConfig.entrypoints as string[]).map((e) => path.resolve('src', e)) ||
-  [...new Bun.Glob('**.html').scanSync('src')]
-    .map((a) => path.resolve('src', a))
-    .filter((dir) => !dir.includes('node_modules'));
+  cliConfig.entrypoints && Array.isArray(cliConfig.entrypoints)
+    ? (cliConfig.entrypoints as string[]).map((e) => path.resolve('src', e))
+    : [...new Bun.Glob('**.html').scanSync('src')]
+        .map((a) => path.resolve('src', a))
+        .filter((dir) => !dir.includes('node_modules'));
 console.log(
   `📄 Found ${entrypoints.length} HTML/TS/TSX ${
     entrypoints.length === 1 ? 'file' : 'files'
