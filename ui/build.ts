@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+/** biome-ignore-all lint/suspicious/noExplicitAny: types complex to be defined explicitly*/
 import plugin from 'bun-plugin-tailwind';
 import { existsSync } from 'fs';
 import { rm } from 'fs/promises';
@@ -11,9 +12,10 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 Usage: bun run build.ts [options]
 
 Common Options:
+  --entrypoints <list>     Entrypoints that will be built
   --outdir <path>          Output directory (default: "dist")
   --minify                 Enable minification (or --minify.whitespace, --minify.syntax, etc)
-  --sourcemap <type>      Sourcemap type: none|linked|inline|external
+  --sourcemap <type>       Sourcemap type: none|linked|inline|external
   --target <target>        Build target: browser|bun|node
   --format <format>        Output format: esm|cjs|iife
   --splitting              Enable code splitting
@@ -43,7 +45,7 @@ const parseValue = (value: string): any => {
   if (/^\d+$/.test(value)) return parseInt(value, 10);
   if (/^\d*\.\d+$/.test(value)) return parseFloat(value);
 
-  if (value.includes(',')) return value.split(',').map((v) => v.trim());
+  if (value.includes(',')) return value.split(',').map((v) => v.trim()).filter((v) => v.length > 0);
 
   return value;
 };
@@ -121,11 +123,13 @@ if (existsSync(outdir)) {
 
 const start = performance.now();
 
-const entrypoints = [...new Bun.Glob('**.html').scanSync('src')]
-  .map((a) => path.resolve('src', a))
-  .filter((dir) => !dir.includes('node_modules'));
+const entrypoints =
+  (cliConfig.entrypoints as string[]).map((e) => path.resolve('src', e)) ||
+  [...new Bun.Glob('**.html').scanSync('src')]
+    .map((a) => path.resolve('src', a))
+    .filter((dir) => !dir.includes('node_modules'));
 console.log(
-  `📄 Found ${entrypoints.length} HTML ${
+  `📄 Found ${entrypoints.length} HTML/TS/TSX ${
     entrypoints.length === 1 ? 'file' : 'files'
   } to process\n`
 );

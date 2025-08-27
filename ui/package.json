@@ -7,6 +7,8 @@
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
     "build": "bun run build.ts",
+    "build:client": "bun run build.ts --outdir=dist/client --minify --sourcemap=linked --target=browser --entrypoints=./src/ssr/client.tsx,",
+    "build:server": "bun run build.ts --outdir=dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/ssr/server.tsx,",
     "generate": "bunx @tanstack/router-cli generate"
   },
   "dependencies": {
