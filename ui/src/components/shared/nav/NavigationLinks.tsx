@@ -51,7 +51,7 @@ const menuBaseClass =
 
 export function Navigation() {
   return (
-    <NavigationMenu viewport={false}>
+    <NavigationMenu className='lg:block hidden' viewport={false}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={menuBaseClass}>
