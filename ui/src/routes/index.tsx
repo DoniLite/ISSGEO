@@ -1,4 +1,5 @@
 import Hero from '@/components/home/Hero';
+import Missions from '@/components/home/Missions';
 import Services from '@/components/home/Services';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -13,6 +14,7 @@ export const Route = createFileRoute('/')({
         <Hero />
       </div>
       <Services />
+      <Missions />
     </>
   ),
 });

@@ -2,11 +2,36 @@
 import { Link } from '@tanstack/react-router';
 import darkLogo from '../../../../assets/ISSGEO_dark.png';
 import { Navigation } from './NavigationLinks';
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { useEffect, useRef, useState } from 'react';
 
 export default function NavBar() {
+  const [navClass, setNavClass] = useState(
+    'w-full h-[4rem] fixed text-foreground bg-transparent z-20 transition-all'
+  );
+
+  useEffect(() => {
+    window.onscroll = handleScroll;
+    return () => window.removeEventListener('scroll', handleScroll);
+  });
+  const navRef = useRef<HTMLDivElement>(null);
+  const handleScroll = () => {
+    const scrollX = Math.floor(window.scrollY);
+    if (navRef.current) {
+      if (scrollX > 10) {
+        setNavClass((prev) => prev.replace('bg-transparent', 'bg-primary'));
+        return;
+      }
+      setNavClass((prev) => prev.replace('bg-primary', 'bg-transparent'));
+    }
+  };
   return (
-    <div className='w-full h-[4rem] fixed text-foreground bg-transparent z-20'>
+    <div ref={navRef} className={navClass}>
       <div className='container mx-auto p-2 h-full flex items-center justify-between lg:p-4'>
         <Link to='.'>
           <img src={darkLogo} alt='Logo' className='w-12 h-12' />
