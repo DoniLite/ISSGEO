@@ -18,13 +18,13 @@ export default function Hero() {
             <button
               onClick={() => alert('clicked')}
               type='button'
-              className='bg-muted cursor-pointer text-muted-foreground font-medium px-4 py-2 rounded-md hover:bg-muted/90'
+              className='bg-muted cursor-pointer text-xs lg:text-lg text-muted-foreground lg:font-medium px-4 py-2 rounded-md hover:bg-muted/90'
             >
               More information
             </button>
             <button
               type='button'
-              className='bg-primary cursor-pointer text-primary-foreground font-medium px-4 py-2 rounded-md hover:bg-primary/90'
+              className='bg-primary cursor-pointer text-xs lg:text-lg text-primary-foreground lg:font-medium px-4 py-2 rounded-md hover:bg-primary/90'
             >
               Begin the adventure
             </button>
