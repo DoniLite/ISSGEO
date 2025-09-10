@@ -1,18 +1,18 @@
 import { Select, SelectContent, SelectTrigger } from '@/components/ui/select';
 import { CalendarDate } from '../shared/Calendar';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
+  const { t } = useTranslation();
   return (
-    <div className='absolute inset-0 flex items-center justify-center p-4'>
+    <div className='absolute inset-0 lg:top-0 flex items-center justify-center p-4'>
       <div className='flex gap-4 lg:gap-6 flex-col lg:flex-row'>
         <div className='flex flex-col relative lg:-left-[12rem] lg:gap-4 xl:gap-8'>
           <h1 className='text-white lg:text-4xl font-bold max-w-xl'>
-            YOU CAN ALSO GET A CERTIFICATION TODAY
+            {t('page.hero.title')}
           </h1>
           <span className='text-foreground max-w-xl font-bold lg:text-[16px]'>
-            Notre institut propose une gamme de formation professionnel vous
-            permettant d'ontenir des certifications dont vous avez besoin pour
-            debuter votre carriere professionnelle
+            {t('page.hero.description')}
           </span>
           <div className='flex items-center gap-2 lg:gap-4 mt-4'>
             <button

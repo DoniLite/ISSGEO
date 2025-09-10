@@ -16,6 +16,7 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "date-fns": "^4.1.0",
+        "embla-carousel-auto-scroll": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
         "embla-carousel-react": "^8.6.0",
         "i18next": "^25.4.2",
@@ -335,6 +336,8 @@
     "electron-to-chromium": ["electron-to-chromium@1.5.208", "", {}, "sha512-ozZyibehoe7tOhNaf16lKmljVf+3npZcJIEbJRVftVsmAg5TeA1mGS9dVCZzOwr2xT7xK15V0p7+GZqSPgkuPg=="],
 
     "embla-carousel": ["embla-carousel@8.6.0", "", {}, "sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA=="],
+
+    "embla-carousel-auto-scroll": ["embla-carousel-auto-scroll@8.6.0", "", { "peerDependencies": { "embla-carousel": "8.6.0" } }, "sha512-WT9fWhNXFpbQ6kP+aS07oF5IHYLZ1Dx4DkwgCY8Hv2ZyYd2KMCPfMV1q/cA3wFGuLO7GMgKiySLX90/pQkcOdQ=="],
 
     "embla-carousel-autoplay": ["embla-carousel-autoplay@8.6.0", "", { "peerDependencies": { "embla-carousel": "8.6.0" } }, "sha512-OBu5G3nwaSXkZCo1A6LTaFMZ8EpkYbwIaH+bPqdBnDGQ2fh4+NbzjXjs2SktoPNKCtflfVMc75njaDHOYXcrsA=="],
 

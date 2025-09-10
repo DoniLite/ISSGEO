@@ -10,12 +10,12 @@ export default function Team() {
         <Badge className='my-2 bg-secondary text-secondary-foreground'>
           Our Team
         </Badge>
-        <div className='w-full flex flex-col md:flex-row lg:items-center gap-4'>
-          <div className='w-full md:w-[40%] xl:w-[55%]'>
+        <div className='w-full flex flex-col lg:flex-row lg:items-center gap-4'>
+          <div className='w-full lg:w-[40%] xl:w-[55%]'>
             <h1 className='text-lg lg:text-3xl font-bold mb-4 lg:mb-0 lg:mr-8'>
               Meet the Team Behind Our Success
             </h1>
-            <p className='text-muted-foreground text-lg font-bold w-full lg:w-[90%]'>
+            <p className='text-muted-foreground font-bold w-full lg:w-[90%]'>
               Our team is composed of dedicated professionals committed to
               delivering excellence and innovation in everything we do.
             </p>
@@ -26,7 +26,7 @@ export default function Team() {
               Join Our Team
             </Link>
           </div>
-          <div className='w-[70%] md:w-[60%] xl:w-[45%] mt-8 lg:mt-0 flex mx-auto justify-center'>
+          <div className='w-[70%] md:w-[80%] xl:w-[45%] mt-8 lg:mt-0 flex mx-auto justify-center'>
             <Slider
               items={teamMembers.map((member) => (
                 <TeamMemberCard {...member} />
