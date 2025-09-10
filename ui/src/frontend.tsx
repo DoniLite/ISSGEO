@@ -1,26 +1,13 @@
-/**
- * This file is the entry point for the React app, it sets up the root
- * element and renders the App component to the DOM.
- *
- * It is included in `src/index.html`.
- */
-
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { App } from "./App";
-
-const elem = document.getElementById("root")!;
-const app = (
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+import { createRoot } from 'react-dom/client';
+import { App } from './App';
+import elem from './root';
 
 if (import.meta.hot) {
   // With hot module reloading, `import.meta.hot.data` is persisted.
+  // biome-ignore lint/suspicious/noAssignInExpressions: assuming this is intentional
   const root = (import.meta.hot.data.root ??= createRoot(elem));
-  root.render(app);
+  root.render(App);
 } else {
   // The hot module reloading API is not available in production.
-  createRoot(elem).render(app);
+  createRoot(elem).render(App);
 }

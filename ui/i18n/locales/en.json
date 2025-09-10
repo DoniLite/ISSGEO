@@ -1,0 +1,19 @@
+{
+    "page": {
+        "hero": {
+            "title": "YOU CAN ALSO GET A CERTIFICATION TODAY",
+            "description": "Our institute offers a range of professional training allowing you to obtain the certifications you need to start your professional career",
+            "ctas": {
+                "explore": "Explore Courses",
+                "contact": "Contact Us"
+            },
+            "form": {
+                "name": "Name",
+                "email": "Email",
+                "phone": "Phone",
+                "message": "Message",
+                "submit": "Submit"
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "page": {
+        "hero": {
+            "title": "VOUS POUVEZ ÉGALEMENT OBTENIR UNE CERTIFICATION AUJOURD'HUI",
+            "description": "Notre institut propose une gamme de formation professionnel vous permettant d'obtenir des certifications dont vous avez besoin pour debuter votre carriere professionnelle",
+            "ctas": {
+                "explore": "Explorer les cours",
+                "contact": "Contactez-nous"
+            }
+        }
+    }
+}
