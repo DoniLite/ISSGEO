@@ -11,7 +11,7 @@ export default function Services() {
         <Badge id='services'>Our Services</Badge>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
           {services.map((s) => (
-            <ServiceCard {...s} key={s.link} />
+            <ServiceCard {...s} />
           ))}
         </div>
       </div>
@@ -30,7 +30,9 @@ function ServiceCard({ title, desc, link }: ServiceProps) {
     <Link to={link}>
       <Card className='p-2 lg:p-4 min-h-[15rem] flex flex-col hover:ring transition-all'>
         <CardTitle className='w-full h-[10%]'>{title}</CardTitle>
-        <CardDescription className='pt-2 w-full h-[80%]'>{desc}</CardDescription>
+        <CardDescription className='pt-2 w-full h-[80%]'>
+          {desc}
+        </CardDescription>
       </Card>
     </Link>
   );
