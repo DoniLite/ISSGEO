@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production bun src/index.tsx",
     "build": "bun build:client && bun build:server",
     "build:all": "bun build && bun build:default",
-    "build:default": "bun run build.ts --outdir=dist/default",
+    "build:default": "bun run build.ts --outdir=dist/default --sourcemap=linked ",
     "build:client": "bun run build.ts --outdir=dist/client --minify --sourcemap=linked --target=browser --entrypoints=./src/ssr/client.tsx,",
     "build:server": "bun run build.ts --outdir=dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/ssr/server.tsx,",
     "generate": "bunx @tanstack/router-cli generate"
@@ -17,6 +17,7 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
