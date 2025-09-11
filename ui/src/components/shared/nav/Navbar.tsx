@@ -9,6 +9,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useEffect, useRef, useState } from 'react';
+import { ThemeToggle } from '../ThemeToogle';
 
 export default function NavBar() {
   const [navClass, setNavClass] = useState(
@@ -38,6 +39,7 @@ export default function NavBar() {
         </Link>
         <Navigation />
         <div className='items-center gap-4 hidden lg:flex'>
+          <ThemeToggle />
           <button
             type='button'
             className='bg-muted cursor-pointer text-muted-foreground font-medium px-4 py-2 rounded-md hover:bg-muted/90'
@@ -51,19 +53,26 @@ export default function NavBar() {
             Get started
           </button>
         </div>
-        <Sheet>
-          <SheetTrigger className='block lg:hidden' asChild>
-            <div className='w-[1.5rem] flex flex-col gap-1 items-center'>
-              <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
-              <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
-              <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
-            </div>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetTitle>ISSGEO Institute</SheetTitle>
-          </SheetContent>
-        </Sheet>
+        <MobileNav />
       </div>
     </div>
+  );
+}
+
+
+const MobileNav = () => {
+  return (
+    <Sheet>
+      <SheetTrigger className='block lg:hidden' asChild>
+        <div className='w-[1.5rem] flex flex-col gap-1 items-center'>
+          <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
+          <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
+          <div className='w-full h-[0.2rem] rounded-xs bg-background'></div>
+        </div>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetTitle>ISSGEO Institute</SheetTitle>
+      </SheetContent>
+    </Sheet>
   );
 }
