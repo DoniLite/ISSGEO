@@ -1,4 +1,11 @@
 {
+    "common": {
+        "mode": {
+            "light": "Claire",
+            "dark": "Sombre",
+            "system": "System"
+        }
+    },
     "page": {
         "hero": {
             "title": "VOUS POUVEZ ÉGALEMENT OBTENIR UNE CERTIFICATION AUJOURD'HUI",
