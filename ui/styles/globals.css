@@ -67,8 +67,8 @@
   --popover: hsl(222 50% 9%);
   --popover-foreground: hsl(0 0% 98%);
 
-  --primary: hsl(0 0% 98%);             /* inverted on dark */
-  --primary-foreground: hsl(222 76% 18%);
+  --primary: hsl(257, 88%, 13%);             /* inverted on dark */
+  --primary-foreground: hsl(221, 44%, 93%);
 
   --secondary: hsl(90 37% 40%);         /* slightly brighter olive */
   --secondary-foreground: hsl(0 0% 98%);
