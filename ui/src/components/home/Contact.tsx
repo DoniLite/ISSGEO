@@ -81,7 +81,7 @@ export default function Contact() {
 function ContactForm() {
   return (
     <form
-      className='w-full rounded-md shadow-lg lg:border-0 border border-primary bg-card/20 p-2 lg:p-4 lg:w-2/5 min-h-[20rem] flex flex-col gap-4 hover:ring transition-all'
+      className='w-full rounded-md dark:border dark:border-border shadow-lg lg:border-0 border border-primary bg-card/20 p-2 lg:p-4 lg:w-2/5 min-h-[20rem] flex flex-col gap-4 hover:ring transition-all'
       action=''
     >
       <div className='w-full flex flex-col gap-1'>

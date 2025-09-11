@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 export default function Hero() {
   const { t } = useTranslation();
   return (
-    <div className='absolute inset-0 lg:top-0 flex items-center justify-center p-4'>
+    <div className='absolute inset-0 top-[20%] lg:top-0 flex items-center justify-center p-4'>
       <div className='flex gap-4 lg:gap-6 flex-col lg:flex-row'>
         <div className='flex flex-col relative lg:-left-[12rem] lg:gap-4 xl:gap-8'>
           <h1 className='text-white lg:text-4xl font-bold max-w-xl'>

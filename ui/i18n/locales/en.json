@@ -1,4 +1,11 @@
 {
+    "common": {
+        "mode": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        }
+    },
     "page": {
         "hero": {
             "title": "YOU CAN ALSO GET A CERTIFICATION TODAY",
