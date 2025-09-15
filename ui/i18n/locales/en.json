@@ -75,6 +75,10 @@
         },
         "home": {
             "id": "Home"
+        },
+        "cta": {
+            "reservation": "Make Reservation",
+            "getStarted": "Get Started"
         }
     }
 }

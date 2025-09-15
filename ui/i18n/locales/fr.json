@@ -68,6 +68,10 @@
         },
         "home": {
             "id": "Accueil"
+        },
+        "cta": {
+            "reservation": "Faire une réservation",
+            "getStarted": "Commencer"
         }
     }
 }
