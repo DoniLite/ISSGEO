@@ -11,7 +11,12 @@ export default function Services() {
         <Badge id='services'>Our Services</Badge>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
           {services.map((s) => (
-            <ServiceCard {...s} />
+            <ServiceCard
+              title={s.title}
+              desc={s.desc}
+              link={s.link}
+              key={s.link}
+            />
           ))}
         </div>
       </div>
