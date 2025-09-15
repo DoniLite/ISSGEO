@@ -6,7 +6,7 @@ export default function Footer() {
       <div className='max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8'>
         {/* Brand / Logo */}
         <div>
-          <h2 className='text-lg font-semibold text-primary'>ISSGEO Institute</h2>
+          <h2 className='text-lg font-semibold text-primary dark:text-secondary'>ISSGEO Institute</h2>
           <p className='text-muted-foreground mt-2 text-sm'>
             Building tech for the future. Research, innovation and great user
             experience.

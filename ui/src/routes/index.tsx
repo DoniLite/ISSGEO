@@ -1,5 +1,5 @@
 import Contact from '@/components/home/Contact';
-import Footer from '@/components/home/Footer';
+import Footer from '@/components/shared/Footer';
 import Hero from '@/components/home/Hero';
 import Missions from '@/components/home/Missions';
 import Services from '@/components/home/Services';

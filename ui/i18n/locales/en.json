@@ -22,5 +22,63 @@
                 "submit": "Submit"
             }
         }
+    },
+    "nav": {
+        "services": {
+            "id": "Services",
+            "titleCard": {
+                "title": "Courses and Certifications",
+                "description": "Discover our range of courses and certifications to enhance your skills and advance your career."
+            },
+            "courses": {
+                "title": "Courses",
+                "description": "Reserve your spot and start learning with our specialized courses."
+            },
+            "calendar": {
+                "title": "Calendar",
+                "description": "Check our calendar to see upcoming classes, events, and workshops."
+            },
+            "masters": {
+                "title": "Masters",
+                "description": "Join our masterclasses to learn from experts and advance your skills."
+            }
+        },
+        "about": {
+            "id": "About Us",
+            "partners": {
+                "title": "Our Partners",
+                "description": "Meet the partners and organizations that support our mission."
+            },
+            "ourMissions": {
+                "title": "Our Missions",
+                "description": "Learn about our goals, values, and what drives our organization."
+            },
+            "aboutOrganization": {
+                "title": "About Our Organization",
+                "description": "Discover our story, our history, and why we do what we do."
+            },
+            "testimonials": {
+                "title": "Testimonials",
+                "description": "Read what students and partners say about their experience with us."
+            }
+        },
+        "team": {
+            "id": "Team",
+            "team": {
+                "title": "Our Team",
+                "description": "Get to know the people working hard to make everything possible."
+            },
+            "join": {
+                "title": "Join Our Team",
+                "description": "Interested in joining us? Explore opportunities and become part of the team."
+            }
+        },
+        "home": {
+            "id": "Home"
+        },
+        "cta": {
+            "reservation": "Make Reservation",
+            "getStarted": "Get Started"
+        }
     }
 }

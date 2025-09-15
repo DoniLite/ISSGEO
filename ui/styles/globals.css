@@ -171,3 +171,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
