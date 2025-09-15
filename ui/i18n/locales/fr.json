@@ -15,5 +15,59 @@
                 "contact": "Contactez-nous"
             }
         }
+    },
+    "nav": {
+        "services": {
+            "id": "Services",
+            "titleCard": {
+                "title": "Cours et Certifications",
+                "description": "Découvrez notre gamme de cours et de certifications pour développer vos compétences et faire progresser votre carrière."
+            },
+            "courses": {
+                "title": "Cours",
+                "description": "Réservez votre place et commencez à apprendre avec nos cours spécialisés."
+            },
+            "calendar": {
+                "title": "Calendrier",
+                "description": "Consultez notre calendrier pour voir les cours, événements et ateliers à venir."
+            },
+            "masters": {
+                "title": "Masters",
+                "description": "Participez à nos masterclasses pour apprendre auprès d'experts et progresser."
+            }
+        },
+        "about": {
+            "id": "Partenaires",
+            "partners": {
+                "title": "Nos Partenaires",
+                "description": "Découvrez les partenaires et organisations qui soutiennent notre mission."
+            },
+            "ourMissions": {
+                "title": "Nos Missions",
+                "description": "Apprenez-en plus sur nos objectifs, nos valeurs et ce qui nous motive."
+            },
+            "aboutOrganization": {
+                "title": "À Propos de Notre Organisation",
+                "description": "Découvrez notre histoire et les raisons qui nous poussent à agir."
+            },
+            "testimonials": {
+                "title": "Témoignages",
+                "description": "Lisez ce que disent nos étudiants et partenaires sur leur expérience."
+            }
+        },
+        "team": {
+            "id": "Équipe",
+            "team": {
+                "title": "Notre Équipe",
+                "description": "Faites connaissance avec les personnes qui travaillent pour rendre tout cela possible."
+            },
+            "join": {
+                "title": "Rejoignez Notre Équipe",
+                "description": "Envie de nous rejoindre ? Découvrez les opportunités et devenez membre de l'équipe."
+            }
+        },
+        "home": {
+            "id": "Accueil"
+        }
     }
 }
