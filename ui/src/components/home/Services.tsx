@@ -7,7 +7,7 @@ import { BookOpen, GraduationCap } from 'lucide-react';
 export default function Services() {
   return (
     <div>
-      <div className='container relative mt-[20%] mx-auto my-8 p-2 lg:p-4 lg:my-[8rem]'>
+      <div className='container relative mt-[30%] mx-auto my-8 p-2 lg:p-4 lg:my-[8rem]'>
         <Badge id='services'>Our Services</Badge>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
           {services.map((s) => (

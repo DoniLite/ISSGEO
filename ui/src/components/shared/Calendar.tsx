@@ -11,7 +11,6 @@ export function CalendarDate({ date, setDate }: CalendarOptions) {
       mode='single'
       selected={date}
       onSelect={(dat) => {
-        console.log('new date ====>', dat);
         if (dat) {
           setDate(dat);
         }

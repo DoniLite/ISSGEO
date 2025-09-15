@@ -1,12 +1,13 @@
 import { Select, SelectContent, SelectTrigger } from '@/components/ui/select';
 import { CalendarDate } from '../shared/Calendar';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useCountriesStore } from '@/stores/countries.store';
 
 export default function Hero() {
   const { t } = useTranslation();
   return (
-    <div className='absolute inset-0 top-[20%] lg:top-0 flex items-center justify-center p-4'>
+    <div className='absolute inset-0 top-[25%] lg:top-0 flex items-center justify-center p-4'>
       <div className='flex gap-4 lg:gap-6 flex-col lg:flex-row'>
         <div className='flex flex-col relative lg:-left-[12rem] lg:gap-4 xl:gap-8'>
           <h1 className='text-white lg:text-4xl font-bold max-w-xl'>
@@ -39,7 +40,17 @@ export default function Hero() {
 }
 
 export function HeroForm() {
+  const { countries, fetchCountries } = useCountriesStore();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentCountry, setCurrentCountry] = useState({
+    code: '+226',
+    flag: 'https://flagcdn.com/w320/bf.png',
+  });
+
+  useEffect(() => {
+    fetchCountries();
+  }, [fetchCountries]);
+
   return (
     <form
       action='#'
@@ -71,9 +82,31 @@ export function HeroForm() {
         <span className='text-lg font-bold relative left-3'>Your Phone</span>
         <div className='group rounded-md border flex items-center'>
           <Select>
-            <SelectTrigger className='w-[40%] h-full px-3 py-2'>
-              <span className='line-clamp-1'>+226 Burkina Faso</span>
+            <SelectTrigger className='w-[40%] h-full px-1 md:px-3 py-2 flex gap-1'>
+              <span className='line-clamp-1 font-bold'>
+                {currentCountry.code}
+              </span>
+              <img
+                src={currentCountry.flag}
+                alt='country flag'
+                className='w-[40%] h-7 object-cover rounded-md'
+              />
             </SelectTrigger>
+            <SelectContent>
+              {countries.map((country) => (
+                <CountrySelector
+                  key={country.name}
+                  code={country.callingCode}
+                  flag={country.flag}
+                  onClick={(c) => {
+                    setCurrentCountry({
+                      code: c.code,
+                      flag: c.flag,
+                    });
+                  }}
+                />
+              ))}
+            </SelectContent>
           </Select>
           <input
             type='text'
@@ -120,5 +153,31 @@ export function HeroForm() {
         Reserve a Place Now
       </button>
     </form>
+  );
+}
+
+interface CountrySelectorProps {
+  code: string;
+  flag: string;
+  onClick: (country: { code: string; flag: string }) => void;
+}
+
+function CountrySelector({ code, flag, onClick }: CountrySelectorProps) {
+  return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: Have to handle action on this component
+    // biome-ignore lint/a11y/useKeyWithClickEvents: Have to handle action on this component
+    <div
+      className='w-full grid grid-cols-2 gap-2 mb-3 cursor-pointer'
+      onClick={() => {
+        onClick({ code, flag });
+      }}
+    >
+      <span className='line-clamp-1 font-bold'>{code}</span>
+      <img
+        src={flag}
+        alt='country flag'
+        className='w-[50%] h-8 object-cover rounded-md'
+      />
+    </div>
   );
 }
