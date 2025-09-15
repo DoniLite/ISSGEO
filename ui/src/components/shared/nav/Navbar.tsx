@@ -4,6 +4,7 @@ import darkLogo from '../../../../assets/ISSGEO_dark.png';
 import { Navigation } from './NavigationLinks';
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
@@ -12,6 +13,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ThemeToggle } from '../ThemeToogle';
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import MobileNavDetails from './MobileNavDetails';
+import getPageLinks from './pageLinks';
+import { X } from 'lucide-react';
 
 export default function NavBar() {
   const { t } = useTranslation();
@@ -64,6 +68,7 @@ export default function NavBar() {
 }
 
 const MobileNav = () => {
+  const { t } = useTranslation();
   return (
     <Sheet>
       <SheetTrigger className='block lg:hidden' asChild>
@@ -73,15 +78,46 @@ const MobileNav = () => {
           <div className='w-full h-[0.2rem] rounded-xs bg-background dark:bg-foreground'></div>
         </div>
       </SheetTrigger>
-      <SheetContent>
-        <SheetTitle>
-          <div className='w-full p-4 flex gap-2 items-center'>
-            <Link to='.'>
-              <img src={darkLogo} alt='Logo' className='w-6 h-6' />
-            </Link>
-            ISSGEO Institute
-          </div>
-        </SheetTitle>
+      <SheetContent className='bg-primary' removeDefaultCloseButton>
+        <div className='w-full flex items-center justify-between p-3'>
+          <SheetTitle>
+            <div className='w-full flex gap-2 items-center text-primary-foreground'>
+              <Link to='.'>
+                <img src={darkLogo} alt='Logo' className='w-6 h-6' />
+              </Link>
+              ISSGEO Institute
+            </div>
+          </SheetTitle>
+          <SheetClose asChild>
+            <X className='text-primary-foreground w-4 h-4' />
+          </SheetClose>
+        </div>
+
+        <div className='p-4 flex flex-col gap-4 text-primary-foreground'>
+          <Link to='/' className='font-bold'>
+            {t('nav.home.id')}
+          </Link>
+          <MobileNavDetails
+            title={t('nav.services.id')}
+            links={getPageLinks().services}
+          />
+          <MobileNavDetails
+            title={t('nav.about.id')}
+            links={getPageLinks().about}
+          />
+          <MobileNavDetails
+            title={t('nav.team.id')}
+            links={getPageLinks().team}
+          />
+          <Link to='/faq' className='font-bold'>
+            FAQ
+          </Link>
+        </div>
+
+        <div className='p-4 w-full flex gap-3'>
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
       </SheetContent>
     </Sheet>
   );
