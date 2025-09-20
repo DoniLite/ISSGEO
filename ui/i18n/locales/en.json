@@ -6,8 +6,15 @@
             "system": "System"
         }
     },
+    "navBadge": {
+        "services": "Our Services",
+        "missions": "Our Missions",
+        "contact": "Contact Us",
+        "testimonials": "Testimonials",
+        "team": "Team"
+    },
     "page": {
-        "hero": {
+        "home": {
             "title": "YOU CAN ALSO GET A CERTIFICATION TODAY",
             "description": "Our institute offers a range of professional training allowing you to obtain the certifications you need to start your professional career",
             "ctas": {
@@ -15,11 +22,27 @@
                 "contact": "Contact Us"
             },
             "form": {
-                "name": "Name",
-                "email": "Email",
-                "phone": "Phone",
-                "message": "Message",
-                "submit": "Submit"
+                "name": {
+                    "label": "Your Name",
+                    "placeholder": "Name"
+                },
+                "email": {
+                    "label": "Your Email",
+                    "placeholder": "Email"
+                },
+                "phone": {
+                    "label": "Your Phone",
+                    "placeholder": "Phone"
+                },
+                "formation": {
+                    "label": "Pick A Formation",
+                    "placeholder": "Select a formation"
+                },
+                "disposability": {
+                    "label": "Choose A Date",
+                    "placeholder": "What's your disposability?"
+                },
+                "submit": "Reserve a Place Now"
             }
         }
     },
