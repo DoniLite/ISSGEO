@@ -1,13 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import { AnimatedSlider } from '../shared/Slider';
 import { Badge } from '../ui/badge';
 import Container from './Container';
 
 export default function Testimonials() {
+  const { t } = useTranslation();
   return (
     <Container>
       <div className='container mx-auto p-2 lg:p-4'>
         <div className='w-full flex'>
-          <Badge className='my-4 ml-auto'>Testimonials</Badge>
+          <Badge className='my-4 ml-auto'>{t('navBadge.testimonials')}</Badge>
         </div>
         <div className='w-full flex flex-col lg:flex-row gap-4'>
           <div className='w-[70%] md:w-[80%] xl:w-[55%] mt-8 lg:mt-0 flex mx-auto'>

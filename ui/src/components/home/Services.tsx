@@ -3,22 +3,27 @@ import { Badge } from '../ui/badge';
 import { Card, CardDescription, CardTitle } from '../ui/card';
 import type { ReactNode } from 'react';
 import { BookOpen, GraduationCap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Services() {
+  const { t } = useTranslation();
   return (
-    <div>
-      <div className='container relative mt-[30%] mx-auto my-8 p-2 lg:p-4 lg:my-[8rem]'>
-        <Badge id='services'>Our Services</Badge>
-        <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
-          {services.map((s) => (
-            <ServiceCard
-              title={s.title}
-              desc={s.desc}
-              link={s.link}
-              key={s.link}
-            />
-          ))}
-        </div>
+    <div
+      id='services'
+      className='container relative mt-[30%] mx-auto my-8 p-2 lg:p-4 lg:my-[8rem]'
+    >
+      <Badge id='services'>
+        {t('navBadge.services')}
+      </Badge>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
+        {services.map((s) => (
+          <ServiceCard
+            title={s.title}
+            desc={s.desc}
+            link={s.link}
+            key={s.link}
+          />
+        ))}
       </div>
     </div>
   );
@@ -63,7 +68,7 @@ const services: ServiceProps[] = [
         deleniti tempore, officiis a rerum. Aliquam, beatae!
       </span>
     ),
-    link: '/formations',
+    link: '/services/formations',
   },
   {
     title: (
@@ -79,6 +84,6 @@ const services: ServiceProps[] = [
         odit nulla?
       </span>
     ),
-    link: '/certification',
+    link: '/services/certification',
   },
 ];

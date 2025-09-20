@@ -34,9 +34,9 @@ export function Navigation() {
             <ul className='grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
               <li className='row-span-3'>
                 <NavigationMenuLink asChild>
-                  <Link
+                  <a
                     className='bg-linear-to-br from-primary/50 via-secondary to-primary flex h-full w-full flex-col justify-end rounded-md p-6 no-underline outline-hidden select-none focus:shadow-md'
-                    to='/courses'
+                    href='/#services'
                   >
                     <div className='mt-4 mb-2 text-primary dark:text-foreground text-lg font-medium'>
                       {t('nav.services.titleCard.title')}
@@ -44,7 +44,7 @@ export function Navigation() {
                     <p className='text-muted text-sm leading-tight'>
                       {t('nav.services.titleCard.description')}
                     </p>
-                  </Link>
+                  </a>
                 </NavigationMenuLink>
               </li>
               {getPageLinks().services.map((link) => (

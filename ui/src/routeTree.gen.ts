@@ -14,7 +14,6 @@ import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TeamIndexRouteImport } from './routes/team/index'
-import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as CoursesIndexRouteImport } from './routes/courses/index'
 import { Route as TeamJoinRouteImport } from './routes/team/join'
 import { Route as TeamMemberRouteImport } from './routes/team/$member'
@@ -45,11 +44,6 @@ const IndexRoute = IndexRouteImport.update({
 const TeamIndexRoute = TeamIndexRouteImport.update({
   id: '/team/',
   path: '/team/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesIndexRoute = ServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesIndexRoute = CoursesIndexRouteImport.update({
@@ -94,7 +88,6 @@ export interface FileRoutesByFullPath {
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
   '/courses': typeof CoursesIndexRoute
-  '/services': typeof ServicesIndexRoute
   '/team': typeof TeamIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,7 +101,6 @@ export interface FileRoutesByTo {
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
   '/courses': typeof CoursesIndexRoute
-  '/services': typeof ServicesIndexRoute
   '/team': typeof TeamIndexRoute
 }
 export interface FileRoutesById {
@@ -123,7 +115,6 @@ export interface FileRoutesById {
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
   '/courses/': typeof CoursesIndexRoute
-  '/services/': typeof ServicesIndexRoute
   '/team/': typeof TeamIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,7 +130,6 @@ export interface FileRouteTypes {
     | '/team/$member'
     | '/team/join'
     | '/courses'
-    | '/services'
     | '/team'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -153,7 +143,6 @@ export interface FileRouteTypes {
     | '/team/$member'
     | '/team/join'
     | '/courses'
-    | '/services'
     | '/team'
   id:
     | '__root__'
@@ -167,7 +156,6 @@ export interface FileRouteTypes {
     | '/team/$member'
     | '/team/join'
     | '/courses/'
-    | '/services/'
     | '/team/'
   fileRoutesById: FileRoutesById
 }
@@ -182,7 +170,6 @@ export interface RootRouteChildren {
   TeamMemberRoute: typeof TeamMemberRoute
   TeamJoinRoute: typeof TeamJoinRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
   TeamIndexRoute: typeof TeamIndexRoute
 }
 
@@ -221,13 +208,6 @@ declare module '@tanstack/react-router' {
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/': {
-      id: '/services/'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses/': {
@@ -286,7 +266,6 @@ const rootRouteChildren: RootRouteChildren = {
   TeamMemberRoute: TeamMemberRoute,
   TeamJoinRoute: TeamJoinRoute,
   CoursesIndexRoute: CoursesIndexRoute,
-  ServicesIndexRoute: ServicesIndexRoute,
   TeamIndexRoute: TeamIndexRoute,
 }
 export const routeTree = rootRouteImport

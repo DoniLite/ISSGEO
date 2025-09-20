@@ -2,13 +2,15 @@ import { Link } from '@tanstack/react-router';
 import { Slider } from '../shared/Slider';
 import { Badge } from '../ui/badge';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Team() {
+  const { t } = useTranslation();
   return (
     <div className='w-full bg-primary py-12 text-primary-foreground my-8 lg:my-[8rem]'>
       <div className='container mx-auto p-2 lg:p-4'>
         <Badge className='my-2 bg-secondary text-secondary-foreground'>
-          Our Team
+          {t('navBadge.team')}
         </Badge>
         <div className='w-full flex flex-col lg:flex-row lg:items-center gap-4'>
           <div className='w-full lg:w-[40%] xl:w-[55%]'>
