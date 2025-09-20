@@ -2,12 +2,17 @@ import { Badge } from '../ui/badge';
 import cover from '../../../assets/coverv2.jpg';
 import cover2 from '../../../assets/coverv1.jpg';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 export default function Missions() {
+  const { t } = useTranslation();
   return (
-    <div className='w-full bg-linear-to-br from-secondary/60 via-secondary/80 to-secondary py-12 text-secondary-foreground my-8 lg:my-[8rem]'>
+    <div
+      id='missions'
+      className='w-full bg-linear-to-br from-secondary/60 via-secondary/80 to-secondary py-12 text-secondary-foreground my-8 lg:my-[8rem]'
+    >
       <div className='container mx-auto p-2 lg:p-4'>
-        <Badge className='my-4'>Our Missions</Badge>
+        <Badge className='my-4'>{t('navBadge.missions')}</Badge>
         <div className='w-full flex gap-3 lg:gap-8 flex-col lg:flex-row'>
           <img
             src={cover}
@@ -28,13 +33,6 @@ export default function Missions() {
               aspernatur, aliquam cumque magni hic earum in itaque, illum
               doloremque laboriosam modi eveniet fugiat. Repellendus, nemo eius
               qui blanditiis numquam, voluptatum praesentium natus deserunt
-              saepe rerum distinctio ab repudiandae labore! Doloribus, in
-              asperiores fuga a praesentium sed harum neque veniam assumenda
-              corrupti officiis mollitia. Veniam provident alias eum
-              necessitatibus similique quidem, sapiente perspiciatis impedit
-              amet? Deserunt provident autem explicabo error dolor ipsam tenetur
-              impedit pariatur rerum alias ullam maiores soluta quos, sed
-              obcaecati commodi, asperiores temporibus repudiandae!
             </p>
             <Link
               to='/'
@@ -60,13 +58,6 @@ export default function Missions() {
               aspernatur, aliquam cumque magni hic earum in itaque, illum
               doloremque laboriosam modi eveniet fugiat. Repellendus, nemo eius
               qui blanditiis numquam, voluptatum praesentium natus deserunt
-              saepe rerum distinctio ab repudiandae labore! Doloribus, in
-              asperiores fuga a praesentium sed harum neque veniam assumenda
-              corrupti officiis mollitia. Veniam provident alias eum
-              necessitatibus similique quidem, sapiente perspiciatis impedit
-              amet? Deserunt provident autem explicabo error dolor ipsam tenetur
-              impedit pariatur rerum alias ullam maiores soluta quos, sed
-              obcaecati commodi, asperiores temporibus repudiandae!
             </p>
             <Link
               to='/'

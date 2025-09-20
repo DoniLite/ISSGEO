@@ -11,10 +11,10 @@ export default function Hero() {
       <div className='flex gap-4 lg:gap-6 flex-col lg:flex-row'>
         <div className='flex flex-col relative lg:-left-[12rem] lg:gap-4 xl:gap-8'>
           <h1 className='text-white lg:text-4xl font-bold max-w-xl'>
-            {t('page.hero.title')}
+            {t('page.home.title')}
           </h1>
-          <span className='text-foreground max-w-xl font-bold lg:text-[16px]'>
-            {t('page.hero.description')}
+          <span className='text-foreground max-w-xl font-bold mt-4 lg:mt-0 text-xs lg:text-[16px]'>
+            {t('page.home.description')}
           </span>
           <div className='flex items-center gap-2 lg:gap-4 mt-4'>
             <button
@@ -22,13 +22,13 @@ export default function Hero() {
               type='button'
               className='bg-muted cursor-pointer text-xs lg:text-lg text-muted-foreground lg:font-medium px-4 py-2 rounded-md hover:bg-muted/90'
             >
-              More information
+              {t('page.home.ctas.contact')}
             </button>
             <button
               type='button'
               className='bg-primary cursor-pointer text-xs lg:text-lg text-primary-foreground lg:font-medium px-4 py-2 rounded-md hover:bg-primary/90'
             >
-              Begin the adventure
+              {t('page.home.ctas.explore')}
             </button>
           </div>
         </div>
@@ -40,6 +40,8 @@ export default function Hero() {
 }
 
 export function HeroForm() {
+  const { t } = useTranslation();
+
   const { countries, fetchCountries } = useCountriesStore();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentCountry, setCurrentCountry] = useState({
@@ -57,29 +59,35 @@ export function HeroForm() {
       className='w-full lg:w-[30rem] flex flex-col rounded-md p-2 lg:p-4 shadow h-auto lg:h-[32rem] bg-card lg:absolute lg:right-[1rem] xl:right-[6rem] 2xl:right-[16rem] lg:top-1/5 2xl:top-1/4'
     >
       <div className='w-full flex flex-col gap-1'>
-        <span className='text-lg font-bold relative left-3'>Your Name</span>
+        <span className='lg:text-lg font-bold relative left-3'>
+          {t('page.home.form.name.label')}
+        </span>
         <input
           type='text'
           id='name'
           name='name'
           className='outline-none focus:ring px-3 py-2 rounded-md border'
-          placeholder='Name'
+          placeholder={t('page.home.form.name.placeholder')}
         />
       </div>
 
       <div className='w-full flex flex-col gap-1 mt-2 lg:mt-4'>
-        <span className='text-lg font-bold relative left-3'>Your Email</span>
+        <span className='lg:text-lg font-bold relative left-3'>
+          {t('page.home.form.email.label')}
+        </span>
         <input
           type='text'
           id='email'
           name='email'
           className='outline-none focus:ring px-3 py-2 rounded-md border'
-          placeholder='Email'
+          placeholder={t('page.home.form.email.placeholder')}
         />
       </div>
 
       <div className='w-full flex flex-col gap-1 mt-2 lg:mt-4'>
-        <span className='text-lg font-bold relative left-3'>Your Phone</span>
+        <span className='lg:text-lg font-bold relative left-3'>
+          {t('page.home.form.phone.label')}
+        </span>
         <div className='group rounded-md border flex items-center'>
           <Select>
             <SelectTrigger className='w-[40%] h-full px-1 md:px-3 py-2 flex gap-1'>
@@ -113,27 +121,33 @@ export function HeroForm() {
             id='phone'
             name='phone'
             className='outline-none w-[60%] h-full group-focus:ring px-3 py-2 '
-            placeholder='Phone Number'
+            placeholder={t('page.home.form.phone.placeholder')}
           />
         </div>
       </div>
 
       <div className='w-full flex flex-col gap-1 mt-2 lg:mt-4'>
-        <span className='text-lg font-bold relative left-3'>
-          Pick a Formation
+        <span className='lg:text-lg font-bold relative left-3'>
+          {t('page.home.form.formation.label')}
         </span>
         <Select>
           <SelectTrigger className='w-full px-3 py-2'>
-            <span className='line-clamp-1'>Select a Formation</span>
+            <span className='line-clamp-1'>
+              {t('page.home.form.formation.placeholder')}
+            </span>
           </SelectTrigger>
         </Select>
       </div>
 
       <div className='w-full flex flex-col gap-1 mt-2 lg:mt-4'>
-        <span className='text-lg font-bold relative left-3'>Choose a Date</span>
+        <span className='lg:text-lg font-bold relative left-3'>
+          {t('page.home.form.disposability.label')}
+        </span>
         <Select>
           <SelectTrigger className='w-full px-3 py-2'>
-            <span className='line-clamp-1'>What's your disposability ?</span>
+            <span className='line-clamp-1'>
+              {t('page.home.form.disposability.placeholder')}
+            </span>
           </SelectTrigger>
           <SelectContent>
             <CalendarDate
@@ -150,7 +164,7 @@ export function HeroForm() {
         type='button'
         className='bg-primary w-full mt-4 lg:mt-auto cursor-pointer text-primary-foreground font-medium px-4 py-2 rounded-md hover:bg-primary/90'
       >
-        Reserve a Place Now
+        {t('page.home.form.submit')}
       </button>
     </form>
   );
