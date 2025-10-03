@@ -10,7 +10,7 @@ declare module "*.svg" {
 
 declare module '*.png' {
   /**
-   * A path to the SVG file
+   * A path to the PNG file
    */
   const path: `${string}.png`;
   export = path;
@@ -18,9 +18,17 @@ declare module '*.png' {
 
 declare module '*.jpg' {
   /**
-   * A path to the SVG file
+   * A path to the JPG file
    */
   const path: `${string}.jpg`;
+  export = path;
+}
+
+declare module '*.jpeg' {
+  /**
+   * A path to the JPEG file
+   */
+  const path: `${string}.jpeg`;
   export = path;
 }
 
