@@ -75,7 +75,7 @@ export function Navigation() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={menuBaseClass}>
+          {/* <NavigationMenuTrigger className={menuBaseClass}>
             {t('nav.team.id')}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -90,7 +90,10 @@ export function Navigation() {
                 </ListItem>
               ))}
             </ul>
-          </NavigationMenuContent>
+          </NavigationMenuContent> */}
+          <NavigationMenuLink asChild className={menuBaseClass}>
+            <Link to='/team/join'>{t('nav.team.join.title')}</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={menuBaseClass}>

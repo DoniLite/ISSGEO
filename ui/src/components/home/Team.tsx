@@ -15,17 +15,16 @@ export default function Team() {
         <div className='w-full flex flex-col lg:flex-row lg:items-center gap-4'>
           <div className='w-full lg:w-[40%] xl:w-[55%]'>
             <h1 className='text-lg lg:text-3xl font-bold mb-4 lg:mb-0 lg:mr-8'>
-              Meet the Team Behind Our Success
+              {t('team.sectionTitle')}
             </h1>
             <p className='text-muted-foreground font-bold w-full lg:w-[90%]'>
-              Our team is composed of dedicated professionals committed to
-              delivering excellence and innovation in everything we do.
+              {t('team.sectionDescription')}
             </p>
             <Link
               to='/'
               className='mt-4 text-sm bg-primary-foreground py-3 px-4 hover:bg-primary-foreground/90 font-bold w-full lg:w-[60%] rounded-[4px] flex justify-center text-primary'
             >
-              Join Our Team
+              {t('team.groupTitle')}
             </Link>
           </div>
           <div className='w-[70%] md:w-[80%] xl:w-[45%] mt-8 lg:mt-0 flex mx-auto justify-center'>

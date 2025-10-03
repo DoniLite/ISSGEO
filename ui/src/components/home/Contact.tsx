@@ -1,27 +1,33 @@
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+  Twitter,
+} from 'lucide-react';
 import { Badge } from '../ui/badge';
 import Container from './Container';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
+  const { t } = useTranslation();
   return (
-    <Container>
+    <Container id='contact'>
       <div className='container mx-auto'>
-        <Badge className='my-4'>Contact</Badge>
+        <Badge className='my-4'>{t('navBadge.contact')}</Badge>
         <div className='flex flex-col lg:flex-row gap-4'>
           <ContactForm />
           <div className='w-full lg:w-3/5 p-2 lg:p-4 flex flex-col'>
             <h1 className='text-xl lg:text-3xl font-bold hover:underline transition-all'>
-              Get in Touch with Us
+              {t('contact.title')}
             </h1>
             <p className='text-muted-foreground font-bold mt-4'>
-              We would love to hear from you! Whether you have questions about
-              our services, need assistance, or want to provide feedback, our
-              team is here to help. Please fill out the contact form, and we
-              will get back to you as soon as possible.
+              {t('contact.description')}
             </p>
             <div className='w-full flex flex-col gap-2 mt-6'>
-              <h2 className='text-lg font-bold'>Contact Information</h2>
+              <h2 className='text-lg font-bold'>{t('contact.contact_info')}</h2>
               <div className='w-full flex flex-col lg:flex-row gap-2 lg:gap-8'>
                 <div className='flex gap-1 items-center'>
                   <Mail className='w-5 h-5 text-muted-foreground' />
@@ -77,42 +83,48 @@ export default function Contact() {
   );
 }
 
-
 function ContactForm() {
+  const { t } = useTranslation();
   return (
     <form
       className='w-full rounded-md dark:border dark:border-border shadow-lg lg:border-0 border border-primary bg-card/20 p-2 lg:p-4 lg:w-2/5 min-h-[20rem] flex flex-col gap-4 hover:ring transition-all'
       action=''
     >
       <div className='w-full flex flex-col gap-1'>
-        <span className='text-lg font-bold relative left-3'>Name</span>
+        <span className='text-lg font-bold relative left-3'>
+          {t('contact.form.name.label')}
+        </span>
         <input
           type='text'
           id='name'
           name='name'
           className='outline-none focus:ring px-3 py-2 rounded-md border'
-          placeholder='Name'
+          placeholder={t('contact.form.name.placeholder')}
         />
       </div>
 
       <div className='w-full flex flex-col gap-1'>
-        <span className='text-lg font-bold relative left-3'>Email</span>
+        <span className='text-lg font-bold relative left-3'>
+          {t('contact.form.email.label')}
+        </span>
         <input
           type='email'
           id='email'
           name='email'
           className='outline-none focus:ring px-3 py-2 rounded-md border'
-          placeholder='Email'
+          placeholder={t('contact.form.email.placeholder')}
         />
       </div>
 
       <div className='w-full flex flex-col gap-1'>
-        <span className='text-lg font-bold relative left-3'>Message</span>
+        <span className='text-lg font-bold relative left-3'>
+          {t('contact.form.message.label')}
+        </span>
         <textarea
           id='message'
           name='message'
           className='outline-none focus:ring px-3 py-2 rounded-md border'
-          placeholder='Message'
+          placeholder={t('contact.form.message.placeholder')}
         />
       </div>
     </form>

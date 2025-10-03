@@ -1,9 +1,16 @@
 import { Link } from '@tanstack/react-router';
 import { Badge } from '../ui/badge';
 import { Card, CardDescription, CardTitle } from '../ui/card';
-import type { ReactNode } from 'react';
-import { BookOpen, GraduationCap } from 'lucide-react';
+import { BookOpen, UserCheck, Briefcase } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import type { LucideIcon } from 'lucide-react';
+
+interface ServiceProps {
+  titleKey: string;
+  descKey: string;
+  link: string;
+  Icon: LucideIcon;
+}
 
 export default function Services() {
   const { t } = useTranslation();
@@ -12,15 +19,14 @@ export default function Services() {
       id='services'
       className='container relative mt-[30%] mx-auto my-8 p-2 lg:p-4 lg:my-[8rem]'
     >
-      <Badge id='services'>
-        {t('navBadge.services')}
-      </Badge>
+      <Badge id='services'>{t('navBadge.services')}</Badge>
       <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4'>
         {services.map((s) => (
           <ServiceCard
-            title={s.title}
-            desc={s.desc}
+            title={t(s.titleKey)}
+            desc={t(s.descKey)}
             link={s.link}
+            Icon={s.Icon}
             key={s.link}
           />
         ))}
@@ -29,17 +35,23 @@ export default function Services() {
   );
 }
 
-interface ServiceProps {
-  title: string | ReactNode;
-  desc: string | ReactNode;
+interface ServiceCardProps {
+  title: string;
+  desc: string;
   link: string;
+  Icon: LucideIcon;
 }
 
-function ServiceCard({ title, desc, link }: ServiceProps) {
+function ServiceCard({ title, desc, link, Icon }: ServiceCardProps) {
   return (
     <Link to={link}>
       <Card className='p-2 lg:p-4 min-h-[15rem] flex flex-col hover:ring transition-all'>
-        <CardTitle className='w-full h-[10%]'>{title}</CardTitle>
+        <CardTitle className='w-full h-[10%]'>
+          <div className='flex gap-2 items-center'>
+            <Icon className='text-xl' />
+            <h1 className='lg:text-xl font-bold'>{title}</h1>
+          </div>
+        </CardTitle>
         <CardDescription className='pt-2 w-full h-[80%]'>
           {desc}
         </CardDescription>
@@ -50,40 +62,21 @@ function ServiceCard({ title, desc, link }: ServiceProps) {
 
 const services: ServiceProps[] = [
   {
-    title: (
-      <div className='flex gap-2 items-center'>
-        <BookOpen className='text-lg' />
-        <h1 className='lg:text-xl font-bold'>Formation</h1>
-      </div>
-    ),
-    desc: (
-      <span className='d'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-        suscipit rem fuga magni ea. Atque quia exercitationem eligendi ipsum
-        eos. Expedita perspiciatis, distinctio ipsum adipisci voluptatibus
-        maxime nulla itaque impedit dolorem! Voluptas iusto deserunt id, placeat
-        cumque qui ratione voluptatibus aut quas perferendis repudiandae minima,
-        debitis ea quibusdam eius unde, quasi veritatis reprehenderit harum
-        commodi nam. Dolorum voluptatem nesciunt sit dignissimos. Quo voluptates
-        deleniti tempore, officiis a rerum. Aliquam, beatae!
-      </span>
-    ),
+    titleKey: 'services.formation.title',
+    descKey: 'services.formation.desc',
     link: '/services/formations',
+    Icon: BookOpen,
   },
   {
-    title: (
-      <div className='flex gap-2 items-center'>
-        <GraduationCap className='text-lg' />
-        <h1 className='lg:text-xl font-bold'>Certification</h1>
-      </div>
-    ),
-    desc: (
-      <span className=''>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam
-        exercitationem in, dolores nisi velit cupiditate dolorum nam dignissimos
-        odit nulla?
-      </span>
-    ),
-    link: '/services/certification',
+    titleKey: 'services.recruitment.title',
+    descKey: 'services.recruitment.desc',
+    link: '/services/recruitment',
+    Icon: UserCheck,
+  },
+  {
+    titleKey: 'services.placement.title',
+    descKey: 'services.placement.desc',
+    link: '/services/placement',
+    Icon: Briefcase,
   },
 ];

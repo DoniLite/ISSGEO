@@ -178,3 +178,7 @@ summary {
 summary::-webkit-details-marker {
   display: none;
 }
+
+html {
+  scroll-behavior: smooth;
+}

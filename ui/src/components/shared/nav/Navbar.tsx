@@ -18,7 +18,7 @@ import getPageLinks from './pageLinks';
 import { X } from 'lucide-react';
 
 export default function NavBar() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [navClass, setNavClass] = useState(
     'w-full h-[4rem] fixed text-foreground bg-transparent z-20 transition-all'
   );
@@ -41,14 +41,14 @@ export default function NavBar() {
   return (
     <div ref={navRef} className={navClass}>
       <div className='container mx-auto p-2 h-full flex items-center justify-between lg:p-4'>
-        <Link to='.'>
+        <Link to='/'>
           <img src={darkLogo} alt='Logo' className='w-12 h-12' />
         </Link>
         <Navigation />
         <div className='items-center gap-4 hidden lg:flex'>
           <LanguageSwitcher />
           <ThemeToggle />
-          <button
+          {/* <button
             type='button'
             className='bg-muted cursor-pointer text-muted-foreground font-medium px-4 py-2 rounded-md hover:bg-muted/90'
           >
@@ -59,7 +59,7 @@ export default function NavBar() {
             className='bg-secondary cursor-pointer text-primary-foreground font-medium px-4 py-2 rounded-md hover:bg-secondary/90'
           >
             {t('nav.cta.getStarted')}
-          </button>
+          </button> */}
         </div>
         <MobileNav />
       </div>
@@ -105,10 +105,13 @@ const MobileNav = () => {
             title={t('nav.about.id')}
             links={getPageLinks().about}
           />
-          <MobileNavDetails
+          {/* <MobileNavDetails
             title={t('nav.team.id')}
             links={getPageLinks().team}
-          />
+          /> */}
+          <Link to='/team/join' className='font-bold'>
+            {t('nav.team.join.title')}
+          </Link>
           <Link to='/faq' className='font-bold'>
             FAQ
           </Link>

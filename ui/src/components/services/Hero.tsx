@@ -1,23 +1,23 @@
+import { useTranslation } from 'react-i18next';
+
 interface ServiceHeroProps {
-  title?: string;
-  description?: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
-export default function Hero({
-  title = "Discover what services we're providing for you",
-  description = `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit labore
-          cupiditate accusamus illo hic, architecto cum rem atque veniam iusto
-          quis provident blanditiis! Nobis, ipsam corrupti dicta itaque natus
-          minima eius corporis perferendis odio provident culpa eveniet
-          perspiciatis laborum. Illo dolore reprehenderit alias debitis
-          necessitatibus earum iste consequatur corporis perspiciatis!`,
-}: ServiceHeroProps) {
+export default function Hero({ titleKey, descriptionKey }: ServiceHeroProps) {
+  const { t } = useTranslation();
+
   return (
     <div className='absolute inset-0 top-[20%] lg:top-0 flex items-center justify-center p-4'>
-      <div className='flex gap-4 flex-col items-center'>
-        <h1 className='text-white lg:text-4xl font-bold max-w-xl'>{title}</h1>
+      <div className='flex gap-4 flex-col items-center text-center'>
+        <h1 className='text-white text-3xl lg:text-5xl font-extrabold max-w-2xl'>
+          {t(titleKey)}
+        </h1>
 
-        <p className='mt-4 font-bold text-xs max-w-xl mx-auto'>{description}</p>
+        <p className='mt-4 font-medium text-white/90 text-sm max-w-xl mx-auto'>
+          {t(descriptionKey)}
+        </p>
       </div>
     </div>
   );
