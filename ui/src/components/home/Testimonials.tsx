@@ -2,11 +2,16 @@ import { useTranslation } from 'react-i18next';
 import { AnimatedSlider } from '../shared/Slider';
 import { Badge } from '../ui/badge';
 import Container from './Container';
+import { Button } from '../ui/button';
+import { useState } from 'react';
+import ReviewModal from '../review/ReviewModal';
 
 export default function Testimonials() {
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   return (
-    <Container>
+    <Container id='testimonials'>
+      <ReviewModal open={open} setOpen={setOpen} />
       <div className='container mx-auto p-2 lg:p-4'>
         <div className='w-full flex'>
           <Badge className='my-4 ml-auto'>{t('navBadge.testimonials')}</Badge>
@@ -22,11 +27,19 @@ export default function Testimonials() {
           </div>
           <div>
             <h1 className='text-lg font-bold lg:text-3xl'>
-              What Our Clients Say
+              {t('testimonials.sectionTitle')}
             </h1>
-            <p className="text-muted-foreground text-sm font-bold">
-              At most +{mockTestimonials.length} clients are using our services you can become one of them now
+            <p className='text-muted-foreground text-sm font-bold'>
+              {t('testimonials.sectionDescription', {
+                testimonialsLength: mockTestimonials.length,
+              })}
             </p>
+            <Button
+              className='w-full font-bold mt-4 cursor-pointer transition-all'
+              onClick={() => setOpen(true)}
+            >
+              {t('testimonials.cta')}
+            </Button>
           </div>
         </div>
       </div>

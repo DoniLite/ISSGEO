@@ -1,15 +1,6 @@
-import Hero from '@/components/services/Hero';
-import BaseHeroWrapper from '@/components/shared/BasePageHeroWrapper';
-import Footer from '@/components/shared/Footer';
+import FaqPage from '@/components/faq/Page';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/faq')({
-  component: () => (
-    <>
-      <BaseHeroWrapper>
-        <Hero />
-      </BaseHeroWrapper>
-      <Footer />
-    </>
-  ),
+  component: FaqPage,
 });

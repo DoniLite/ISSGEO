@@ -3,7 +3,7 @@ import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className='bg-background text-foreground border-t border-border mt-12'>
-      <div className='max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8'>
+      <div className='container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8'>
         {/* Brand / Logo */}
         <div>
           <h2 className='text-lg font-semibold text-primary dark:text-secondary'>ISSGEO Institute</h2>
@@ -81,7 +81,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className='border-t border-border mt-6'>
         <p className='text-center text-xs text-muted-foreground py-4'>
-          © {new Date().getFullYear()} Kartesians. All rights reserved.
+          © {new Date().getFullYear()} ISSGEO. All rights reserved.
         </p>
       </div>
     </footer>

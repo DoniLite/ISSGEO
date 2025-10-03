@@ -8,11 +8,11 @@ export default function getPageLinks() {
 
   const pageLinks = {
     about: [
-      {
-        title: t('nav.about.partners.title'),
-        description: t('nav.about.partners.description'),
-        href: '/team',
-      },
+      // {
+      //   title: t('nav.about.partners.title'),
+      //   description: t('nav.about.partners.description'),
+      //   href: '/team',
+      // },
       {
         title: t('nav.about.ourMissions.title'),
         description: t('nav.about.ourMissions.description'),
@@ -41,9 +41,9 @@ export default function getPageLinks() {
         href: '/calendar',
       },
       {
-        title: t('nav.services.masters.title'),
-        description: t('nav.services.masters.description'),
-        href: '/courses/masters',
+        title: t('nav.services.competences.title'),
+        description: t('nav.services.competences.description'),
+        href: '/competences',
       },
     ],
     team: [
