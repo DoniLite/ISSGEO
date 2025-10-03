@@ -6,6 +6,90 @@
             "system": "System"
         }
     },
+    "them": {
+        "all": "All"
+    },
+    "services": {
+        "formation": {
+            "title": "Certified Professional Training",
+            "desc": "Boost your career with our cutting-edge professional training modules. Each course is designed by experts and leads to a recognized certification, ensuring you acquire in-demand skills. Invest in your future, certify your expertise.",
+            "page": {
+                "hero": {
+                    "title": "Become a Certified Expert: Our Transformative Training Programs",
+                    "desc": "Accelerate your professional trajectory with intensive, recognized programs focused on practical skills. Your future starts with the right certification."
+                },
+                "sectionTitle": "The Key Advantages of Our Programs",
+                "introText": "We don't just train; we shape job-ready professionals. Here's what you gain by engaging with us:",
+                "advantages": {
+                    "certifTitle": "Recognized Certification",
+                    "certifDesc": "Obtain a diploma or certificate that opens doors and officially validates your expertise to national and international employers.",
+                    "careerTitle": "Rapid Career Progression",
+                    "careerDesc": "Our modules are aligned with real industry needs to ensure your new skills lead directly to a promotion or a new role.",
+                    "expertTitle": "Expert Trainers",
+                    "expertDesc": "Learn from industry professionals, benefit from their real-world experience, and receive personalized advice throughout your journey."
+                },
+                "extended_information": {
+                    "academic_hub": {
+                        "title": "The Academic Hub",
+                        "subtitle": "An enriched and structured learning environment.",
+                        "description": "Access a comprehensive platform featuring cutting-edge educational resources, live or recorded interactive courses, and personalized follow-up. Our Hub is the nerve center of your success, designed to adapt to your pace and maximize skill acquisition."
+                    },
+                    "get_your_target": {
+                        "title": "Achieve Your Career Goals",
+                        "subtitle": "Train with a clear vision of employment.",
+                        "description": "Every training module is directly aligned with labor market demands. We help you precisely identify the skills needed to land your dream job, ensuring your investment in training translates into tangible career advancement."
+                    },
+                    "grow_your_idea": {
+                        "title": "Cultivate Your Innovative Potential",
+                        "subtitle": "From concept to completion, we guide you.",
+                        "description": "Beyond theory, we encourage practical application and entrepreneurial thinking. Our workshops and collaborative projects are designed to empower you to turn your creative ideas into real solutions or viable ventures, making you a change agent in your field."
+                    }
+                },
+                "cta": "Browse Our Modules"
+            }
+        },
+        "recruitment": {
+            "title": "Recruitment of Certified Talent",
+            "desc": "Find the perfect professional for your teams. We actively recommend our certified and highly qualified graduates to companies looking to recruit immediately operational experts. A verified talent pool, a simplified hiring process.",
+            "page": {
+                "hero": {
+                    "title": "Recruit Excellence: Certified Talent, Without the Risk",
+                    "desc": "Stop wasting time on endless searches. Gain direct access to a pool of professionals whose skills have been rigorously validated by our certifications."
+                },
+                "sectionTitle": "Our Simplified Recommendation Process",
+                "introText": "We bridge the gap between our top graduates and your specific staffing needs. See how we help you recruit smarter:",
+                "steps": {
+                    "searchTitle": "Needs Analysis",
+                    "searchDesc": "We precisely define the technical and soft skills required for the position you need to fill within your company.",
+                    "certifTitle": "Certified Profile Selection",
+                    "certifDesc": "We identify learners who achieved the best results and hold certifications relevant to your sector.",
+                    "matchTitle": "Personalized Matching",
+                    "matchDesc": "You meet directly with the candidates we recommend, knowing they are already validated and job-ready."
+                },
+                "cta": "Start a Recruitment Process"
+            }
+        },
+        "placement": {
+            "title": "Qualified Internship Placement",
+            "desc": "Welcome the energy and fresh knowledge of the next generation. We connect our students with companies for relevant internships. This is the perfect opportunity to evaluate future collaborators and contribute to their professional development.",
+            "page": {
+                "hero": {
+                    "title": "Relevant Internships: Integrate New Talent Today",
+                    "desc": "Open your company's doors to motivated students trained in the latest practices. A win-win relationship for the company and the student."
+                },
+                "sectionTitle": "Why Host Our Interns?",
+                "introText": "Internship placement is an opportunity to innovate and prepare your company's future. Here are the immediate benefits:",
+                "benefits": {
+                    "exposureTitle": "Evaluative Pre-recruitment",
+                    "exposureDesc": "Use the internship as an extended evaluation period. If the profile suits you, you can hire them without a surprise probationary period.",
+                    "innovationTitle": "Injection of New Ideas",
+                    "innovationDesc": "Our students are trained in the latest technologies and methods, bringing fresh perspectives and innovative solutions to your challenges."
+                },
+                "note": "We support you in defining the internship missions and monitoring the student to ensure a positive and productive experience for both parties.",
+                "cta": "Submit an Internship Offer"
+            }
+        }
+    },
     "navBadge": {
         "services": "Our Services",
         "missions": "Our Missions",
@@ -13,7 +97,7 @@
         "testimonials": "Testimonials",
         "team": "Team"
     },
-    "page": {
+    "pages": {
         "home": {
             "title": "YOU CAN ALSO GET A CERTIFICATION TODAY",
             "description": "Our institute offers a range of professional training allowing you to obtain the certifications you need to start your professional career",
@@ -61,9 +145,9 @@
                 "title": "Calendar",
                 "description": "Check our calendar to see upcoming classes, events, and workshops."
             },
-            "masters": {
-                "title": "Masters",
-                "description": "Join our masterclasses to learn from experts and advance your skills."
+            "competences": {
+                "title": "Competences",
+                "description": "See which high-demand certified competencies you will master, the specific job sectors where they are sought, and the career advantages they provide."
             }
         },
         "about": {
@@ -92,7 +176,7 @@
                 "description": "Get to know the people working hard to make everything possible."
             },
             "join": {
-                "title": "Join Our Team",
+                "title": "Join Us",
                 "description": "Interested in joining us? Explore opportunities and become part of the team."
             }
         },
@@ -102,6 +186,169 @@
         "cta": {
             "reservation": "Make Reservation",
             "getStarted": "Get Started"
+        }
+    },
+    "missions": {
+        "sectionTitle": "Our Missions: Shaping the Future of the Territory",
+        "pillar_1": {
+            "title": "Train the Experts of Urban Development",
+            "subtitle": "Training of excellent technical and scientific executives.",
+            "description": "We train high-level technical and scientific executives capable of designing, implementing, and managing complex projects in urban planning, development, mobility, land and real estate management, and sustainable development. Become a key player in territorial evolution.",
+            "cta": "Discover Our Programs"
+        },
+        "pillar_2": {
+            "title": "Expertise and Innovative Solutions for Stakeholders",
+            "subtitle": "Targeted support for local authorities and businesses.",
+            "description": "We support local authorities, public, and private stakeholders with specialized expertise services and innovative solutions. Our scope covers urban planning, territorial engineering, environment, and mobility, ensuring more effective and sustainable projects.",
+            "cta": "Contact Our Expertise Unit"
+        },
+        "pillar_3": {
+            "title": "Production of Reliable Geospatial Data",
+            "subtitle": "Knowledge and data for informed planning.",
+            "description": "The ISSG is committed to producing and disseminating reliable geospatial knowledge and data. This crucial information is essential for rigorous planning, proactive natural risk prevention, and better adaptation to climate change.",
+            "cta": "Access Data and Publications"
+        },
+        "pillar_4": {
+            "title": "Contribute to Sustainable Territorial Development",
+            "subtitle": "Applied research and technical support for inclusion.",
+            "description": "We actively contribute to inclusive and sustainable territorial development through continuous training, relevant applied research, and on-site technical support. We act for a long-term positive social and environmental impact.",
+            "cta": "View Our Research Projects"
+        }
+    },
+    "contact": {
+        "title": "Get in Touch with Us",
+        "description": "We would love to hear from you! Whether you have questions about our services, need assistance, or want to provide feedback, our team is here to help. Please fill out the contact form, and we will get back to you as soon as possible.",
+        "contact_info": "Contact Information",
+        "form": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Name"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Email"
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Message"
+            }
+        }
+    },
+    "team": {
+        "sectionTitle": "Meet the Team Behind Our Success",
+        "sectionDescription": "Our team is composed of dedicated professionals committed to delivering excellence and innovation in everything we do.",
+        "groupTitle": "Join Our Team"
+    },
+    "testimonials": {
+        "sectionTitle": "What Our Clients Say",
+        "sectionDescription": "At most +{{testimonialsLength}} clients are using our services you can become one of them now",
+        "cta": "Give us your feedback"
+    },
+    "about": {
+        "hero": {
+            "title": "Shaping the Geographic Future",
+            "description": "Discover the Higher Institute of Geographic Sciences, our vision, values, and commitment to sustainable and innovative territorial development."
+        },
+        "values": {
+            "sectionTitle": "Our Core Values",
+            "intro": "ISSG is guided by a strong set of values that inspire every action and commitment we make:",
+            "excellence": {
+                "title": "Academic and Professional Excellence",
+                "description": "Guaranteeing high-quality training, adapted to international standards and territorial needs, to train elite professionals."
+            },
+            "innovation": {
+                "title": "Innovation and Technological Modernity",
+                "description": "Promoting the use of GIS, drones, digital technologies, and advanced methods in territorial planning and management."
+            },
+            "ethics": {
+                "title": "Rigorous Ethics and Integrity",
+                "description": "Ensuring total transparency and impeccable professionalism in the production, analysis, and use of all our geospatial data."
+            },
+            "sustainability": {
+                "title": "Commitment to Sustainable Development",
+                "description": "Systematically and transversally integrating environmental, social, and economic dimensions into the design and implementation of all our projects."
+            },
+            "collaboration": {
+                "title": "Strategic Collaboration and Openness",
+                "description": "Actively strengthening our partnerships with local authorities, national institutions, funders, and the private sector for maximized impact."
+            }
+        },
+        "mainActivity": {
+            "sectionTitle": "Our Core Activity: Training, Research, Expertise",
+            "intro": "The Higher Institute of Geographic Sciences (ISSG) is a pillar in the field of geographic sciences, urban planning, and sustainable development. We work to:",
+            "mission1": {
+                "title": "Training Qualified Executives",
+                "description": "Train professionals capable of designing, managing, and evaluating complex projects related to territorial management, land engineering, and environmental protection."
+            },
+            "mission2": {
+                "title": "Production & Dissemination of Geospatial Knowledge",
+                "description": "Produce and disseminate reliable geospatial data and essential knowledge for strategic urban planning and informed local development."
+            },
+            "mission3": {
+                "title": "Expert Support and Consulting",
+                "description": "Support public, private, and international stakeholders with tailor-made study, expertise, and consulting services."
+            },
+            "conclusion": "Through these missions, ISSG actively contributes to the modernization of urban and territorial management, the capacity building of local actors, and the promotion of balanced and sustainable development for all."
+        },
+        "socials": {
+            "followUs": "Follow Us on Social Media:",
+            "facebook": "Facebook",
+            "instagram": "Instagram"
+        }
+    },
+    "faq": {
+        "sectionTitle": "Frequently Asked Questions",
+        "sectionDescription": "Find quick answers to the most common questions about our training courses, services, and institute.",
+        "q1": {
+            "question": "What certifications does ISSG provide?",
+            "answer": "We issue recognized professional certifications, adapted to international standards in the fields of urban planning, land management, and project management. These certifications attest to the acquisition of precise and sought-after job skills."
+        },
+        "q2": {
+            "question": "Can I take training courses remotely?",
+            "answer": "Yes, several of our training modules are available online (video conference or e-learning) to allow maximum flexibility, especially for working professionals. Please check the calendar for online sessions."
+        },
+        "q3": {
+            "question": "How does the recruitment service work for my company?",
+            "answer": "Our service connects your company with our top certified graduates. After analyzing your needs, we recommend profiles whose skills have been rigorously validated, simplifying your hiring process."
+        },
+        "q4": {
+            "question": "What is the difference between 'Recruitment' and 'Placement'?",
+            "answer": "'Recruitment' concerns the hiring of our qualified graduates for permanent or fixed-term positions. 'Placement' concerns connecting students for short or medium-term evaluation internships."
+        },
+        "q5": {
+            "question": "What is the average cost of a training course?",
+            "answer": "The cost varies depending on the duration (hours) and the thematic area. You can view the estimated price ranges on the 'Training' page and request a personalized quote via the contact form."
+        }
+    },
+    "careers": {
+        "hero": {
+            "title": "Join ISSG: Shape the Territories of Tomorrow",
+            "description": "We are looking for passionate professionals, experts in geography, urban planning, and digital technologies. If you share our commitment to excellence and innovation, your place is with us."
+        },
+        "whyJoin": {
+            "title": "Why Work at ISSG?",
+            "point1": {
+                "subtitle": "Tangible Impact",
+                "desc": "Contribute directly to sustainable territorial development projects and the training of the next generation of experts."
+            },
+            "point2": {
+                "subtitle": "Culture of Innovation",
+                "desc": "Work with the latest technologies (GIS, drones, AI) in an environment that encourages applied research and modernity."
+            },
+            "point3": {
+                "subtitle": "Growth and Flexibility",
+                "desc": "Benefit from continuous training, a collaborative work environment, and flexibility adapted to your work-life balance."
+            }
+        },
+        "positions": {
+            "sectionTitle": "Current Open Positions",
+            "noOffers": "We do not have any open job offers at the moment. We invite you to submit a spontaneous application.",
+            "cta": "View Position Details"
+        },
+        "spontaneous": {
+            "title": "Spontaneous Application",
+            "desc": "Can't find your ideal position? Send us your CV and cover letter. We are always looking for exceptional talent in our areas of expertise.",
+            "cta": "Submit My Spontaneous Application"
         }
     }
 }

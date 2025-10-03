@@ -6,6 +6,90 @@
             "system": "System"
         }
     },
+    "them": {
+        "all": "Tous"
+    },
+    "services": {
+        "formation": {
+            "title": "Formation Professionnelle Certifiante",
+            "desc": "Propulsez votre carrière avec nos modules de formation professionnelle de pointe. Chaque parcours est conçu par des experts et mène à une certification reconnue, garantissant l'acquisition de compétences demandées par le marché. Investissez dans votre avenir, certifiez votre expertise.",
+            "page": {
+                "hero": {
+                    "title": "Devenez un Expert Certifié : Nos Formations qui Transforment",
+                    "desc": "Accélérez votre trajectoire professionnelle avec des programmes intensifs, reconnus et axés sur les compétences pratiques. Votre avenir commence par la bonne certification."
+                },
+                "sectionTitle": "Les Avantages Clés de nos Programmes",
+                "introText": "Nous ne faisons pas que former, nous façonnons des professionnels prêts pour le marché de l'emploi. Voici ce que vous gagnez en vous engageant avec nous :",
+                "advantages": {
+                    "certifTitle": "Certification Reconnue",
+                    "certifDesc": "Obtenez un diplôme ou un certificat qui ouvre des portes et valide officiellement votre expertise auprès des employeurs nationaux et internationaux.",
+                    "careerTitle": "Progression de Carrière Rapide",
+                    "careerDesc": "Nos modules sont alignés sur les besoins réels de l'industrie pour garantir que vos nouvelles compétences mènent directement à une promotion ou à un nouveau rôle.",
+                    "expertTitle": "Formateurs Experts",
+                    "expertDesc": "Apprenez auprès de professionnels de l'industrie, bénéficiez de leur expérience concrète et de conseils personnalisés tout au long de votre parcours."
+                },
+                "extended_information": {
+                    "academic_hub": {
+                        "title": "Le Pôle Académique",
+                        "subtitle": "Un environnement d'apprentissage enrichi et structuré.",
+                        "description": "Accédez à une plateforme complète intégrant des ressources pédagogiques de pointe, des cours interactifs en direct ou en différé, et un suivi personnalisé. Notre Hub est le centre névralgique de votre réussite, conçu pour s'adapter à votre rythme et maximiser l'acquisition de compétences."
+                    },
+                    "get_your_target": {
+                        "title": "Atteignez Vos Objectifs Professionnels",
+                        "subtitle": "Formez-vous avec une vision claire de l'emploi.",
+                        "description": "Chaque module de formation est directement aligné sur les exigences du marché du travail. Nous vous aidons à identifier précisément les compétences à acquérir pour décrocher le poste rêvé, garantissant que votre investissement dans la formation se traduise par une progression de carrière concrète."
+                    },
+                    "grow_your_idea": {
+                        "title": "Développez Votre Potentiel d'Innovation",
+                        "subtitle": "De l'idée à la concrétisation, nous vous guidons.",
+                        "description": "Au-delà de la théorie, nous encourageons l'application pratique et la pensée entrepreneuriale. Nos ateliers et projets collaboratifs sont conçus pour vous permettre de transformer vos idées créatives en solutions réelles ou en projets viables, faisant de vous un acteur du changement dans votre domaine."
+                    }
+                },
+                "cta": "Parcourir nos Modules"
+            }
+        },
+        "recruitment": {
+            "title": "Recrutement de Talents Certifiés",
+            "desc": "Trouvez le professionnel idéal pour vos équipes. Nous recommandons activement nos **apprenants certifiés** et hautement qualifiés aux entreprises qui cherchent à recruter des experts immédiatement opérationnels. Un vivier de talents vérifié, une embauche simplifiée.",
+            "page": {
+                "hero": {
+                    "title": "Recrutez l'Excellence : Des Talents Certifiés, sans le Risque",
+                    "desc": "Ne perdez plus de temps dans des recherches interminables. Accédez directement à un vivier de professionnels dont les compétences ont été rigoureusement validées par nos certifications."
+                },
+                "sectionTitle": "Notre Processus de Recommandation Simplifié",
+                "introText": "Nous faisons le pont entre nos meilleurs apprenants et vos besoins spécifiques en personnel. Découvrez comment nous vous aidons à recruter plus intelligemment :",
+                "steps": {
+                    "searchTitle": "Analyse du Besoin",
+                    "searchDesc": "Nous définissons précisément les compétences techniques et humaines requises pour le poste à pourvoir au sein de votre entreprise.",
+                    "certifTitle": "Sélection des Profils Certifiés",
+                    "certifDesc": "Nous identifions les apprenants ayant obtenu les meilleures notes et les certifications pertinentes pour votre secteur d'activité.",
+                    "matchTitle": "Mise en Relation Personnalisée",
+                    "matchDesc": "Vous rencontrez directement les candidats que nous vous recommandons, en sachant qu'ils sont déjà validés et prêts à l'emploi."
+                },
+                "cta": "Démarrer un Recrutement"
+            }
+        },
+        "placement": {
+            "title": "Placement de Stagiaires Qualifiés",
+            "desc": "Accueillez l'énergie et les connaissances fraîches de la prochaine génération. Nous mettons en relation nos étudiants avec des entreprises pour des **stages pertinents**. C'est l'occasion parfaite d'évaluer de futurs collaborateurs et de contribuer à leur développement professionnel.",
+            "page": {
+                "hero": {
+                    "title": "Stages Pertinents : Intégrez les Nouveaux Talents dès Aujourd'hui",
+                    "desc": "Ouvrez les portes de votre entreprise à des étudiants motivés et formés aux dernières pratiques. Une relation gagnant-gagnant pour l'entreprise et l'étudiant."
+                },
+                "sectionTitle": "Pourquoi Accueillir nos Stagiaires ?",
+                "introText": "Le placement de stagiaires est une opportunité d'innover et de préparer l'avenir de votre entreprise. Voici les bénéfices immédiats :",
+                "benefits": {
+                    "exposureTitle": "Pré-recrutement Évaluatif",
+                    "exposureDesc": "Utilisez le stage comme une période d'évaluation prolongée. Si le profil vous convient, vous pouvez le recruter sans période d'essai surprise.",
+                    "innovationTitle": "Apport de Nouvelles Idées",
+                    "innovationDesc": "Nos étudiants sont formés aux technologies et méthodes les plus récentes, apportant un regard neuf et des solutions innovantes à vos défis."
+                },
+                "note": "Nous vous accompagnons dans la définition des missions de stage et dans le suivi de l'étudiant pour garantir une expérience positive et productive pour les deux parties.",
+                "cta": "Proposer une Offre de Stage"
+            }
+        }
+    },
     "navBadge": {
         "services": "Nos Services",
         "missions": "Nos Missions",
@@ -13,7 +97,7 @@
         "testimonials": "Témoignages",
         "team": "Équipe"
     },
-    "page": {
+    "pages": {
         "home": {
             "title": "VOUS POUVEZ ÉGALEMENT OBTENIR UNE CERTIFICATION AUJOURD'HUI",
             "description": "Notre institut propose une gamme de formation professionnel vous permettant d'obtenir des certifications dont vous avez besoin pour debuter votre carriere professionnelle",
@@ -44,6 +128,36 @@
                 },
                 "submit": "Réservez Une Place"
             }
+        },
+        "formations": {
+            "title": "Catalogue des Formations Certifiantes",
+            "desc": "Parcourez nos programmes conçus par des experts pour transformer votre carrière et maîtriser les enjeux du territoire.",
+            "searchPlaceholder": "Rechercher par titre ou mot-clé...",
+            "filterTitle": "Filtrer par Thématique",
+            "noResults": "Aucune formation trouvée correspondant à vos critères de recherche ou de filtre.",
+            "duration": "Durée estimée :",
+            "priceRange": "Budget estimé :",
+            "participants": "Participants :",
+            "enrolled": "Inscrits :",
+            "viewDetails": "Détails du Programme"
+        },
+        "trainingDetail": {
+            "enrollCta": "S'inscrire à ce Programme",
+            "outcomesTitle": "Objectifs Pédagogiques Clés",
+            "modulesTitle": "Contenu Détaillé de la Formation",
+            "audienceTitle": "Public Cible"
+        },
+        "calendar": {
+            "title": "Calendrier des Sessions de Formation",
+            "desc": "Consultez les dates de début des prochaines sessions et réservez votre place.",
+            "nextSessions": "Prochaines Sessions Disponibles",
+            "location": "Lieu :",
+            "startDate": "Date de Début :",
+            "viewSession": "Voir la Session"
+        },
+        "modules": {
+            "title": "Compétences Clés et Secteurs d'Application",
+            "desc": "Découvrez les compétences certifiantes que vous allez acquérir et les portes qu'elles ouvrent sur le marché de l'emploi."
         }
     },
     "nav": {
@@ -61,13 +175,13 @@
                 "title": "Calendrier",
                 "description": "Consultez notre calendrier pour voir les cours, événements et ateliers à venir."
             },
-            "masters": {
-                "title": "Formateurs",
-                "description": "Participez à nos masterclasses pour apprendre auprès d'experts et progresser."
+            "competences": {
+                "title": "Compétences Clés",
+                "description": "Découvrez les compétences certifiantes très recherchées que vous maîtriserez, les secteurs d'emploi spécifiques qui les demandent, ainsi que les avantages concrets pour votre carrière."
             }
         },
         "about": {
-            "id": "Partenaires",
+            "id": "A propos de nous",
             "partners": {
                 "title": "Nos Partenaires",
                 "description": "Découvrez les partenaires et organisations qui soutiennent notre mission."
@@ -92,7 +206,7 @@
                 "description": "Faites connaissance avec les personnes qui travaillent pour rendre tout cela possible."
             },
             "join": {
-                "title": "Rejoignez Notre Équipe",
+                "title": "Rejoignez Nous",
                 "description": "Envie de nous rejoindre ? Découvrez les opportunités et devenez membre de l'équipe."
             }
         },
@@ -102,6 +216,169 @@
         "cta": {
             "reservation": "Faire une réservation",
             "getStarted": "Commencer"
+        }
+    },
+    "missions": {
+        "sectionTitle": "Nos Missions : Façonner l'Avenir du Territoire",
+        "pillar_1": {
+            "title": "Former les Experts du Développement Urbain",
+            "subtitle": "Formation de cadres techniques et scientifiques d'excellence.",
+            "description": "Nous formons des cadres techniques et scientifiques de haut niveau, dotés de la capacité de **concevoir, mettre en œuvre et piloter** des projets complexes en urbanisme, aménagement, mobilité, gestion foncière et développement durable. Devenez un acteur clé de l'évolution territoriale.",
+            "cta": "Découvrir nos Programmes"
+        },
+        "pillar_2": {
+            "title": "Expertise et Solutions Innovantes pour les Acteurs",
+            "subtitle": "Accompagnement ciblé des collectivités et entreprises.",
+            "description": "Nous accompagnons les collectivités locales, les acteurs publics et privés par des **services d'expertise pointus** et des solutions innovantes. Notre action couvre l'urbanisme, l'ingénierie territoriale, l'environnement et la mobilité, garantissant des projets plus efficaces et durables.",
+            "cta": "Contacter notre Cellule d'Expertise"
+        },
+        "pillar_3": {
+            "title": "Production de Données Géospatiales Fiables",
+            "subtitle": "Connaissances et données pour une planification éclairée.",
+            "description": "L’ISSG s'engage à **produire et diffuser des connaissances et données géospatiales fiables**. Ces informations cruciales sont essentielles pour une planification rigoureuse, la prévention proactive des risques naturels et une meilleure adaptation aux changements climatiques.",
+            "cta": "Accéder aux Données et Publications"
+        },
+        "pillar_4": {
+            "title": "Contribuer au Développement Territorial Durable",
+            "subtitle": "Recherche appliquée et appuis techniques pour l'inclusion.",
+            "description": "Nous contribuons activement au **développement territorial inclusif et durable** via des formations continues, des recherches appliquées pertinentes et des appuis techniques sur le terrain. Nous agissons pour un impact social et environnemental positif à long terme.",
+            "cta": "Voir nos Projets de Recherche"
+        }
+    },
+    "contact": {
+        "title": "Contactez-Nous",
+        "description": "Nous serions ravis d'échanger avec vous ! Que vous ayez des questions sur nos services, besoin d'assistance ou souhaitiez nous faire part de vos commentaires, notre équipe est là pour vous aider. Veuillez remplir le formulaire de contact, et nous vous répondrons dans les plus brefs délais.",
+        "contact_info": "Information de contact",
+        "form": {
+            "name": {
+                "label": "Nom",
+                "placeholder": "Nom"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Email"
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Message"
+            }
+        }
+    },
+    "team": {
+        "sectionTitle": "Découvrez l'Équipe Derrière Notre Succès",
+        "sectionDescription": "Notre équipe est composée de professionnels dévoués qui s'engagent à offrir l'excellence et l'innovation dans tout ce que nous entreprenons.",
+        "groupTitle": "Rejoignez Notre Équipe"
+    },
+    "testimonials": {
+        "sectionTitle": "Ce que Disent Nos Clients",
+        "sectionDescription": "Plus de **+{{testimonialsLength}} clients** utilisent nos services. Vous pouvez les rejoindre dès maintenant.",
+        "cta": "Donnez-nous votre avis"
+    },
+    "about": {
+        "hero": {
+            "title": "À Propos de l'ISSG : Façonner l'Avenir Géographique",
+            "description": "Découvrez l'Institut Supérieur des Sciences Géographiques, notre vision, nos valeurs et notre engagement pour un développement territorial durable et innovant."
+        },
+        "values": {
+            "sectionTitle": "Nos Valeurs Fondamentales",
+            "intro": "L'ISSG est guidé par un ensemble de valeurs fortes qui inspirent chacune de nos actions et engagements :",
+            "excellence": {
+                "title": "Excellence Académique et Professionnelle",
+                "description": "Garantir des formations de qualité supérieure, adaptées aux normes internationales et aux besoins spécifiques de nos territoires, pour former des professionnels d'élite."
+            },
+            "innovation": {
+                "title": "Innovation et Modernité Technologique",
+                "description": "Promouvoir l'intégration des Systèmes d'Information Géographique (SIG), des drones, des technologies numériques et des méthodes avancées dans la planification et la gestion territoriale."
+            },
+            "ethics": {
+                "title": "Éthique et Intégrité Rigoureuse",
+                "description": "Assurer une transparence totale et un professionnalisme irréprochable dans la production, l'analyse et l'utilisation de toutes nos données géospatiales."
+            },
+            "sustainability": {
+                "title": "Engagement pour le Développement Durable",
+                "description": "Intégrer systématiquement et transversalement les dimensions environnementales, sociales et économiques dans la conception et la mise en œuvre de tous nos projets."
+            },
+            "collaboration": {
+                "title": "Collaboration et Ouverture Stratégique",
+                "description": "Renforcer activement nos partenariats avec les collectivités, les institutions nationales, les bailleurs de fonds et le secteur privé pour un impact maximisé."
+            }
+        },
+        "mainActivity": {
+            "sectionTitle": "Notre Cœur d'Activité : Formation, Recherche, Expertise",
+            "intro": "L'Institut Supérieur des Sciences Géographiques (ISSG) est un pilier dans le domaine des sciences géographiques, de l'urbanisme et du développement durable. Nous œuvrons pour :",
+            "mission1": {
+                "title": "Formation de Cadres Qualifiés",
+                "description": "Former des professionnels capables de concevoir, piloter et évaluer des projets complexes liés à la gestion territoriale, à l'ingénierie foncière et à la protection de l'environnement."
+            },
+            "mission2": {
+                "title": "Production & Diffusion de Connaissances Géospatiales",
+                "description": "Produire et diffuser des données géospatiales fiables et des connaissances essentielles pour une planification urbaine stratégique et un développement local éclairé."
+            },
+            "mission3": {
+                "title": "Accompagnement et Conseil Expert",
+                "description": "Accompagner les acteurs publics, privés et internationaux par des prestations d'études, d'expertise et de conseil sur mesure."
+            },
+            "conclusion": "Par l'ensemble de ces actions, l'ISSG contribue activement à la modernisation de la gestion urbaine et territoriale, au renforcement des capacités des acteurs locaux et à la promotion d'un développement équilibré et durable pour tous."
+        },
+        "socials": {
+            "followUs": "Suivez-nous sur nos Réseaux Sociaux :",
+            "facebook": "Facebook",
+            "instagram": "Instagram"
+        }
+    },
+    "faq": {
+        "sectionTitle": "Questions Fréquemment Posées",
+        "sectionDescription": "Trouvez rapidement les réponses aux interrogations les plus courantes concernant nos formations, nos services et notre institut.",
+        "q1": {
+            "question": "Quelles certifications sont délivrées par l'ISSG ?",
+            "answer": "Nous délivrons des certifications professionnelles reconnues, adaptées aux normes internationales dans les domaines de l'urbanisme, du foncier, et de la gestion de projet. Ces certifications attestent de l'acquisition de compétences précises et recherchées sur le marché de l'emploi."
+        },
+        "q2": {
+            "question": "Puis-je suivre les formations à distance ?",
+            "answer": "Oui, plusieurs de nos modules de formation sont disponibles en ligne (visioconférence ou e-learning) pour permettre une flexibilité maximale, notamment pour les professionnels en activité. Consultez le calendrier pour les sessions en ligne."
+        },
+        "q3": {
+            "question": "Comment le service de recrutement fonctionne-t-il pour mon entreprise ?",
+            "answer": "Notre service met en relation votre entreprise avec nos meilleurs apprenants certifiés. Après analyse de vos besoins, nous vous recommandons des profils dont les compétences ont été validées rigoureusement, simplifiant votre processus d'embauche."
+        },
+        "q4": {
+            "question": "Quelle est la différence entre 'Recrutement' et 'Placement' ?",
+            "answer": "'Recrutement' concerne l'embauche de nos diplômés qualifiés pour des postes permanents ou en CDD. 'Placement' concerne la mise en relation d'étudiants pour des stages d'évaluation de courte ou moyenne durée."
+        },
+        "q5": {
+            "question": "Quel est le coût moyen d'une formation ?",
+            "answer": "Le coût varie en fonction de la durée (heures) et de la thématique. Vous pouvez consulter les fourchettes de prix estimées sur la page 'Formations' et demander un devis personnalisé via le formulaire de contact."
+        }
+    },
+    "careers": {
+        "hero": {
+            "title": "Rejoignez l'ISSG : Façonnez les Territoires de Demain",
+            "description": "Nous sommes à la recherche de professionnels passionnés, d'experts en géographie, urbanisme, et technologies numériques. Si vous partagez notre engagement pour l'excellence et l'innovation, votre place est parmi nous."
+        },
+        "whyJoin": {
+            "title": "Pourquoi Travailler à l'ISSG ?",
+            "point1": {
+                "subtitle": "Un Impact Concret",
+                "desc": "Contribuez directement à des projets d'aménagement territorial durable et à la formation de la prochaine génération d'experts."
+            },
+            "point2": {
+                "subtitle": "Culture de l'Innovation",
+                "desc": "Travaillez avec les dernières technologies (SIG, drones, IA) dans un environnement qui encourage la recherche appliquée et la modernité."
+            },
+            "point3": {
+                "subtitle": "Développement et Flexibilité",
+                "desc": "Bénéficiez de formations continues, d'un environnement de travail collaboratif et d'une flexibilité adaptée à votre équilibre vie professionnelle/personnelle."
+            }
+        },
+        "positions": {
+            "sectionTitle": "Postes Actuellement Ouverts",
+            "noOffers": "Nous n'avons pas d'offres d'emploi disponibles pour le moment. Nous vous invitons à soumettre une candidature spontanée.",
+            "cta": "Voir le Détail du Poste"
+        },
+        "spontaneous": {
+            "title": "Candidature Spontanée",
+            "desc": "Vous ne trouvez pas votre poste idéal ? Envoyez-nous votre CV et lettre de motivation. Nous sommes toujours à la recherche de talents exceptionnels dans nos domaines d'expertise.",
+            "cta": "Soumettre ma Candidature Spontanée"
         }
     }
 }
