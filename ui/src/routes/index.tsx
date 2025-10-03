@@ -3,7 +3,7 @@ import Footer from '@/components/shared/Footer';
 import Hero from '@/components/home/Hero';
 import Missions from '@/components/home/Missions';
 import Services from '@/components/home/Services';
-import Team from '@/components/home/Team';
+// import Team from '@/components/home/Team';
 import Testimonials from '@/components/home/Testimonials';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -19,7 +19,7 @@ export const Route = createFileRoute('/')({
       </div>
       <Services />
       <Missions />
-      <Team />
+      {/* <Team /> */}
       <Contact />
       <Testimonials />
       <Footer />

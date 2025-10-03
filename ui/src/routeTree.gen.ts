@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CompetencesRouteImport } from './routes/competences'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,12 +19,16 @@ import { Route as CoursesIndexRouteImport } from './routes/courses/index'
 import { Route as TeamJoinRouteImport } from './routes/team/join'
 import { Route as TeamMemberRouteImport } from './routes/team/$member'
 import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
-import { Route as CoursesMastersRouteImport } from './routes/courses/masters'
 import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
 
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompetencesRoute = CompetencesRouteImport.update({
+  id: '/competences',
+  path: '/competences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -66,11 +71,6 @@ const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
   path: '/services/$serviceId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoursesMastersRoute = CoursesMastersRouteImport.update({
-  id: '/courses/masters',
-  path: '/courses/masters',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CoursesCourseIdRoute = CoursesCourseIdRouteImport.update({
   id: '/courses/$courseId',
   path: '/courses/$courseId',
@@ -81,9 +81,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
   '/faq': typeof FaqRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
-  '/courses/masters': typeof CoursesMastersRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
@@ -94,9 +94,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
   '/faq': typeof FaqRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
-  '/courses/masters': typeof CoursesMastersRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
@@ -108,9 +108,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
   '/faq': typeof FaqRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
-  '/courses/masters': typeof CoursesMastersRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/$member': typeof TeamMemberRoute
   '/team/join': typeof TeamJoinRoute
@@ -123,9 +123,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/calendar'
+    | '/competences'
     | '/faq'
     | '/courses/$courseId'
-    | '/courses/masters'
     | '/services/$serviceId'
     | '/team/$member'
     | '/team/join'
@@ -136,9 +136,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/calendar'
+    | '/competences'
     | '/faq'
     | '/courses/$courseId'
-    | '/courses/masters'
     | '/services/$serviceId'
     | '/team/$member'
     | '/team/join'
@@ -149,9 +149,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/calendar'
+    | '/competences'
     | '/faq'
     | '/courses/$courseId'
-    | '/courses/masters'
     | '/services/$serviceId'
     | '/team/$member'
     | '/team/join'
@@ -163,9 +163,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
+  CompetencesRoute: typeof CompetencesRoute
   FaqRoute: typeof FaqRoute
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
-  CoursesMastersRoute: typeof CoursesMastersRoute
   ServicesServiceIdRoute: typeof ServicesServiceIdRoute
   TeamMemberRoute: typeof TeamMemberRoute
   TeamJoinRoute: typeof TeamJoinRoute
@@ -180,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/competences': {
+      id: '/competences'
+      path: '/competences'
+      fullPath: '/competences'
+      preLoaderRoute: typeof CompetencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -238,13 +245,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesServiceIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses/masters': {
-      id: '/courses/masters'
-      path: '/courses/masters'
-      fullPath: '/courses/masters'
-      preLoaderRoute: typeof CoursesMastersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/courses/$courseId': {
       id: '/courses/$courseId'
       path: '/courses/$courseId'
@@ -259,9 +259,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
+  CompetencesRoute: CompetencesRoute,
   FaqRoute: FaqRoute,
   CoursesCourseIdRoute: CoursesCourseIdRoute,
-  CoursesMastersRoute: CoursesMastersRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
   TeamMemberRoute: TeamMemberRoute,
   TeamJoinRoute: TeamJoinRoute,
