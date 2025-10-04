@@ -1,6 +1,5 @@
 {
-    "cSpell.words": [
-        "ISSGEO"
-    ],
-    "biome.lsp.bin": "ui/node_modules/@biomejs/biome/bin/biome"
+	"cSpell.words": ["ISSGEO"],
+	"biome.lsp.bin": "ui/node_modules/@biomejs/biome/bin/biome",
+	"i18n-ally.localesPaths": ["i18n", "i18n/locales"]
 }
