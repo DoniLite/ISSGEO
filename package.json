@@ -14,7 +14,7 @@
 		"build:all": "bun run build && bun build:default",
 		"build:default": "bun run build.ts --outdir=static/dist/default --sourcemap=linked ",
 		"build:client": "bun run build.ts --outdir=static/dist/client --minify --sourcemap=linked --target=browser --entrypoints=./src/client.tsx,",
-		"build:server": "bun run build.ts --outdir=static/dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/server.tsx,",
+		"build:server": "bun run build.ts --outdir=static/dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/index.ts,",
 		"generate": "bunx @tanstack/router-cli generate"
 	},
 	"dependencies": {
