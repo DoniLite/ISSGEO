@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - run: bun fmt
+    - run: bun lint
+commit-msg:
+  jobs:
+    - run: bun commitlint --edit {1}
