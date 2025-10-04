@@ -43,10 +43,10 @@ function TrainingDetail() {
       <div className={`py-16 ${BG_LINEAR_CLASS}`}>
         <div className='container mx-auto p-4'>
           <h1 className='text-4xl font-extrabold text-primary mb-2'>
-            {t(training.titleKey)}
+            {training.title}
           </h1>
           <p className='text-xl text-muted-foreground mb-6'>
-            {t(training.descriptionKey)}
+            {training.description}
           </p>
 
           <div className='grid lg:grid-cols-[1fr_350px] gap-8'>
@@ -59,7 +59,7 @@ function TrainingDetail() {
                 </CardHeader>
                 <CardContent>
                   <p className='text-gray-700 leading-relaxed'>
-                    {t(training.detailedDescriptionKey)}
+                    {training.detailedDescription}
                   </p>
                 </CardContent>
               </Card>
@@ -74,10 +74,10 @@ function TrainingDetail() {
                 </CardHeader>
                 <CardContent>
                   <ul className='space-y-3 list-none p-0'>
-                    {training.learningOutcomesKeys.map((key) => (
+                    {training.learningOutcomes.map((key) => (
                       <li key={key} className='flex items-start'>
                         <span className='mr-3 text-green-500'>&bull;</span>
-                        {t(key)}
+                        {key}
                       </li>
                     ))}
                   </ul>
@@ -94,9 +94,9 @@ function TrainingDetail() {
                 </CardHeader>
                 <CardContent>
                   <ol className='list-decimal list-inside space-y-3 p-0'>
-                    {training.detailedModulesKeys.map((key) => (
+                    {training.detailedModules.map((key) => (
                       <li key={key} className='font-medium text-gray-700'>
-                        {t(key)}
+                        {key}
                       </li>
                     ))}
                   </ol>
@@ -134,7 +134,7 @@ function TrainingDetail() {
                       <Target className='w-4 h-4 mr-2' /> Public:
                     </span>
                     <span className='font-semibold text-right'>
-                      {t(training.targetAudienceKey)}
+                      {training.targetAudience}
                     </span>
                   </div>
 
