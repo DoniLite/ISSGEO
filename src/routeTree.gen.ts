@@ -8,266 +8,224 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as AboutRouteImport } from "./routes/about";
-import { Route as CalendarRouteImport } from "./routes/calendar";
-import { Route as CompetencesRouteImport } from "./routes/competences";
-import { Route as CoursesCourseIdRouteImport } from "./routes/courses/$courseId";
-import { Route as CoursesIndexRouteImport } from "./routes/courses/index";
-import { Route as FaqRouteImport } from "./routes/faq";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ServicesServiceIdRouteImport } from "./routes/services/$serviceId";
-import { Route as TeamMemberRouteImport } from "./routes/team/$member";
-import { Route as TeamIndexRouteImport } from "./routes/team/index";
-import { Route as TeamJoinRouteImport } from "./routes/team/join";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CompetencesRouteImport } from './routes/competences'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoursesIndexRouteImport } from './routes/courses/index'
+import { Route as TeamJoinRouteImport } from './routes/team/join'
+import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
+import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
 
 const FaqRoute = FaqRouteImport.update({
-	id: "/faq",
-	path: "/faq",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompetencesRoute = CompetencesRouteImport.update({
-	id: "/competences",
-	path: "/competences",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/competences',
+  path: '/competences',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
-	id: "/calendar",
-	path: "/calendar",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
-	id: "/about",
-	path: "/about",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const TeamIndexRoute = TeamIndexRouteImport.update({
-	id: "/team/",
-	path: "/team/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesIndexRoute = CoursesIndexRouteImport.update({
-	id: "/courses/",
-	path: "/courses/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/courses/',
+  path: '/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamJoinRoute = TeamJoinRouteImport.update({
-	id: "/team/join",
-	path: "/team/join",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const TeamMemberRoute = TeamMemberRouteImport.update({
-	id: "/team/$member",
-	path: "/team/$member",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/team/join',
+  path: '/team/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-	id: "/services/$serviceId",
-	path: "/services/$serviceId",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/services/$serviceId',
+  path: '/services/$serviceId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesCourseIdRoute = CoursesCourseIdRouteImport.update({
-	id: "/courses/$courseId",
-	path: "/courses/$courseId",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/courses/$courseId',
+  path: '/courses/$courseId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/faq": typeof FaqRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/$member": typeof TeamMemberRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/courses": typeof CoursesIndexRoute;
-	"/team": typeof TeamIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/faq': typeof FaqRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/courses': typeof CoursesIndexRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/faq": typeof FaqRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/$member": typeof TeamMemberRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/courses": typeof CoursesIndexRoute;
-	"/team": typeof TeamIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/faq': typeof FaqRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/courses': typeof CoursesIndexRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/faq": typeof FaqRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/$member": typeof TeamMemberRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/courses/": typeof CoursesIndexRoute;
-	"/team/": typeof TeamIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/faq': typeof FaqRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/courses/': typeof CoursesIndexRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/faq"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/$member"
-		| "/team/join"
-		| "/courses"
-		| "/team";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/faq"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/$member"
-		| "/team/join"
-		| "/courses"
-		| "/team";
-	id:
-		| "__root__"
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/faq"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/$member"
-		| "/team/join"
-		| "/courses/"
-		| "/team/";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/faq'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/courses'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/faq'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/courses'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/faq'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/courses/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	AboutRoute: typeof AboutRoute;
-	CalendarRoute: typeof CalendarRoute;
-	CompetencesRoute: typeof CompetencesRoute;
-	FaqRoute: typeof FaqRoute;
-	CoursesCourseIdRoute: typeof CoursesCourseIdRoute;
-	ServicesServiceIdRoute: typeof ServicesServiceIdRoute;
-	TeamMemberRoute: typeof TeamMemberRoute;
-	TeamJoinRoute: typeof TeamJoinRoute;
-	CoursesIndexRoute: typeof CoursesIndexRoute;
-	TeamIndexRoute: typeof TeamIndexRoute;
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CalendarRoute: typeof CalendarRoute
+  CompetencesRoute: typeof CompetencesRoute
+  FaqRoute: typeof FaqRoute
+  CoursesCourseIdRoute: typeof CoursesCourseIdRoute
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
+  TeamJoinRoute: typeof TeamJoinRoute
+  CoursesIndexRoute: typeof CoursesIndexRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/faq": {
-			id: "/faq";
-			path: "/faq";
-			fullPath: "/faq";
-			preLoaderRoute: typeof FaqRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/competences": {
-			id: "/competences";
-			path: "/competences";
-			fullPath: "/competences";
-			preLoaderRoute: typeof CompetencesRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/calendar": {
-			id: "/calendar";
-			path: "/calendar";
-			fullPath: "/calendar";
-			preLoaderRoute: typeof CalendarRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/about": {
-			id: "/about";
-			path: "/about";
-			fullPath: "/about";
-			preLoaderRoute: typeof AboutRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/team/": {
-			id: "/team/";
-			path: "/team";
-			fullPath: "/team";
-			preLoaderRoute: typeof TeamIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/courses/": {
-			id: "/courses/";
-			path: "/courses";
-			fullPath: "/courses";
-			preLoaderRoute: typeof CoursesIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/team/join": {
-			id: "/team/join";
-			path: "/team/join";
-			fullPath: "/team/join";
-			preLoaderRoute: typeof TeamJoinRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/team/$member": {
-			id: "/team/$member";
-			path: "/team/$member";
-			fullPath: "/team/$member";
-			preLoaderRoute: typeof TeamMemberRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/services/$serviceId": {
-			id: "/services/$serviceId";
-			path: "/services/$serviceId";
-			fullPath: "/services/$serviceId";
-			preLoaderRoute: typeof ServicesServiceIdRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/courses/$courseId": {
-			id: "/courses/$courseId";
-			path: "/courses/$courseId";
-			fullPath: "/courses/$courseId";
-			preLoaderRoute: typeof CoursesCourseIdRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/competences': {
+      id: '/competences'
+      path: '/competences'
+      fullPath: '/competences'
+      preLoaderRoute: typeof CompetencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/': {
+      id: '/courses/'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/join': {
+      id: '/team/join'
+      path: '/team/join'
+      fullPath: '/team/join'
+      preLoaderRoute: typeof TeamJoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$serviceId': {
+      id: '/services/$serviceId'
+      path: '/services/$serviceId'
+      fullPath: '/services/$serviceId'
+      preLoaderRoute: typeof ServicesServiceIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/$courseId': {
+      id: '/courses/$courseId'
+      path: '/courses/$courseId'
+      fullPath: '/courses/$courseId'
+      preLoaderRoute: typeof CoursesCourseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	AboutRoute: AboutRoute,
-	CalendarRoute: CalendarRoute,
-	CompetencesRoute: CompetencesRoute,
-	FaqRoute: FaqRoute,
-	CoursesCourseIdRoute: CoursesCourseIdRoute,
-	ServicesServiceIdRoute: ServicesServiceIdRoute,
-	TeamMemberRoute: TeamMemberRoute,
-	TeamJoinRoute: TeamJoinRoute,
-	CoursesIndexRoute: CoursesIndexRoute,
-	TeamIndexRoute: TeamIndexRoute,
-};
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CalendarRoute: CalendarRoute,
+  CompetencesRoute: CompetencesRoute,
+  FaqRoute: FaqRoute,
+  CoursesCourseIdRoute: CoursesCourseIdRoute,
+  ServicesServiceIdRoute: ServicesServiceIdRoute,
+  TeamJoinRoute: TeamJoinRoute,
+  CoursesIndexRoute: CoursesIndexRoute,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
