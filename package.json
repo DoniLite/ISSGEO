@@ -11,13 +11,14 @@
 		"lint": "bunx biome lint --write",
 		"check": "bunx biome check --write",
 		"build": "bun build:client && bun build:server",
-		"build:all": "bun build && bun build:default",
-		"build:default": "bun run build.ts --outdir=dist/default --sourcemap=linked ",
-		"build:client": "bun run build.ts --outdir=dist/client --minify --sourcemap=linked --target=browser --entrypoints=./src/ssr/client.tsx,",
-		"build:server": "bun run build.ts --outdir=dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/ssr/server.tsx,",
+		"build:all": "bun run build && bun build:default",
+		"build:default": "bun run build.ts --outdir=static/dist/default --sourcemap=linked ",
+		"build:client": "bun run build.ts --outdir=static/dist/client --minify --sourcemap=linked --target=browser --entrypoints=./src/client.tsx,",
+		"build:server": "bun run build.ts --outdir=static/dist/server --sourcemap=external --splitting --format=esm --target=node --entrypoints=./src/server.tsx,",
 		"generate": "bunx @tanstack/router-cli generate"
 	},
 	"dependencies": {
+		"@hono/node-server": "^1.19.5",
 		"@radix-ui/react-accordion": "^1.2.12",
 		"@radix-ui/react-dialog": "^1.1.15",
 		"@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -36,6 +37,7 @@
 		"embla-carousel-auto-scroll": "^8.6.0",
 		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-react": "^8.6.0",
+		"hono": "^4.9.9",
 		"i18next": "^25.4.2",
 		"lucide-react": "^0.541.0",
 		"react": "^19",
@@ -48,7 +50,7 @@
 		"zustand": "^5.0.8"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.4",
+		"@biomejs/biome": "2.2.5",
 		"@commitlint/cli": "^20.1.0",
 		"@commitlint/config-conventional": "^20.0.0",
 		"@tanstack/router-cli": "^1.131.27",
