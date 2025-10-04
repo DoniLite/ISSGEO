@@ -1,42 +1,42 @@
-import { serve } from 'bun';
-import index from './index.html';
+import { serve } from "bun";
+import index from "./index.html";
 
 const server = serve({
-  routes: {
-    // Serve index.html for all unmatched routes.
-    '/*': index,
+	routes: {
+		// Serve index.html for all unmatched routes.
+		"/*": index,
 
-    '/api/hello': {
-      async GET(req) {
-        return Response.json({
-          message: 'Hello, world!',
-          method: 'GET',
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: 'Hello, world!',
-          method: 'PUT',
-        });
-      },
-    },
+		"/api/hello": {
+			async GET(req) {
+				return Response.json({
+					message: "Hello, world!",
+					method: "GET",
+				});
+			},
+			async PUT(req) {
+				return Response.json({
+					message: "Hello, world!",
+					method: "PUT",
+				});
+			},
+		},
 
-    '/api/hello/:name': async (req) => {
-      const { name } = req.params;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
-    },
-  },
+		"/api/hello/:name": async (req) => {
+			const { name } = req.params;
+			return Response.json({
+				message: `Hello, ${name}!`,
+			});
+		},
+	},
 
-  development: process.env.NODE_ENV !== 'production' && {
-    // Enable browser hot reloading in development
-    hmr: true,
+	development: process.env.NODE_ENV !== "production" && {
+		// Enable browser hot reloading in development
+		hmr: true,
 
-    // Echo console logs from the browser to the server
-    console: true,
-  },
-  port: 4000
+		// Echo console logs from the browser to the server
+		console: true,
+	},
+	port: 4000,
 });
 
 console.log(`🚀 Server running at ${server.url}`);

@@ -1,6 +1,6 @@
-import JoinUsPage from '@/components/careers/JoinUs';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
+import JoinUsPage from "@/components/careers/JoinUs";
 
-export const Route = createFileRoute('/team/join')({
-  component: JoinUsPage,
+export const Route = createFileRoute("/team/join")({
+	component: JoinUsPage,
 });

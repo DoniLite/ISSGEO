@@ -4,10 +4,10 @@ import {
 	useContext,
 	useEffect,
 	useState,
-} from 'react';
+} from "react";
 
-type Theme = 'light' | 'dark' | 'system';
-type ResolvedTheme = 'light' | 'dark';
+type Theme = "light" | "dark" | "system";
+type ResolvedTheme = "light" | "dark";
 
 interface ThemeContextType {
 	theme: Theme;
@@ -22,12 +22,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const useTheme = () => {
 	const context = useContext(ThemeContext);
 	if (context === undefined) {
-		throw new Error('useTheme must be used within a ThemeProvider');
+		throw new Error("useTheme must be used within a ThemeProvider");
 	}
 	return context;
 };
 
-export const getThemeScript = (defaultTheme: Theme = 'dark') => {
+export const getThemeScript = (defaultTheme: Theme = "dark") => {
 	return `
     (function() {
       try {
@@ -56,8 +56,8 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 	children,
-	defaultTheme = 'dark',
-	serverTheme = 'dark',
+	defaultTheme = "dark",
+	serverTheme = "dark",
 }) => {
 	const [theme, setThemeState] = useState<Theme>(defaultTheme);
 	const [resolvedTheme, setResolvedTheme] =
@@ -65,40 +65,40 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 	const [isHydrated, setIsHydrated] = useState(false);
 
 	const getSystemTheme = useCallback((): ResolvedTheme => {
-		if (typeof window === 'undefined') return 'dark';
-		return globalThis.matchMedia('(prefers-color-scheme: dark)').matches
-			? 'dark'
-			: 'light';
+		if (typeof window === "undefined") return "dark";
+		return globalThis.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
 	}, []);
 
 	const resolveTheme = useCallback(
 		(themeValue: Theme): ResolvedTheme => {
-			return themeValue === 'system' ? getSystemTheme() : themeValue;
+			return themeValue === "system" ? getSystemTheme() : themeValue;
 		},
 		[getSystemTheme],
 	);
 
 	const applyTheme = useCallback((resolved: ResolvedTheme) => {
-		if (typeof window === 'undefined') return;
+		if (typeof window === "undefined") return;
 
 		const html = document.documentElement;
 		const { body } = document;
 
-		html.classList.remove('light', 'dark');
-		body.classList.remove('light', 'dark');
+		html.classList.remove("light", "dark");
+		body.classList.remove("light", "dark");
 
 		html.classList.add(resolved);
 		body.classList.add(resolved);
-		html.setAttribute('data-theme', resolved);
+		html.setAttribute("data-theme", resolved);
 	}, []);
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
-			if (typeof window !== 'undefined') {
+			if (typeof window !== "undefined") {
 				try {
-					localStorage.setItem('theme', newTheme);
+					localStorage.setItem("theme", newTheme);
 				} catch (error) {
-					console.error('Error during the Theme saving:', error);
+					console.error("Error during the Theme saving:", error);
 				}
 			}
 
@@ -111,22 +111,22 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 	);
 
 	const toggleTheme = useCallback(() => {
-		const themeOrder: Theme[] = ['dark', 'light', 'system'];
+		const themeOrder: Theme[] = ["dark", "light", "system"];
 		const currentIndex = themeOrder.indexOf(theme);
 		const nextIndex = (currentIndex + 1) % themeOrder.length;
-		setTheme(themeOrder[nextIndex] ?? 'light');
+		setTheme(themeOrder[nextIndex] ?? "light");
 	}, [theme, setTheme]);
 
 	useEffect(() => {
 		let savedTheme: Theme = defaultTheme;
 
 		try {
-			const stored = localStorage.getItem('theme') as Theme;
-			if (stored && ['light', 'dark', 'system'].includes(stored)) {
+			const stored = localStorage.getItem("theme") as Theme;
+			if (stored && ["light", "dark", "system"].includes(stored)) {
 				savedTheme = stored;
 			}
 		} catch (error) {
-			console.error('Error to get the theme:', error);
+			console.error("Error to get the theme:", error);
 		}
 
 		const resolved = resolveTheme(savedTheme);
@@ -136,17 +136,17 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 		applyTheme(resolved);
 		setIsHydrated(true);
 
-		const mediaQuery = globalThis.matchMedia('(prefers-color-scheme: dark)');
+		const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
 		const handleChange = () => {
-			if (savedTheme === 'system') {
+			if (savedTheme === "system") {
 				const newResolved = getSystemTheme();
 				setResolvedTheme(newResolved);
 				applyTheme(newResolved);
 			}
 		};
 
-		mediaQuery.addEventListener('change', handleChange);
-		return () => mediaQuery.removeEventListener('change', handleChange);
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
 	}, [defaultTheme, resolveTheme, applyTheme, getSystemTheme]);
 
 	const value: ThemeContextType = {

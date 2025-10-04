@@ -1,5 +1,5 @@
-import type { StateCreator } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import type { StateCreator } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 /**
  * Applies middleware to a Zustand store.
@@ -18,10 +18,10 @@ import { devtools, persist } from 'zustand/middleware';
  * @returns
  */
 export const applyStoreMiddleware = <T>(
-  f: StateCreator<T>,
-  storeName: string
+	f: StateCreator<T>,
+	storeName: string,
 ) => devtools(persist(f, { name: storeName }));
 
 export type BaseStore = {
-  reset: () => void;
+	reset: () => void;
 };

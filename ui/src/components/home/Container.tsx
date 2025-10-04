@@ -1,26 +1,23 @@
-import { cn } from '@/lib/utils';
-import type { HtmlHTMLAttributes } from 'react';
+import type { HtmlHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 interface ContainerProps {
-  children: React.ReactNode;
-  className?: HtmlHTMLAttributes<HTMLDivElement>['className'];
-  [x: string]: unknown;
+	children: React.ReactNode;
+	className?: HtmlHTMLAttributes<HTMLDivElement>["className"];
+	[x: string]: unknown;
 }
 
 export default function Container({
-  children,
-  className,
-  ...props
+	children,
+	className,
+	...props
 }: ContainerProps) {
-  return (
-    <div
-      className={cn(
-        'w-full my-8 p-2 lg:p-4 lg:my-[8rem]',
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
-  );
+	return (
+		<div
+			className={cn("w-full my-8 p-2 lg:p-4 lg:my-[8rem]", className)}
+			{...props}
+		>
+			{children}
+		</div>
+	);
 }
