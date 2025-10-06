@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { render } from './entry-server';
-import { serveStatic } from '@hono/node-server/serve-static';
+import { serveStatic } from 'hono/bun';
 
 const app = new Hono();
 
