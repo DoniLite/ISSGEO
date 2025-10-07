@@ -30,7 +30,7 @@ export default function FormationsCatalogue() {
 				training.description.toLowerCase().includes(lowerSearch)
 			);
 		});
-	}, [searchTerm, activeFilter, t]);
+	}, [searchTerm, activeFilter]);
 
 	return (
 		<>
