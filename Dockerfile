@@ -25,6 +25,8 @@ COPY . .
 ENV NODE_ENV=production
 # RUN bun test
 RUN bun run build:client
+RUN bun run migrate:db
+RUN bun run seed:db
 
 # copy production dependencies and source code into final image
 FROM base AS release
