@@ -6,7 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../ui/accordion';
-import { HelpCircle } from 'lucide-react';
+import BaseHeroWrapper from '../shared/BasePageHeroWrapper';
+import Hero from '../services/Hero';
 
 export default function FaqPage() {
   const { t } = useTranslation();
@@ -21,17 +22,13 @@ export default function FaqPage() {
 
   return (
     <>
+      <BaseHeroWrapper>
+        <Hero
+          titleKey='faq.sectionTitle'
+          descriptionKey='faq.sectionDescription'
+        />
+      </BaseHeroWrapper>
       <div className='container mx-auto my-16 p-4'>
-        <div className='text-center mb-12'>
-          <HelpCircle className='w-12 h-12 text-primary mx-auto mb-4' />
-          <h1 className='text-4xl font-extrabold mb-2'>
-            {t('faq.sectionTitle')}
-          </h1>
-          <p className='text-xl text-muted-foreground max-w-3xl mx-auto'>
-            {t('faq.sectionDescription')}
-          </p>
-        </div>
-
         <div className='max-w-4xl mx-auto'>
           <Accordion type='single' collapsible className='w-full'>
             {faqItems.map((key) => (
@@ -39,7 +36,7 @@ export default function FaqPage() {
                 <AccordionTrigger className='text-lg font-semibold text-left hover:no-underline'>
                   {t(`faq.${key}.question`)}
                 </AccordionTrigger>
-                <AccordionContent className='text-gray-700 leading-relaxed'>
+                <AccordionContent className='text-muted-foreground leading-relaxed'>
                   {t(`faq.${key}.answer`)}
                 </AccordionContent>
               </AccordionItem>

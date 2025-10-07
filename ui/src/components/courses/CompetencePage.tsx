@@ -32,9 +32,7 @@ export default function CompetencesPage() {
                 </div>
               </CardHeader>
               <CardContent className='px-0 pb-0 space-y-4'>
-                <p className='text-foreground'>
-                  {comp.description}
-                </p>
+                <p className='text-foreground'>{comp.description}</p>
 
                 <div className='pt-2 border-t'>
                   <h4 className='font-semibold mt-2 flex items-center text-lg text-primary/80 dark:text-secondary/80'>
@@ -44,7 +42,7 @@ export default function CompetencesPage() {
                     {comp.sectors.map((sector) => (
                       <Badge key={sector}>
                         <Tag className='w-3 h-3 mr-1' />{' '}
-                        {sector}
+                        <span className='text-wrap'>{sector}</span>
                       </Badge>
                     ))}
                   </div>
