@@ -188,6 +188,14 @@
 			"getStarted": "Get Started"
 		}
 	},
+	"sidebar": {
+		"home": "Home",
+		"inbox": "Inbox",
+		"formations": "Courses",
+		"calendar": "Calendar",
+		"search": "Search",
+		"settings": "Settings"
+	},
 	"missions": {
 		"sectionTitle": "Our Missions: Shaping the Future of the Territory",
 		"pillar_1": {

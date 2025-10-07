@@ -218,6 +218,14 @@
 			"getStarted": "Commencer"
 		}
 	},
+	"sidebar": {
+		"home": "Acceuil",
+		"inbox": "Messages",
+		"formations": "Formations",
+		"calendar": "Calendrier",
+		"search": "Recherche",
+		"settings": "Configuration"
+	},
 	"missions": {
 		"sectionTitle": "Nos Missions : Façonner l'Avenir du Territoire",
 		"pillar_1": {
