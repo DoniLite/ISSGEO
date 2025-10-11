@@ -1,8 +1,9 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/node-postgres';
-
-if (!process.env.DATABASE_URL) {
-    throw new Error('please provide a DATABASE_URL env');
-}
-
-export const db = drizzle(process.env.DATABASE_URL);
+export * from './schema/types';
+export * from './schema/contact.schema';
+export * from './schema/job.schema';
+export * from './schema/relations';
+export * from './schema/session.schema';
+export * from './schema/testimonials.schema';
+export * from './schema/thematic.schema';
+export * from './schema/training.schema';
+export * from './schema/user.schema';
