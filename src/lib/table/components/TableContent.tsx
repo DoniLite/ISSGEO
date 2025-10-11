@@ -1,0 +1,133 @@
+import type {
+  ColumnDef,
+  ColumnPinningPosition,
+  Row,
+  Table as TableType,
+} from '@tanstack/react-table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../components/ui/table';
+import { flexRender } from '@tanstack/react-table';
+import { cn } from '@/lib/utils';
+import type { ElementType } from 'react';
+import { useTranslation } from 'react-i18next';
+
+interface Props<TData extends Record<string, unknown>, TValue> {
+  table: TableType<TData>;
+  columns: ColumnDef<TData, TValue>[];
+  noResultsTextKey: string;
+  getPinnedItemClassDefinition: (
+    index: number,
+    itemsLength: number,
+    pinnedState: ColumnPinningPosition
+  ) => Record<string, boolean>;
+  slotComponent?: ElementType<SlotProps<TData>>;
+}
+
+export interface SlotProps<TData extends Record<string, unknown>> {
+  row: Row<TData>;
+  table: TableType<TData>;
+}
+
+export default function TableContent<
+  TData extends Record<string, unknown>,
+  TValue,
+>(config: Props<TData, TValue>) {
+  const { table, columns, noResultsTextKey, getPinnedItemClassDefinition } =
+    config;
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Table>
+        <TableHeader className='h-13 border-b-2'>
+          {table.getHeaderGroups().map((group) => (
+            <TableRow key={group.id}>
+              {group.headers.map((header, index) => (
+                <TableHead
+                  key={header.id}
+                  className={cn(
+                    getPinnedItemClassDefinition(
+                      index,
+                      group.headers.length,
+                      header.column.getIsPinned()
+                    )
+                  )}
+                >
+                  {header.isPlaceholder &&
+                    flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+
+        <TableBody>
+          {table.getRowModel().rows.length ? (
+            table.getRowModel().rows.map((row) => (
+              <>
+                <TableRow
+                  key={row.id}
+                  className='px-4'
+                  aria-selected={row.getIsSelected()}
+                >
+                  {row.getVisibleCells().map((cell, index) => (
+                    <TableCell
+                      key={cell.id}
+                      className={cn(
+                        getPinnedItemClassDefinition(
+                          index,
+                          row.getVisibleCells().length,
+                          cell.column.getIsPinned()
+                        )
+                      )}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                {row.getIsExpanded() && (
+                  <TableRow aria-expanded>
+                    <TableCell colSpan={row.getAllCells().length}>
+                      {config.slotComponent ? (
+                        <config.slotComponent row={row} table={table} />
+                      ) : (
+                        <DefaultSlot row={row} table={table} />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
+                {t(noResultsTextKey || 'common.noResult')}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+
+function DefaultSlot<TData extends Record<string, unknown>>({
+  row,
+}: SlotProps<TData>) {
+  return (
+    <pre className='bg-muted rounded p-2 text-xs'>
+      {JSON.stringify(row.original, null, 2)}
+    </pre>
+  );
+}
