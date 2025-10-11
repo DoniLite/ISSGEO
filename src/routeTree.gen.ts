@@ -10,18 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ErrorRouteImport } from './routes/error'
 import { Route as CompetencesRouteImport } from './routes/competences'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CoursesIndexRouteImport } from './routes/courses/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as TeamJoinRouteImport } from './routes/team/join'
 import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
 import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
 
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErrorRoute = ErrorRouteImport.update({
+  id: '/error',
+  path: '/error',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompetencesRoute = CompetencesRouteImport.update({
@@ -49,6 +57,11 @@ const CoursesIndexRoute = CoursesIndexRouteImport.update({
   path: '/courses/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamJoinRoute = TeamJoinRouteImport.update({
   id: '/team/join',
   path: '/team/join',
@@ -64,16 +77,24 @@ const CoursesCourseIdRoute = CoursesCourseIdRouteImport.update({
   path: '/courses/$courseId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
+  '/admin': typeof AdminIndexRoute
   '/courses': typeof CoursesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +102,13 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
+  '/admin': typeof AdminIndexRoute
   '/courses': typeof CoursesIndexRoute
 }
 export interface FileRoutesById {
@@ -93,10 +117,13 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
+  '/admin/': typeof AdminIndexRoute
   '/courses/': typeof CoursesIndexRoute
 }
 export interface FileRouteTypes {
@@ -106,10 +133,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/competences'
+    | '/error'
     | '/faq'
+    | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
+    | '/admin'
     | '/courses'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,10 +147,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/competences'
+    | '/error'
     | '/faq'
+    | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
+    | '/admin'
     | '/courses'
   id:
     | '__root__'
@@ -128,10 +161,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/competences'
+    | '/error'
     | '/faq'
+    | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
+    | '/admin/'
     | '/courses/'
   fileRoutesById: FileRoutesById
 }
@@ -140,10 +176,13 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
   CompetencesRoute: typeof CompetencesRoute
+  ErrorRoute: typeof ErrorRoute
   FaqRoute: typeof FaqRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
   ServicesServiceIdRoute: typeof ServicesServiceIdRoute
   TeamJoinRoute: typeof TeamJoinRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
 }
 
@@ -154,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/competences': {
@@ -191,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team/join': {
       id: '/team/join'
       path: '/team/join'
@@ -212,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesCourseIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -220,10 +280,13 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
   CompetencesRoute: CompetencesRoute,
+  ErrorRoute: ErrorRoute,
   FaqRoute: FaqRoute,
+  AdminLoginRoute: AdminLoginRoute,
   CoursesCourseIdRoute: CoursesCourseIdRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
   TeamJoinRoute: TeamJoinRoute,
+  AdminIndexRoute: AdminIndexRoute,
   CoursesIndexRoute: CoursesIndexRoute,
 }
 export const routeTree = rootRouteImport
