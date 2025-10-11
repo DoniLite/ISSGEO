@@ -1,24 +1,24 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Manipulation of method params is needed here due to the fact that there inference are complex we will keep this */
 
-import { type ClassConstructor, plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
-import type { Context } from 'hono';
-import type { ContentfulStatusCode } from 'hono/utils/http-status';
-import type { bodyGetter, ContextInstance } from '../types/base';
+import { type ClassConstructor, plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
+import type { Context } from "hono";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
+import type { bodyGetter, ContextInstance } from "../types/base";
 
 export class ValidationError extends Error {
 	constructor(
 		public statusCode: ContentfulStatusCode,
 		public errors: Array<{ property: string; constraints: any; value: any }>,
 	) {
-		super('Validation failed');
-		this.name = 'ValidationError';
+		super("Validation failed");
+		this.name = "ValidationError";
 	}
 }
 
-const REPOSITORY_METADATA = Symbol('repository');
-const SERVICE_METADATA = Symbol('service');
-const DTO_METADATA = Symbol('dto');
+const REPOSITORY_METADATA = Symbol("repository");
+const SERVICE_METADATA = Symbol("service");
+const DTO_METADATA = Symbol("dto");
 const DTO_CLASSES = new Map<string, any>();
 
 export function Repository<T>(tableName: string) {
@@ -46,7 +46,7 @@ export function DTO<T>() {
 
 export function ValidateDTO<T extends object, B extends bodyGetter>(
 	dtoClassName?: new (...args: any[]) => T,
-	provider: B = 'json' as B,
+	provider: B = "json" as B,
 ) {
 	return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
 		const originalMethod = descriptor.value;
@@ -54,7 +54,7 @@ export function ValidateDTO<T extends object, B extends bodyGetter>(
 		descriptor.value = async function (...args: any[]) {
 			const c: Context | undefined = args.find(
 				(arg) =>
-					arg && typeof arg === 'object' && 'req' in arg && 'json' in arg,
+					arg && typeof arg === "object" && "req" in arg && "json" in arg,
 			);
 
 			if (!c) {
@@ -67,11 +67,11 @@ export function ValidateDTO<T extends object, B extends bodyGetter>(
 			let body: Record<string, unknown> = {};
 
 			let dtoClass: new (...args: any[]) => T;
-			if (provider === 'json') {
+			if (provider === "json") {
 				body = rawBody as Record<string, unknown>;
-			} else if (provider === 'formData') {
+			} else if (provider === "formData") {
 				body = Object.fromEntries((rawBody as FormData).entries());
-			} else if (provider === 'query') {
+			} else if (provider === "query") {
 				body = rawBody as Record<string, unknown>;
 			}
 			if (dtoClassName) {
@@ -81,7 +81,7 @@ export function ValidateDTO<T extends object, B extends bodyGetter>(
 				}
 			} else {
 				const paramTypes = Reflect.getMetadata(
-					'design:paramtypes',
+					"design:paramtypes",
 					target,
 					propertyKey,
 				);
@@ -111,7 +111,7 @@ export function ValidateDTO<T extends object, B extends bodyGetter>(
 			}
 
 			const paramTypes = Reflect.getMetadata(
-				'design:paramtypes',
+				"design:paramtypes",
 				target,
 				propertyKey,
 			);

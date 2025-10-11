@@ -1,7 +1,7 @@
-import type { PgColumn } from 'drizzle-orm/pg-core';
+import type { PgColumn } from "drizzle-orm/pg-core";
 
 export interface BaseEntity {
-	id: string | number;
+	id?: string;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 }
@@ -10,7 +10,7 @@ export interface BaseTable {
 	name: string;
 	schema: string | undefined;
 	columns: Record<keyof BaseRow, PgColumn>;
-	dialect: 'pg';
+	dialect: "pg";
 }
 
 interface BaseRow {
@@ -27,7 +27,7 @@ export interface CrudOperations<T, CreateDTO, UpdateDTO> {
 	delete(id: string | number): Promise<boolean>;
 }
 
-export type bodyGetter = 'query' | 'formData' | 'json';
+export type bodyGetter = "query" | "formData" | "json";
 
 export type ContextInstance<T extends bodyGetter> = {
 	query: Record<string, string | string[]>;

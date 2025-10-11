@@ -1,13 +1,18 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Type inference for all the any definition isn't applicable with an easy way */
-import { and, eq } from 'drizzle-orm';
+import { and, count, desc, eq, ilike, or, type SQL } from "drizzle-orm";
 import type {
 	PgInsertValue,
 	PgTable,
 	PgTableWithColumns,
 	PgUpdateSetSource,
-} from 'drizzle-orm/pg-core';
-import { DatabaseConnection } from './database';
-import type { BaseEntity, BaseTable, CrudOperations } from './types/base';
+} from "drizzle-orm/pg-core";
+import { DatabaseConnection } from "./database";
+import type { BaseEntity, BaseTable, CrudOperations } from "./types/base";
+import type {
+	PaginatedResponse,
+	PaginationQuery,
+	SortOrder,
+} from "@/lib/interfaces/pagination";
 
 export abstract class BaseRepository<
 	T extends BaseEntity,
@@ -31,6 +36,117 @@ export abstract class BaseRepository<
 			.where(eq(this.table.id, id))
 			.limit(1);
 		return (result as T) || null;
+	}
+
+	async findPaginated(
+		paginationQuery: PaginationQuery,
+	): Promise<PaginatedResponse<T>> {
+		const {
+			page = 1,
+			pageSize = 10,
+			search,
+			sortBy = "id",
+			sortOrder = "asc" as SortOrder,
+			filters = {},
+		} = paginationQuery;
+
+		// Validate pagination params
+		const validPage = Math.max(1, page);
+		const validPageSize = Math.max(1, pageSize);
+		const offset = (validPage - 1) * validPageSize;
+
+		let query = this.db.select().from(this.table as PgTable);
+		const conditions: any[] = [];
+
+		// Apply filters
+		if (Object.keys(filters).length > 0) {
+			for (const [key, value] of Object.entries(filters)) {
+				if (value !== undefined) {
+					if (Array.isArray(value)) {
+						// Handle array filters (IN clause)
+						conditions.push(eq((this.table as any)[key], value[0]));
+					} else if (typeof value === "string" || typeof value === "number") {
+						conditions.push(eq((this.table as any)[key], value));
+					} else if (typeof value === "boolean") {
+						conditions.push(eq((this.table as any)[key], value));
+					}
+				}
+			}
+		}
+
+		// Apply search if provided
+		if (search?.trim()) {
+			const searchTerms = search.trim().split(" ").filter(Boolean);
+			const searchConditions = searchTerms.flatMap((term) => {
+				// Search across common text fields
+				const textFields = [
+					"name",
+					"title",
+					"description",
+					"email",
+					"username",
+				];
+				return textFields
+					.map((field) => {
+						const tableField = (this.table as any)[field];
+						return tableField ? ilike(tableField, `%${term}%`) : null;
+					})
+					.filter(Boolean);
+			}) as SQL[];
+
+			if (searchConditions.length > 0) {
+				conditions.push(or(...searchConditions));
+			}
+		}
+
+		// Apply conditions
+		if (conditions.length > 0) {
+			query = query.where(and(...conditions)) as typeof query;
+		}
+
+		// Apply sorting
+		const sortByField = (this.table as any)[sortBy];
+		if (sortByField) {
+			query = query.orderBy(
+				sortOrder === "desc" ? desc(sortByField) : sortByField,
+			) as typeof query;
+		}
+
+		// Get total count
+		const countQuery = this.db
+			.select({ count: count() })
+			.from(this.table as PgTable);
+
+		if (conditions.length > 0) {
+			const countQueryWithFilters = await countQuery.where(and(...conditions));
+			const totalCount = countQueryWithFilters[0]?.count;
+			const itemCount = totalCount ?? 0;
+
+			// Apply pagination
+			const items = (await query.limit(validPageSize).offset(offset)) as T[];
+
+			return {
+				items,
+				itemCount,
+				page: validPage,
+				pageSize: validPageSize,
+				pageCount: Math.ceil(itemCount / validPageSize),
+			};
+		}
+
+		const totalCount = (await countQuery)[0]?.count;
+		const itemCount = totalCount ?? 0;
+
+		// Apply pagination
+		const items = (await query.limit(validPageSize).offset(offset)) as T[];
+
+		return {
+			items,
+			itemCount,
+			page: validPage,
+			pageSize: validPageSize,
+			pageCount: Math.ceil(itemCount / validPageSize),
+		};
 	}
 
 	async findAll(filters?: Partial<T>): Promise<T[]> {
