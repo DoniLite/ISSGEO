@@ -1,13 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
-import Contact from '@/components/home/Contact';
-import Hero from '@/components/home/Hero';
-import Missions from '@/components/home/Missions';
-import Services from '@/components/home/Services';
+import { createFileRoute } from "@tanstack/react-router";
+import Contact from "@/components/home/Contact";
+import Hero from "@/components/home/Hero";
+import Missions from "@/components/home/Missions";
+import Services from "@/components/home/Services";
 // import Team from '@/components/home/Team';
-import Testimonials from '@/components/home/Testimonials';
-import Footer from '@/components/shared/Footer';
+import Testimonials from "@/components/home/Testimonials";
+import Footer from "@/components/shared/Footer";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
 	component: () => (
 		<>
 			<div className="relative w-full h-screen">

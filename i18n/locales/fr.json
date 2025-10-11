@@ -388,5 +388,22 @@
 			"desc": "Vous ne trouvez pas votre poste idéal ? Envoyez-nous votre CV et lettre de motivation. Nous sommes toujours à la recherche de talents exceptionnels dans nos domaines d'expertise.",
 			"cta": "Soumettre ma Candidature Spontanée"
 		}
+	},
+	"admin": {
+		"login": {
+			"welcome": "Bienvenue",
+			"description": "Veuillez renseignez vos identifiants de connexion",
+			"input": {
+				"login": {
+					"label": "Email",
+					"placeholder": "Email"
+				},
+				"password": {
+					"label": "Mot De Passe",
+					"placeholder": "Mot De Passe"
+				},
+				"submit": "Envoyer"
+			}
+		}
 	}
 }

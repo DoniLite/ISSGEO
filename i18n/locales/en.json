@@ -358,5 +358,22 @@
 			"desc": "Can't find your ideal position? Send us your CV and cover letter. We are always looking for exceptional talent in our areas of expertise.",
 			"cta": "Submit My Spontaneous Application"
 		}
+	},
+	"admin": {
+		"login": {
+			"welcome": "Welcome",
+			"description": "Fill your connection data",
+			"input": {
+				"login:input": {
+					"label": "Email",
+					"placeholder": "Email"
+				},
+				"password:input": {
+					"label": "Password",
+					"placeholder": "Password"
+				},
+				"submit": "Submit"
+			}
+		}
 	}
 }
