@@ -50,16 +50,13 @@ export default function TablePagination({
         {t('common.table.lines_per_page', {
           count: currentPagination.pageSize,
         })}
-        <div className='w-[30%] lg:w-auto'>
+        <div className='w-[30%] lg:min-w-[10%]'>
           <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-              <Button
-                variant='outline'
-                className='relative right-2 mx-2 h-8 w-full'
-              >
+            <DropdownMenuTrigger asChild>
+              <span className='relative p-2 flex items-center gap-3 right-2 mx-2 h-8 w-full'>
                 {currentPagination.pageSize}
                 <ChevronDown className='ml-auto h-4 w-4' />
-              </Button>
+              </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align='center'
@@ -85,11 +82,11 @@ export default function TablePagination({
       </div>
 
       <div className='flex w-full items-center justify-between lg:w-[60%]'>
-        <div className='text-muted-foreground my-3 text-xs lg:my-0 lg:text-sm'>
-          {t('common.table.page')}
-          {currentPagination.page}
-          {t(ofTextKey || 'common.table.of')}
-          {currentPagination.pageCount}
+        <div className='text-muted-foreground flex gap-1 items-center lg:gap-2 my-3 text-xs lg:my-0 lg:text-sm'>
+          <span>{t('common.table.page')}</span>
+          <span>{currentPagination.page}</span>
+          <span>{t(ofTextKey || 'common.table.of')}</span>
+          <span>{currentPagination.pageCount}</span>
         </div>
         <div className='mt-3 flex flex-wrap justify-center space-y-2 space-x-2 text-xs lg:mt-0 lg:text-lg'>
           <Button

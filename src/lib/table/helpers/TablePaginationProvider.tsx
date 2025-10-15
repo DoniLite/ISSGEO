@@ -18,7 +18,9 @@ export function useTablePagination() {
   const context = useContext(paginationContext);
 
   if (!context) {
-    throw new Error('useTablePagination must be used within a ThemeProvider');
+    throw new Error(
+      'useTablePagination must be used within a TablePaginationProvider'
+    );
   }
 
   return context;

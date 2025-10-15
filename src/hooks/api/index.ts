@@ -167,9 +167,9 @@ export function useApi<
     dependencies?: unknown[];
   }
 ): UseApiReturn<ExtractResponse<RouteEndpoint<R, P, M>>> {
-  const [data, setData] = useState<ExtractResponse<
-    RouteEndpoint<R, P, M>
-  > | null>(null);
+  const [data, setData] = useState<ExtractResponse<RouteEndpoint<R, P, M>>>(
+    {} as ExtractResponse<RouteEndpoint<R, P, M>>
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
 

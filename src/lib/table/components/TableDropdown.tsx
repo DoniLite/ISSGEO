@@ -35,25 +35,22 @@ export default function TableDropdown<TData extends Record<string, unknown>>({
       onOpenChange={(v) => {
         setOpen(v);
         if (open) {
-            open(v);
+          open(v);
         }
       }}
     >
       <DropdownMenuTrigger
-        as-child
+        asChild
         className='hover:border-ring focus:border:ring hover:bg-transparent'
       >
-        <Button
-          variant='outline'
-          className='ml-auto w-full justify-between lg:w-auto'
-        >
+        <span className='flex gap-2 items-center ml-auto w-full justify-between lg:w-auto'>
           {t('common.columns')}
           {isOpen ? (
             <ChevronUp className='ml-2 h-4 w-4' />
           ) : (
             <ChevronDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align='center'

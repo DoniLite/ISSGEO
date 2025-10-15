@@ -19,14 +19,14 @@ export class CreateContactDTO extends BaseCreateDTO {
 export class UpdateContactDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsString()
-  name!: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
-  message!: string;
+  message?: string;
 
   @IsOptional()
   @IsString()
   @IsEmail()
-  email!: string;
+  email?: string;
 }

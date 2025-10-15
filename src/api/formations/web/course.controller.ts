@@ -4,10 +4,10 @@ import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 const courseApp = webFactory.createApp();
 
-courseApp.get('/', (c) => {
+courseApp.get('/', async (c) => {
   const service = ServiceFactory.getCourseService();
   const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+  const rows = await service.findPaginated(query);
 
   return c.json(rows);
 });
@@ -51,7 +51,7 @@ courseApp.delete('/:id', async (c) => {
 courseApp.get('/key-competency', async (c) => {
   const service = ServiceFactory.getCourseService();
   const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginatedCompetency(query);
+  const rows = await service.findPaginatedCompetency(query);
 
   return c.json(rows);
 });

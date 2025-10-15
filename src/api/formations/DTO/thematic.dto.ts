@@ -15,9 +15,9 @@ export class CreateThematicDTO extends BaseCreateDTO {
 export class UpdateThematicDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsString()
-  name!: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
-  icon!: string;
+  icon?: string;
 }

@@ -4,10 +4,10 @@ import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 const thematicApp = webFactory.createApp();
 
-thematicApp.get('/', (c) => {
+thematicApp.get('/', async (c) => {
   const service = ServiceFactory.getThematicService();
   const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+  const rows = await service.findPaginated(query);
 
   return c.json(rows);
 });

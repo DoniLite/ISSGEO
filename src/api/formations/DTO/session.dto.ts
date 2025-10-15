@@ -18,13 +18,13 @@ export class CreateSessionDTO extends BaseCreateDTO {
 export class UpdateSessionDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsDateString()
-  startDate!: string;
+  startDate?: string;
 
   @IsOptional()
   @IsString()
-  location!: string;
+  location?: string;
 
   @IsOptional()
   @IsString()
-  moduleId!: string;
+  moduleId?: string;
 }

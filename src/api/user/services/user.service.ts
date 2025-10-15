@@ -52,7 +52,7 @@ export class UserService extends BaseService<
     dto: LoginDTO,
     context: Context
   ): Promise<
-    Pick<UserTableType, 'id' | 'email' | 'name' | 'image'> & { token: string }
+    Pick<UserTableType, 'id' | 'email' | 'name' | 'image'>
   > {
     const res = await this.findOneBy('email', dto.email);
 
@@ -102,7 +102,6 @@ export class UserService extends BaseService<
       email: res.email,
       name: res.name,
       image: res.image,
-      token,
     };
   }
 

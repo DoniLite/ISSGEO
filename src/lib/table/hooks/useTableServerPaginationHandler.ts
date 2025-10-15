@@ -1,20 +1,20 @@
 import {
-	PAGINATION_DEFAULT_PAGE_SIZE,
-	type PaginatedResponse,
-	type PaginationQuery,
-} from "@/lib/interfaces/pagination";
-import { useState } from "react";
+  PAGINATION_DEFAULT_PAGE_SIZE,
+  type PaginatedResponse,
+  type PaginationQuery,
+} from '@/lib/interfaces/pagination';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface TableServerPaginationHandlerOptions<
-	T,
-	Q extends PaginationQuery = PaginationQuery,
+  T,
+  Q extends PaginationQuery = PaginationQuery,
 > {
-	initialPageSize?: number;
-	initialQuery?: Partial<Q>;
-	refetchFunction: (query: Q) => Promise<PaginatedResponse<T>>;
+  initialPageSize?: number;
+  initialQuery?: Partial<Q>;
+  refetchFunction: (query: Q) => Promise<PaginatedResponse<T>>;
 }
 export interface FetchAllDataOptions {
-	force?: boolean;
+  force?: boolean;
 }
 
 /**
@@ -22,240 +22,292 @@ export interface FetchAllDataOptions {
  * Manages its own refs and provides computed values for stores to use
  */
 export function useTableServerPaginationHandler<
-	T extends { id: string },
-	Q extends PaginationQuery = PaginationQuery,
+  T extends { id?: string },
+  Q extends PaginationQuery = PaginationQuery,
 >(options: TableServerPaginationHandlerOptions<T, Q>) {
-	const {
-		initialPageSize = PAGINATION_DEFAULT_PAGE_SIZE,
-		initialQuery = {},
-		refetchFunction,
-	} = options;
+  const {
+    initialPageSize = PAGINATION_DEFAULT_PAGE_SIZE,
+    initialQuery = {},
+    refetchFunction,
+  } = options;
 
-	// Internal refs managed by this composable
-	const [items, setItems] = useState<T[]>([]);
-	const [allItems, setAllItems] = useState<T[]>([]);
-	const [pagination, setPagination] = useState<
-		Pick<PaginatedResponse<T>, "itemCount" | "page" | "pageSize" | "pageCount">
-	>({
-		itemCount: 0,
-		page: 1,
-		pageSize: initialPageSize,
-		pageCount: 0,
-	});
-	const [query, setQuery] = useState<Q>({
-		page: 1,
-		pageSize: initialPageSize,
-		...initialQuery,
-	} as Q);
+  // Internal refs managed by this composable
+  const [items, setItems] = useState<T[]>([]);
+  const itemsRef = useRef<T[]>(items);
 
-	/**
-	 * Fetches data using the provided refetch function and updates internal state
-	 */
-	async function fetchData(
-		newQuery: Partial<Q> = {},
-	): Promise<PaginatedResponse<T>> {
-		Object.assign(query, newQuery);
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
 
-		const response = await refetchFunction(query as Q);
+  const [allItems, setAllItems] = useState<T[]>([]);
+  const allItemsRef = useRef<T[]>(allItems);
+  useEffect(() => {
+    allItemsRef.current = allItems;
+  }, [allItems]);
 
-		setItems(response.items);
-		setPagination({
-			itemCount: response.itemCount,
-			page: response.page,
-			pageSize: response.pageSize,
-			pageCount: response.pageCount,
-		});
+  const [pagination, setPagination] = useState<
+    Pick<PaginatedResponse<T>, 'itemCount' | 'page' | 'pageSize' | 'pageCount'>
+  >({
+    itemCount: 0,
+    page: 1,
+    pageSize: initialPageSize,
+    pageCount: 0,
+  });
+  const paginationRef = useRef(pagination);
 
-		return response;
-	}
+  useEffect(() => {
+    paginationRef.current = pagination;
+  }, [pagination]);
 
-	function _setAllItems(items: T[]) {
-		setAllItems(
-			[...items, ...allItems].filter(
-				(x: T, i, self: T[]) =>
-					self.findIndex((item) => item.id === x.id) === i,
-			),
-		);
-	}
-	/**
-	 * Fetches data using the provided refetch function and updates internal state
-	 */
-	async function fetchAllData(
-		newQuery: Partial<Q> = {},
-		options: FetchAllDataOptions = { force: false },
-	): Promise<T[]> {
-		const { filters, ...restQuery } = newQuery;
-		if (!allItems.length || options.force) {
-			const response = await refetchFunction({
-				...restQuery,
-				...filters,
-				pageSize: -1,
-			} as Q);
-			_setAllItems(response.items);
-			return response.items;
-		}
-		return allItems;
-	}
+  const [query, setQuery] = useState<Q>({
+    page: 1,
+    pageSize: initialPageSize,
+    ...initialQuery,
+  } as Q);
+  const queryRef = useRef<Q>(query);
 
-	/**
-	 * Handles pagination state after creating or updating an item
-	 * Adds the item to the beginning of the list and maintains page size
-	 */
-	function handlePostCreate(newItem: T) {
-		setItems([newItem, ...items]);
+  useEffect(() => {
+    queryRef.current = query;
+  }, [query]);
 
-		// Maintain page size by removing excess items
-		if (items.length > pagination.pageSize) {
-			setItems(items.slice(0, pagination.pageSize));
-		}
+  const _setAllItems = useCallback((itemsToAdd: T[]) => {
+    setAllItems((prev) =>
+      [...itemsToAdd, ...prev].filter(
+        (x: T, i, self: T[]) => self.findIndex((item) => item.id === x.id) === i
+      )
+    );
+  }, []);
 
-		setPagination((prev) => ({
-			...prev,
-			itemCount: prev.itemCount + 1,
-			pageCount: Math.ceil(prev.itemCount / prev.pageSize),
-		}));
-	}
+  /**
+   * Fetches data using the provided refetch function and updates internal state
+   */
+  const fetchData = useCallback(
+    async (newQuery: Partial<Q> = {}): Promise<PaginatedResponse<T>> => {
+      // Merge query immutably and keep ref updated
+      const mergedQuery = { ...(queryRef.current as Q), ...newQuery } as Q;
+      setQuery(mergedQuery);
+      queryRef.current = mergedQuery;
 
-	/**
-	 * Handles pagination state after updating an existing item
-	 * Updates the item in place if it exists in the current page
-	 */
-	function handlePostUpdate(updatedItem: T) {
-		const currentItems = items;
-		const index = currentItems.findIndex(
-			(item: T) => item.id === updatedItem.id,
-		);
-		if (index !== -1) {
-			const newItems = [...currentItems] as T[];
-			newItems[index] = updatedItem;
-			setItems(newItems);
-		}
-	}
+      const response = await refetchFunction(mergedQuery);
 
-	/**
-	 * Handles pagination state after updating an existing item
-	 * Updates the item partially in place if it exists in the current page
-	 */
-	function handlePostUpdatePartial(
-		id: T["id"],
-		partialUpdatedItem: Partial<T>,
-	): Partial<T> {
-		const currentItems = items;
-		const index = currentItems.findIndex((item: T) => item.id === id);
-		if (index !== -1) {
-			const newItems = [...currentItems] as T[];
-			newItems[index] = { ...newItems[index], ...partialUpdatedItem } as T;
-			setItems(newItems);
-		}
-		return partialUpdatedItem;
-	}
+      setItems(response.items);
+      setPagination({
+        itemCount: response.itemCount,
+        page: response.page,
+        pageSize: response.pageSize,
+        pageCount: response.pageCount,
+      });
 
-	/**
-	 * Removes specific items from the current list by ID
-	 */
-	function removeItemsFromList(itemIds: T["id"][]) {
-		const currentItems = [...items] as T[];
-		setItems(currentItems.filter((item: T) => !itemIds.includes(item.id)));
-	}
+      return response;
+    },
+    [refetchFunction]
+  );
 
-	/**
-	 * Handles pagination state after deleting items
-	 * Removes items from the list and handles page navigation if current page becomes empty
-	 */
-	async function handlePostDelete(deletedCount: number = 1) {
-		// Update total count
-		setPagination((prev) => ({
-			...prev,
-			itemCount: Math.max(0, pagination.itemCount - deletedCount),
-			pageCount: Math.ceil(prev.itemCount / prev.pageSize),
-		}));
+  /**
+   * Fetches data using the provided refetch function and updates internal state
+   */
+  const fetchAllData = useCallback(
+    async (
+      newQuery: Partial<Q> = {},
+      options: FetchAllDataOptions = { force: false }
+    ): Promise<T[]> => {
+      const { filters, ...restQuery } = newQuery;
+      if (!allItemsRef.current.length || options.force) {
+        const response = await refetchFunction({
+          ...(restQuery as Q),
+          ...(filters as Record<string, unknown>),
+          pageSize: -1,
+        } as Q);
+        _setAllItems(response.items);
+        return response.items;
+      }
+      return allItemsRef.current;
+    },
+    [refetchFunction, _setAllItems]
+  );
 
-		// If current page is empty and not the first page, go to previous page
-		if (items.length === 0 && pagination.page > 1) {
-			const previousPage = pagination.page - 1;
-			setPagination((prev) => ({
-				...prev,
-				page: previousPage,
-			}));
-			await fetchData({ page: previousPage } as Partial<Q>);
-		} else if (items.length === 0 && pagination.page === 1) {
-			// If we're on the first page and it's empty, just refetch to ensure consistency
-			await fetchData({ page: 1 } as Partial<Q>);
-		}
-	}
+  /**
+   * Handles pagination state after creating or updating an item
+   * Adds the item to the beginning of the list and maintains page size
+   */
+  const handlePostCreate = useCallback((newItem: T) => {
+    setItems((prev) => {
+      const next = [newItem, ...prev];
+      const { pageSize } = paginationRef.current;
+      return next.length > pageSize ? next.slice(0, pageSize) : next;
+    });
 
-	/**
-	 * Handles bulk delete operations
-	 */
-	async function handleBulkDelete(deletedItemIds: T["id"][]) {
-		// Remove items from the current list
-		removeItemsFromList(deletedItemIds);
+    setPagination((prev) => ({
+      ...prev,
+      itemCount: prev.itemCount + 1,
+      pageCount: Math.ceil((prev.itemCount + 1) / prev.pageSize),
+    }));
+  }, []);
 
-		// Handle pagination state
-		await handlePostDelete(deletedItemIds.length);
-	}
+  /**
+   * Handles pagination state after updating an existing item
+   * Updates the item in place if it exists in the current page
+   */
+  const handlePostUpdate = useCallback((updatedItem: Partial<T>) => {
+    setItems((prev) => {
+      const index = prev.findIndex((item) => item.id === updatedItem.id);
+      if (index === -1) {
+        return prev;
+      }
+      const newItems = [...prev];
+      newItems[index] = {
+        ...newItems[index],
+        ...updatedItem,
+      } as T;
+      return newItems;
+    });
+  }, []);
 
-	/**
-	 * Updates the current page and refetches data
-	 */
-	async function goToPage(page: number) {
-		await fetchData({ page } as Partial<Q>);
-	}
+  /**
+   * Handles pagination state after updating an existing item
+   * Updates the item partially in place if it exists in the current page
+   */
+  const handlePostUpdatePartial = useCallback(
+    (id: T['id'], partialUpdatedItem: Partial<T>): Partial<T> => {
+      setItems((prev) => {
+        const index = prev.findIndex((item) => item.id === id);
+        if (index === -1) {
+          return prev;
+        }
+        const newItems = [...prev];
+        newItems[index] = { ...newItems[index], ...partialUpdatedItem } as T;
+        return newItems;
+      });
+      return partialUpdatedItem;
+    },
+    []
+  );
 
-	/**
-	 * Updates the page size and refetches data
-	 */
-	async function updatePageSize(pageSize: number) {
-		await fetchData({ page: 1, pageSize } as Partial<Q>);
-	}
+  /**
+   * Removes specific items from the current list by ID
+   */
+  const removeItemsFromList = useCallback((itemIds: T['id'][]) => {
+    setItems((prev) => prev.filter((item) => !itemIds.includes(item.id)));
+  }, []);
 
-	/**
-	 * Updates search/filter parameters and refetches data
-	 */
-	async function updateFilters(filters: Partial<Q>) {
-		await fetchData({ page: 1, ...filters } as Partial<Q>);
-	}
+  /**
+   * Handles pagination state after deleting items
+   * Removes items from the list and handles page navigation if current page becomes empty
+   */
+  const handlePostDelete = useCallback(
+    async (deletedCount: number = 1) => {
+      // Update total count
+      setPagination((prev) => {
+        const newItemCount = Math.max(0, prev.itemCount - deletedCount);
+        return {
+          ...prev,
+          itemCount: newItemCount,
+          pageCount: Math.ceil(newItemCount / prev.pageSize),
+        };
+      });
 
-	/**
-	 * Resets the state to initial values
-	 */
-	function resetFilters() {
-		setItems([]);
-		setPagination({
-			itemCount: 0,
-			page: 1,
-			pageSize: initialPageSize,
-			pageCount: 0,
-		});
-		setQuery((prev) => ({
-			...prev,
-			...{
-				page: 1,
-				pageSize: initialPageSize,
-				...initialQuery,
-			},
-		}));
-	}
+      const currentItems = itemsRef.current;
+      const currentPagination = paginationRef.current;
 
-	return {
-		items,
-		allItems,
-		pagination,
-		query,
+      // If current page is empty and not the first page, go to previous page
+      if (currentItems.length === 0 && currentPagination.page > 1) {
+        const previousPage = currentPagination.page - 1;
+        setPagination((prev) => ({
+          ...prev,
+          page: previousPage,
+        }));
+        await fetchData({ page: previousPage } as Partial<Q>);
+      } else if (currentItems.length === 0 && currentPagination.page === 1) {
+        // If we're on the first page and it's empty, just refetch to ensure consistency
+        await fetchData({ page: 1 } as Partial<Q>);
+      }
+    },
+    [fetchData]
+  );
 
-		// Actions
-		fetchData,
-		fetchAllData,
-		handlePostCreate,
-		handlePostUpdate,
-		handlePostUpdatePartial,
-		handlePostDelete,
-		handleBulkDelete,
-		removeItemsFromList,
-		goToPage,
-		updatePageSize,
-		updateFilters,
-		resetFilters,
-		setQuery,
-	};
+  /**
+   * Handles bulk delete operations
+   */
+  const handleBulkDelete = useCallback(
+    async (deletedItemIds: T['id'][]) => {
+      // Remove items from the current list
+      removeItemsFromList(deletedItemIds);
+
+      // Handle pagination state
+      await handlePostDelete(deletedItemIds.length);
+    },
+    [removeItemsFromList, handlePostDelete]
+  );
+
+  /**
+   * Updates the current page and refetches data
+   */
+  const goToPage = useCallback(
+    async (page: number) => {
+      await fetchData({ page } as Partial<Q>);
+    },
+    [fetchData]
+  );
+
+  /**
+   * Updates the page size and refetches data
+   */
+  const updatePageSize = useCallback(
+    async (pageSize: number) => {
+      await fetchData({ page: 1, pageSize } as Partial<Q>);
+    },
+    [fetchData]
+  );
+
+  /**
+   * Updates search/filter parameters and refetches data
+   */
+  const updateFilters = useCallback(
+    async (filters: Partial<Q>) => {
+      await fetchData({ page: 1, ...filters } as Partial<Q>);
+    },
+    [fetchData]
+  );
+
+  /**
+   * Resets the state to initial values
+   */
+  const resetFilters = useCallback(() => {
+    setItems([]);
+    setPagination({
+      itemCount: 0,
+      page: 1,
+      pageSize: initialPageSize,
+      pageCount: 0,
+    });
+    const resetQ = {
+      page: 1,
+      pageSize: initialPageSize,
+      ...initialQuery,
+    } as Q;
+    setQuery(resetQ);
+    queryRef.current = resetQ;
+  }, [initialPageSize, initialQuery]);
+
+  return {
+    items,
+    allItems,
+    pagination,
+    query,
+
+    // Actions
+    fetchData,
+    fetchAllData,
+    handlePostCreate,
+    handlePostUpdate,
+    handlePostUpdatePartial,
+    handlePostDelete,
+    handleBulkDelete,
+    removeItemsFromList,
+    goToPage,
+    updatePageSize,
+    updateFilters,
+    resetFilters,
+    setQuery,
+  };
 }

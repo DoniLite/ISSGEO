@@ -4,10 +4,10 @@ import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 const userApp = webFactory.createApp();
 
-userApp.get('/', (c) => {
+userApp.get('/', async (c) => {
   const service = ServiceFactory.getUserService();
   const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+  const rows = await service.findPaginated(query);
 
   return c.json(rows);
 });
@@ -34,6 +34,19 @@ userApp.patch('/:id', async (c) => {
   }
 
   return c.json({ updated: true, rows: res.length });
+});
+
+userApp.delete('/:id', async (c) => {
+  const service = ServiceFactory.getUserService();
+  const id = c.req.param('id');
+
+  const res = await service.delete(id);
+
+  if (!res) {
+    return c.notFound();
+  }
+
+  return c.json({ deleted: res });
 });
 
 userApp.post('/login', async (c) => {

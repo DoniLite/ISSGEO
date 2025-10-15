@@ -1,85 +1,167 @@
-import type { UserTableType as User } from "@/db";
+import type { CreateContactDTO } from '@/api/contact';
+import type { CreateJobDTO, UpdateJobDTO } from '@/api/job';
+import type { CreateTestimonialDTO } from '@/api/testimonials';
+import type { CreateUserDto, LoginDTO, UpdateUserDto } from '@/api/user';
+import type {
+  ContactTableType as Contact,
+  UserTableType as User,
+  TestimonialsTableType as Testimonials,
+  JobOfferTableType as Job
+} from '@/db';
+import type {
+  PaginatedResponse,
+  PaginationQuery,
+} from '@/lib/interfaces/pagination';
 
 export interface ApiResponse<T = unknown> {
-	data: T;
-	status: number;
-	message?: string;
+  data: T;
+  status: number;
+  message?: string;
 }
 
 export class ApiError extends Error {
-	constructor(
-		message: string,
-		public status: number,
-		public code?: string,
-	) {
-		super(message);
-		this.name = 'ApiError';
-	}
+  constructor(
+    message: string,
+    public status: number,
+    public code?: string
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
 }
 
 export interface ApiErrorInterface {
-	message: string;
-	status: number;
-	code?: string;
+  message: string;
+  status: number;
+  code?: string;
 }
 
 export interface RouteDefinition {
-	method: HttpMethod;
-	response: unknown;
-	params?: Record<string, unknown>;
-	body?: unknown;
+  method: HttpMethod;
+  response: unknown;
+  params?: Record<string, unknown>;
+  body?: unknown;
 }
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export interface RequestConfig {
-	method?: HttpMethod;
-	headers?: Record<string, string>;
-	body?: unknown;
-	params?: Record<string, unknown>;
+  method?: HttpMethod;
+  headers?: Record<string, string>;
+  body?: unknown;
+  params?: Record<string, unknown>;
 }
 
 export interface UseApiState<T> {
-	data: T | null;
-	loading: boolean;
-	error: ApiError | null;
+  data: T;
+  loading: boolean;
+  error: ApiError | null;
 }
 
 export interface UseApiReturn<T> extends UseApiState<T> {
-	refetch: () => Promise<void>;
-	mutate: (newData: T) => void;
+  refetch: () => Promise<void>;
+  mutate: (newData: T) => void;
+}
+
+interface DefaultPatchResponse {
+  updated: boolean;
+  rows: number;
+}
+
+interface DefaultDeleteResponse {
+  deleted: boolean;
 }
 
 export interface ApiRoutes {
   users: {
     '/users': {
       GET: {
-        response: User[];
-        params?: { page?: number; limit?: number };
+        response: PaginatedResponse<User>;
+        params?: PaginationQuery;
       };
       POST: {
-        response: { id: number; name: string; email: string };
-        body: { name: string; email: string };
+        response: User;
+        body: CreateUserDto;
+      };
+    };
+    '/users/login': {
+      POST: {
+        body: LoginDTO;
+        response: Pick<User, 'id' | 'name' | 'email' | 'image'>;
       };
     };
     '/users/:id': {
-      GET: {
-        response: User;
-        params: { id: number };
-      };
       PATCH: {
-        response: User;
-        params: { id: number };
-        body: Partial<User>;
+        response: DefaultPatchResponse;
+        body: UpdateUserDto;
+        params: { id: User['id'] };
       };
       DELETE: {
-        response: { success: boolean };
-        params: { id: number };
+        params: { id: User['id'] };
+        response: DefaultDeleteResponse;
+      };
+    };
+  };
+  contact: {
+    '/contact': {
+      GET: {
+        response: PaginatedResponse<Contact>;
+        params: PaginationQuery;
+      };
+      POST: {
+        response: Contact;
+        body: CreateContactDTO;
+      };
+    };
+    '/contact/:id': {
+      DELETE: {
+        params: { id: Contact['id'] };
+        response: DefaultDeleteResponse;
+      };
+    };
+  };
+  testimonials: {
+    '/testimonials': {
+      GET: {
+        response: PaginatedResponse<Testimonials>;
+        params: PaginationQuery;
+      };
+      POST: {
+        response: Contact;
+        body: CreateTestimonialDTO;
+      };
+    };
+    '/testimonials/:id': {
+      DELETE: {
+        params: { id: Testimonials['id'] };
+        response: DefaultDeleteResponse;
+      };
+    };
+  };
+  job: {
+    '/job': {
+      GET: {
+        response: PaginatedResponse<Job>;
+        params: PaginationQuery;
+      };
+      POST: {
+        response: Job;
+        body: CreateJobDTO;
+      };
+    };
+    '/job/:id': {
+      DELETE: {
+        params: { id: Testimonials['id'] };
+        response: DefaultDeleteResponse;
+      };
+      PATCH: {
+        response: DefaultPatchResponse;
+        body: UpdateJobDTO;
+        params: { id: Job['id'] };
       };
     };
   };
 }
-
 
 // Utilitaires de types
 export type ExtractResponse<T> = T extends { response: infer R } ? R : never;

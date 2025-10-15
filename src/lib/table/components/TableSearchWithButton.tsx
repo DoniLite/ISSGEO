@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import {
@@ -11,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 import { useTablePagination } from '../helpers/TablePaginationProvider';
 import useDebounceFn from '@/hooks/useDebounceFn';
 import { Search, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface Props {
   className: HTMLAttributes<'div'>['className'];
@@ -30,7 +30,7 @@ export default function TableSearchWithButton({ className, update }: Props) {
     }
 
     if (update) {
-        update(searchValue);
+      update(searchValue);
     }
   }
 
@@ -46,7 +46,7 @@ export default function TableSearchWithButton({ className, update }: Props) {
 
   useEffect(() => {
     debouncedSetFilter(searchValue);
-  }, [searchValue, debouncedSetFilter]);
+  }, [searchValue]);
 
   return (
     <div
@@ -59,6 +59,11 @@ export default function TableSearchWithButton({ className, update }: Props) {
         <Input
           id={useId()}
           value={searchValue}
+          onChange={(e) => {
+            e.preventDefault();
+            const v = e.currentTarget.value;
+            setSearchValue(v);
+          }}
           type='text'
           placeholder={t('common.search')}
           className='w-full pr-15 pl-10 md:pr-20'
@@ -69,7 +74,6 @@ export default function TableSearchWithButton({ className, update }: Props) {
             <Search className='text-muted-foreground h-4 w-4' />
           ) : (
             <button
-              v-else
               type='button'
               className='focus:outline-none'
               onClick={onClear}
@@ -78,17 +82,6 @@ export default function TableSearchWithButton({ className, update }: Props) {
             </button>
           )}
         </span>
-        {canSearch && (
-          <Button
-            variant='default'
-            className='border-primary absolute inset-y-0 end-0 flex items-center space-x-2 rounded-l-none border-2'
-            disabled={isLoading}
-            onClick={handleSearch}
-          >
-            <span className='hidden lg:inline'>{t('common.search')}</span>
-            <Search className='h-4 w-4' />
-          </Button>
-        )}
       </div>
     </div>
   );

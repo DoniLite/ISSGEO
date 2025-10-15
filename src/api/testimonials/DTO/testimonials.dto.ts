@@ -17,13 +17,13 @@ export class CreateTestimonialDTO extends BaseCreateDTO {
 export class UpdateTestimonialDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsString()
-  name!: string;
+  name?: string;
 
   @IsOptional()
   @IsNumber()
-  starNumber!: number;
+  starNumber?: number;
 
   @IsOptional()
   @IsString()
-  message!: string;
+  message?: string;
 }

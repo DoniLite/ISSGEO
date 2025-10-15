@@ -4,7 +4,69 @@
 			"light": "Claire",
 			"dark": "Sombre",
 			"system": "System"
-		}
+		},
+		"search": "Rechercher",
+		"no_results": "Aucun résultat",
+		"selectedItems": "{{count}} élément(s) sélectionné(s)",
+		"confirm": "Confirmer",
+		"cancel": "Annuler",
+		"deleting": "Suppression...",
+		"toast": {
+			"deleteAlert": {
+				"single": {
+					"title": "Supprimer l’élément",
+					"description": "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible."
+				},
+				"multiple": {
+					"title": "Supprimer les éléments",
+					"description": "Êtes-vous sûr de vouloir supprimer {{count}} éléments ? Cette action est irréversible."
+				}
+			}
+		},
+		"actions": "Actions",
+		"edit": "Modifier",
+		"delete": "Supprimer",
+		"fallbackText": "Entité",
+		"title": "Titre",
+		"description": "Description",
+		"submit": "Envoyer",
+		"all": "Tous",
+		"add": "Ajouter",
+		"columns": "Colonnes",
+		"noResult": "Aucun résultat",
+		"expand": "Développer",
+		"save": "Enregistrer",
+		"update": "Mettre à jour",
+		"updatedAt": "Mis à jour le",
+		"last_update": "Dernière mise à jour",
+		"users": "Utilisateurs",
+		"name": "Nom",
+		"select": "Sélectionner",
+		"selectAll": "Tout sélectionner",
+		"clearAll": "Tout effacer",
+		"removeAll": "Tout supprimer",
+		"searchSelectedItems": "Rechercher dans les éléments sélectionnés...",
+		"noResultsFound": "Aucun résultat trouvé",
+		"saving": "Enregistrement...",
+		"first": "Premier",
+		"last": "Dernier",
+		"previous": "Précédent",
+		"next": "Suivant",
+		"of": "De",
+		"selected": "Sélectionné(s)",
+		"loading": "Chargement",
+		"settings": "Paramètres",
+		"reset": "Réinitialiser",
+		"change": "Changer",
+		"upload": "Téléverser",
+		"table": {
+			"of": "Sur",
+			"lines_per_page": "Ligne(s) par page",
+			"lines_to_all": "{{count}} ligne(s) au total",
+			"page": "Page"
+		},
+		"location": "Localisation",
+		"contract": "Contrat"
 	},
 	"them": {
 		"all": "Tous"
@@ -50,7 +112,7 @@
 		},
 		"recruitment": {
 			"title": "Recrutement de Talents Certifiés",
-			"desc": "Trouvez le professionnel idéal pour vos équipes. Nous recommandons activement nos **apprenants certifiés** et hautement qualifiés aux entreprises qui cherchent à recruter des experts immédiatement opérationnels. Un vivier de talents vérifié, une embauche simplifiée.",
+			"desc": "Trouvez le professionnel idéal pour vos équipes. Nous recommandons activement nos apprenants certifiés et hautement qualifiés aux entreprises qui cherchent à recruter des experts immédiatement opérationnels. Un vivier de talents vérifié, une embauche simplifiée.",
 			"page": {
 				"hero": {
 					"title": "Recrutez l'Excellence : Des Talents Certifiés, sans le Risque",
@@ -71,7 +133,7 @@
 		},
 		"placement": {
 			"title": "Placement de Stagiaires Qualifiés",
-			"desc": "Accueillez l'énergie et les connaissances fraîches de la prochaine génération. Nous mettons en relation nos étudiants avec des entreprises pour des **stages pertinents**. C'est l'occasion parfaite d'évaluer de futurs collaborateurs et de contribuer à leur développement professionnel.",
+			"desc": "Accueillez l'énergie et les connaissances fraîches de la prochaine génération. Nous mettons en relation nos étudiants avec des entreprises pour des stages pertinents. C'est l'occasion parfaite d'évaluer de futurs collaborateurs et de contribuer à leur développement professionnel.",
 			"page": {
 				"hero": {
 					"title": "Stages Pertinents : Intégrez les Nouveaux Talents dès Aujourd'hui",
@@ -223,6 +285,8 @@
 		"inbox": "Messages",
 		"formations": "Formations",
 		"calendar": "Calendrier",
+		"contact": "Contact",
+		"job": "Emploie",
 		"search": "Recherche",
 		"settings": "Configuration"
 	},
@@ -231,25 +295,25 @@
 		"pillar_1": {
 			"title": "Former les Experts du Développement Urbain",
 			"subtitle": "Formation de cadres techniques et scientifiques d'excellence.",
-			"description": "Nous formons des cadres techniques et scientifiques de haut niveau, dotés de la capacité de **concevoir, mettre en œuvre et piloter** des projets complexes en urbanisme, aménagement, mobilité, gestion foncière et développement durable. Devenez un acteur clé de l'évolution territoriale.",
+			"description": "Nous formons des cadres techniques et scientifiques de haut niveau, dotés de la capacité de concevoir, mettre en œuvre et piloter des projets complexes en urbanisme, aménagement, mobilité, gestion foncière et développement durable. Devenez un acteur clé de l'évolution territoriale.",
 			"cta": "Découvrir nos Programmes"
 		},
 		"pillar_2": {
 			"title": "Expertise et Solutions Innovantes pour les Acteurs",
 			"subtitle": "Accompagnement ciblé des collectivités et entreprises.",
-			"description": "Nous accompagnons les collectivités locales, les acteurs publics et privés par des **services d'expertise pointus** et des solutions innovantes. Notre action couvre l'urbanisme, l'ingénierie territoriale, l'environnement et la mobilité, garantissant des projets plus efficaces et durables.",
+			"description": "Nous accompagnons les collectivités locales, les acteurs publics et privés par des services d'expertise pointus et des solutions innovantes. Notre action couvre l'urbanisme, l'ingénierie territoriale, l'environnement et la mobilité, garantissant des projets plus efficaces et durables.",
 			"cta": "Contacter notre Cellule d'Expertise"
 		},
 		"pillar_3": {
 			"title": "Production de Données Géospatiales Fiables",
 			"subtitle": "Connaissances et données pour une planification éclairée.",
-			"description": "L’ISSG s'engage à **produire et diffuser des connaissances et données géospatiales fiables**. Ces informations cruciales sont essentielles pour une planification rigoureuse, la prévention proactive des risques naturels et une meilleure adaptation aux changements climatiques.",
+			"description": "L’ISSG s'engage à produire et diffuser des connaissances et données géospatiales fiables. Ces informations cruciales sont essentielles pour une planification rigoureuse, la prévention proactive des risques naturels et une meilleure adaptation aux changements climatiques.",
 			"cta": "Accéder aux Données et Publications"
 		},
 		"pillar_4": {
 			"title": "Contribuer au Développement Territorial Durable",
 			"subtitle": "Recherche appliquée et appuis techniques pour l'inclusion.",
-			"description": "Nous contribuons activement au **développement territorial inclusif et durable** via des formations continues, des recherches appliquées pertinentes et des appuis techniques sur le terrain. Nous agissons pour un impact social et environnemental positif à long terme.",
+			"description": "Nous contribuons activement au développement territorial inclusif et durable via des formations continues, des recherches appliquées pertinentes et des appuis techniques sur le terrain. Nous agissons pour un impact social et environnemental positif à long terme.",
 			"cta": "Voir nos Projets de Recherche"
 		}
 	},
@@ -269,6 +333,17 @@
 			"message": {
 				"label": "Message",
 				"placeholder": "Message"
+			},
+			"submit": "Envoyer"
+		},
+		"toast": {
+			"success": {
+				"title": "Votre message a été envoyé!",
+				"message": "Merci pour votre message nous vous reviendrons le plus vite possible"
+			},
+			"error": {
+				"title": "Quelque chose s'est mal passé!",
+				"message": "Nous avons du mal pour l'envoie de votre message"
 			}
 		}
 	},
@@ -279,8 +354,36 @@
 	},
 	"testimonials": {
 		"sectionTitle": "Ce que Disent Nos Clients",
-		"sectionDescription": "Plus de **+{{testimonialsLength}} clients** utilisent nos services. Vous pouvez les rejoindre dès maintenant.",
-		"cta": "Donnez-nous votre avis"
+		"sectionDescription": "Plus de +{{testimonialsLength}} clients utilisent nos services. Vous pouvez les rejoindre dès maintenant.",
+		"cta": "Donnez-nous votre avis",
+		"form": {
+			"title": "Donnez nous votres avis",
+			"description": "Dites nous ce que vous pensez de nos services",
+			"name": "Nom",
+			"message": "Message",
+			"appreciation": {
+				"label": "Votre appréciation",
+				"fields": {
+					"0": "Très Mauvais",
+					"1": "Mauvais",
+					"2": "Acceptable",
+					"3": "Bon",
+					"4": "Très Bon"
+				}
+			},
+			"cancel": "Annuler",
+			"send": "Envoyer"
+		},
+		"toast": {
+			"success": {
+				"title": "Votre avis a été envoyé!",
+				"message": "Merci pour votre avis"
+			},
+			"error": {
+				"title": "Quelque chose s'est mal passé!",
+				"message": "Nous avons du mal pour l'envoie de votre message"
+			}
+		}
 	},
 	"about": {
 		"hero": {
@@ -403,6 +506,30 @@
 					"placeholder": "Mot De Passe"
 				},
 				"submit": "Envoyer"
+			}
+		},
+		"job": {
+			"id": "Emploies",
+			"form": {
+				"errors": {
+					"title": "Le titre doit contenir au moins deux lettres",
+					"location": "la localisation doit contenir au moins deux lettres"
+				},
+				"label": {
+					"location": "Localisation",
+					"contract": "Contrat"
+				},
+				"description": {
+					"title": "Le titre de votre offre d'emploi",
+					"location": "La localisation de l'offre d'emploi",
+					"contract": "Le type de contrat que vous proposez"
+				},
+				"contracts": {
+					"CDD": "CDD",
+					"CDI": "CDI",
+					"Freelance": "Prestataire",
+					"Stage": "Stage"
+				}
 			}
 		}
 	}

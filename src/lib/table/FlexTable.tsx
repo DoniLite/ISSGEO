@@ -45,7 +45,7 @@ interface SlotProps<TData extends Record<string, unknown>> {
   table: Table<TData>;
 }
 
-interface Emits {
+export interface Emits {
   (e: 'update:sorting', sorting: SortingState): void;
   (e: 'update:filters', filters: ColumnFilter[]): void;
   (e: 'update:page' | 'update:pageSize', value: number): void;
@@ -114,7 +114,7 @@ export default function FlexTable<
   });
 
   return (
-    <div>
+    <div className='container mx-auto'>
       <div className='mx-auto my-6 flex justify-between'>
         {props.assets && <props.assets table={table} />}
       </div>

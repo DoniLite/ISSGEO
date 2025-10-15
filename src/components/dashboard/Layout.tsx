@@ -9,10 +9,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <TablePaginationProvider>
         <AppSidebar />
-        <main className='p-2 container mx-auto'>
+        <main className='p-2 lg:p-8 container mx-auto'>
           <div className='w-full flex justify-between items-center'>
             <SidebarTrigger />
-            <div className='flex gap-3 items-center'>
+            <div className='flex gap-3 items-center bg-primary/60 px-8 py-1 rounded-lg'>
               <LanguageSwitcher />
               <ThemeToggle />
             </div>

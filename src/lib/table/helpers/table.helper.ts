@@ -1,7 +1,7 @@
 import type { Row } from "@tanstack/react-table";
 
 export const filterInternDate = <
-	T extends { createdAt: Date | string; updatedAt: Date | string },
+	T extends { createdAt?: Date | null; updatedAt?: Date | null },
 	U extends Record<string | number | symbol, unknown>,
 >(
 	row: Row<T>,
@@ -12,8 +12,8 @@ export const filterInternDate = <
 		const start = updateValue.start.getTime();
 		const end = updateValue.end.getTime();
 
-		const created = new Date(row.original.createdAt).getTime();
-		const updated = new Date(row.original.updatedAt).getTime();
+		const created = new Date(row.original?.createdAt ?? '').getTime();
+		const updated = new Date(row.original?.updatedAt ?? '').getTime();
 
 		return (
 			(updated >= start && updated <= end) ||
@@ -24,7 +24,7 @@ export const filterInternDate = <
 };
 
 export const sortInternDate = <
-	T extends { createdAt: Date | string; updatedAt: Date | string },
+	T extends { createdAt?: Date | null; updatedAt?: Date | null },
 >(
 	rowA: Row<T>,
 	rowB: Row<T>,

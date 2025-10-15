@@ -140,16 +140,17 @@ console.log(
 );
 
 const result = await Bun.build({
-	entrypoints,
-	outdir,
-	plugins: [plugin],
-	minify: true,
-	target: "browser",
-	sourcemap: "linked",
-	define: {
-		"process.env.NODE_ENV": JSON.stringify("production"),
-	},
-	...cliConfig,
+  entrypoints,
+  outdir,
+  plugins: [plugin],
+  target: 'browser',
+  sourcemap: 'linked',
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(
+      process.env.NODE_ENV ?? 'development'
+    ),
+  },
+  ...cliConfig,
 });
 
 const end = performance.now();

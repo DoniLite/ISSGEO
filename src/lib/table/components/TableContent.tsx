@@ -58,11 +58,10 @@ export default function TableContent<
                     )
                   )}
                 >
-                  {header.isPlaceholder &&
-                    flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </TableHead>
               ))}
             </TableRow>
@@ -71,44 +70,16 @@ export default function TableContent<
 
         <TableBody>
           {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <>
-                <TableRow
+            table
+              .getRowModel()
+              .rows.map((row) => (
+                <RowChild
                   key={row.id}
-                  className='px-4'
-                  aria-selected={row.getIsSelected()}
-                >
-                  {row.getVisibleCells().map((cell, index) => (
-                    <TableCell
-                      key={cell.id}
-                      className={cn(
-                        getPinnedItemClassDefinition(
-                          index,
-                          row.getVisibleCells().length,
-                          cell.column.getIsPinned()
-                        )
-                      )}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-                {row.getIsExpanded() && (
-                  <TableRow aria-expanded>
-                    <TableCell colSpan={row.getAllCells().length}>
-                      {config.slotComponent ? (
-                        <config.slotComponent row={row} table={table} />
-                      ) : (
-                        <DefaultSlot row={row} table={table} />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
-            ))
+                  row={row}
+                  table={table}
+                  getPinnedItemClassDefinition={getPinnedItemClassDefinition}
+                />
+              ))
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className='h-24 text-center'>
@@ -129,5 +100,53 @@ function DefaultSlot<TData extends Record<string, unknown>>({
     <pre className='bg-muted rounded p-2 text-xs'>
       {JSON.stringify(row.original, null, 2)}
     </pre>
+  );
+}
+
+function RowChild<TData extends Record<string, unknown>>(config: {
+  table: TableType<TData>;
+  row: Row<TData>;
+  slotComponent?: ElementType<SlotProps<TData>>;
+  getPinnedItemClassDefinition: (
+    index: number,
+    itemsLength: number,
+    pinnedState: ColumnPinningPosition
+  ) => Record<string, boolean>;
+}) {
+  const { row, table, getPinnedItemClassDefinition } = config;
+  return (
+    <>
+      <TableRow
+        key={row.id}
+        className='px-4'
+        aria-selected={row.getIsSelected()}
+      >
+        {row.getVisibleCells().map((cell, index) => (
+          <TableCell
+            key={cell.id}
+            className={cn(
+              getPinnedItemClassDefinition(
+                index,
+                row.getVisibleCells().length,
+                cell.column.getIsPinned()
+              )
+            )}
+          >
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </TableCell>
+        ))}
+      </TableRow>
+      {row.getIsExpanded() && (
+        <TableRow aria-expanded key={row.id}>
+          <TableCell colSpan={row.getAllCells().length}>
+            {config.slotComponent ? (
+              <config.slotComponent row={row} table={table} />
+            ) : (
+              <DefaultSlot row={row} table={table} />
+            )}
+          </TableCell>
+        </TableRow>
+      )}
+    </>
   );
 }

@@ -18,13 +18,13 @@ export class CreateJobDTO extends BaseCreateDTO {
 export class UpdateJobDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsString()
-  title!: string;
+  title?: string;
 
   @IsOptional()
   @IsString()
-  location!: string;
+  location?: string;
 
   @IsOptional()
   @IsEnum(['CDI', 'CDD', 'Freelance', 'Stage'])
-  contract!: JobOfferTableType['contract'];
+  contract?: JobOfferTableType['contract'];
 }

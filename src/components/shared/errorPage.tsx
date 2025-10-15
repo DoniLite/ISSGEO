@@ -16,12 +16,16 @@ export default function ErrorPage({ error, info, reset }: ErrorComponentProps) {
         <CardContent>
           <Alert
             variant={'destructive'}
-            className='flex gap-3 justify-between items-center'
+            className='flex gap-3 flex-col justify-between items-center'
           >
             <AlertCircle />
             <p>An error occurred: {error.name} </p>
             <span className='text-wrap'>{error.message}</span>
-            {import.meta.env?.NODE_ENV === 'development' && (
+            {/* <> */}
+            <span> stack: {error.stack}</span>
+            <span> info: {info?.componentStack}</span>
+            {/* </> */}
+            {window.process?.env?.NODE_ENV === 'development' && (
               <>
                 <span> stack: {error.stack}</span>
                 <span> info: {info?.componentStack}</span>

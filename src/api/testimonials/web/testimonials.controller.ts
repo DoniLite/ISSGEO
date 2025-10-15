@@ -4,10 +4,10 @@ import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 const testimonialsApp = webFactory.createApp();
 
-testimonialsApp.get('/', (c) => {
+testimonialsApp.get('/', async (c) => {
   const service = ServiceFactory.getTestimonialService();
   const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+  const rows = await service.findPaginated(query);
 
   return c.json(rows);
 });

@@ -1,13 +1,13 @@
+import buildQuery from '@/api/helpers/buildQuery';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 const jobApp = webFactory.createApp();
 
-jobApp.get('/', (c) => {
+jobApp.get('/', async (c) => {
   const service = ServiceFactory.getJobService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+  const query = buildQuery(c.req.query());
+  const rows = await service.findPaginated(query);
 
   return c.json(rows);
 });
@@ -27,7 +27,11 @@ jobApp.patch('/:id', async (c) => {
   const id = c.req.param('id');
   const dto = await c.req.json();
 
+  console.log('patch id ===>', id);
+  console.log('patch dto ===>', dto);
+
   const res = await service.update(id, dto, c);
+  console.log('patch res ===>', res)
   if (!res) {
     return c.notFound();
   }

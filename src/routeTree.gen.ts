@@ -21,6 +21,7 @@ import { Route as TeamJoinRouteImport } from './routes/team/join'
 import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
 import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminJobRouteImport } from './routes/admin/job'
 
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
@@ -82,6 +83,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminJobRoute = AdminJobRouteImport.update({
+  id: '/admin/job',
+  path: '/admin/job',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/job'
     | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/job'
     | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/job'
     | '/admin/login'
     | '/courses/$courseId'
     | '/services/$serviceId'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   CompetencesRoute: typeof CompetencesRoute
   ErrorRoute: typeof ErrorRoute
   FaqRoute: typeof FaqRoute
+  AdminJobRoute: typeof AdminJobRoute
   AdminLoginRoute: typeof AdminLoginRoute
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
   ServicesServiceIdRoute: typeof ServicesServiceIdRoute
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/job': {
+      id: '/admin/job'
+      path: '/admin/job'
+      fullPath: '/admin/job'
+      preLoaderRoute: typeof AdminJobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -282,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompetencesRoute: CompetencesRoute,
   ErrorRoute: ErrorRoute,
   FaqRoute: FaqRoute,
+  AdminJobRoute: AdminJobRoute,
   AdminLoginRoute: AdminLoginRoute,
   CoursesCourseIdRoute: CoursesCourseIdRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
