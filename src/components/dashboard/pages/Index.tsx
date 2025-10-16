@@ -1,8 +1,16 @@
 import { Card, CardContent } from '@/components/ui/card';
 import Layout from '../Layout';
 import { ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { useAuthStore } from '@/stores/auth.store';
+import { useEffect } from 'react';
 
 export default function IndexPage() {
+  const { me } = useAuthStore();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
+  useEffect(() => {
+    me();
+  }, []);
+
   return (
     <Layout>
       <div className='w-full'>

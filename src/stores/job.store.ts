@@ -11,6 +11,7 @@ import { useCallback } from 'react';
 interface JobStore extends BaseStore {
   create: (data: CreateJobDTO) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
+  deleteMultiple: (ids: string[]) => Promise<void>;
   update: (id: string, data: UpdateJobDTO) => Promise<void>;
 }
 
@@ -53,7 +54,7 @@ export default function useJobStore(): JobStore &
       params: { id },
     });
     if (res.status >= 200 && res.status < 300) {
-      paginationHandler.handlePostUpdate(data);
+      paginationHandler.handlePostUpdatePartial(id, data);
     }
   });
 
@@ -63,6 +64,14 @@ export default function useJobStore(): JobStore &
     });
 
     paginationHandler.handleBulkDelete([id]);
+  });
+
+  const deleteMultiple = withAsyncOperation(async (ids: string[]) => {
+    await apiClient.call('job', '/job', 'DELETE', {
+      body: { ids },
+    });
+
+    paginationHandler.handleBulkDelete(ids);
   });
 
   const goToPage = withAsyncOperation(async (page: number) => {
@@ -93,6 +102,7 @@ export default function useJobStore(): JobStore &
     fetchData,
     create,
     deleteOne,
+    deleteMultiple,
     update,
     goToPage,
     updateFilters,

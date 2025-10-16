@@ -38,6 +38,7 @@
 		"save": "Enregistrer",
 		"update": "Mettre à jour",
 		"updatedAt": "Mis à jour le",
+		"createdAt": "Date de création",
 		"last_update": "Dernière mise à jour",
 		"users": "Utilisateurs",
 		"name": "Nom",
@@ -66,7 +67,11 @@
 			"page": "Page"
 		},
 		"location": "Localisation",
-		"contract": "Contrat"
+		"contract": "Contrat",
+		"profile": "Profile",
+		"logout": "Déconnexion",
+		"starNumber": "Nombre D'étoiles",
+		"message": "Message"
 	},
 	"them": {
 		"all": "Tous"
@@ -288,7 +293,9 @@
 		"contact": "Contact",
 		"job": "Emploie",
 		"search": "Recherche",
-		"settings": "Configuration"
+		"settings": "Configuration",
+		"users": "Utilisateurs",
+		"testimonials": "Témoignages"
 	},
 	"missions": {
 		"sectionTitle": "Nos Missions : Façonner l'Avenir du Territoire",

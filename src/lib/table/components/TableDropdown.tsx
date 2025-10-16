@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -39,11 +38,8 @@ export default function TableDropdown<TData extends Record<string, unknown>>({
         }
       }}
     >
-      <DropdownMenuTrigger
-        asChild
-        className='hover:border-ring focus:border:ring hover:bg-transparent'
-      >
-        <span className='flex gap-2 items-center ml-auto w-full justify-between lg:w-auto'>
+      <DropdownMenuTrigger asChild>
+        <span className='flex gap-2 items-center ml-auto border cursor-pointer p-2 rounded-md w-full justify-between lg:w-auto hover:border-ring focus:border:ring hover:bg-transparent'>
           {t('common.columns')}
           {isOpen ? (
             <ChevronUp className='ml-2 h-4 w-4' />

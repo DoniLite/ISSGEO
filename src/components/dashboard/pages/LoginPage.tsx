@@ -1,8 +1,20 @@
+import type { LoginDTO } from '@/api/user';
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/stores/auth.store';
+import { useState, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
   const { t } = useTranslation();
+  const { login } = useAuthStore();
+
+  const [auth, setAuth] = useState<LoginDTO>({ email: '', password: '' });
+
+  function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    login(auth);
+  }
+
   return (
     <div className='flex min-h-screen w-full items-center justify-center'>
       <div className='bg-card min-w-[300px] rounded-lg p-8 shadow-lg md:min-w-md lg:min-w-lg xl:min-w-xl'>
@@ -22,6 +34,15 @@ export default function LoginPage() {
               name='login'
               aria-required='true'
               required={true}
+              value={auth.email}
+              onChange={(e) => {
+                e.preventDefault();
+                const v = e.currentTarget.value;
+                setAuth((prev) => ({
+                  ...prev,
+                  email: v,
+                }));
+              }}
               className='ring-muted focus:ring-primary rounded-md bg-transparent px-4 py-2 ring outline-none'
             />
           </div>
@@ -34,6 +55,15 @@ export default function LoginPage() {
               type='password'
               placeholder={t('admin.login.input.password.placeholder')}
               name='password'
+              value={auth.password}
+              onChange={(e) => {
+                e.preventDefault();
+                const v = e.currentTarget.value;
+                setAuth((prev) => ({
+                  ...prev,
+                  password: v,
+                }));
+              }}
               required={true}
               className='ring-muted focus:ring-primary rounded-md bg-transparent px-4 py-2 ring outline-none'
             />
@@ -41,6 +71,7 @@ export default function LoginPage() {
 
           <Button
             type='submit'
+            onClick={handleSubmit}
             className='bg-primary text-primary-foreground w-full cursor-pointer rounded-md px-4 py-2 font-bold'
           >
             {t('admin.login.input.submit')}

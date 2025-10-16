@@ -20,8 +20,15 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as TeamJoinRouteImport } from './routes/team/join'
 import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
 import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin/testimonials'
+import { Route as AdminProfileRouteImport } from './routes/admin/profile'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminJobRouteImport } from './routes/admin/job'
+import { Route as AdminContactRouteImport } from './routes/admin/contact'
+import { Route as AdminCalendarRouteImport } from './routes/admin/calendar'
+import { Route as AdminCoursesIndexRouteImport } from './routes/admin/courses/index'
+import { Route as AdminCoursesFormRouteImport } from './routes/admin/courses/form'
 
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
@@ -78,6 +85,21 @@ const CoursesCourseIdRoute = CoursesCourseIdRouteImport.update({
   path: '/courses/$courseId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
+  id: '/admin/testimonials',
+  path: '/admin/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProfileRoute = AdminProfileRouteImport.update({
+  id: '/admin/profile',
+  path: '/admin/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -88,6 +110,26 @@ const AdminJobRoute = AdminJobRouteImport.update({
   path: '/admin/job',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminContactRoute = AdminContactRouteImport.update({
+  id: '/admin/contact',
+  path: '/admin/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCalendarRoute = AdminCalendarRouteImport.update({
+  id: '/admin/calendar',
+  path: '/admin/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCoursesIndexRoute = AdminCoursesIndexRouteImport.update({
+  id: '/admin/courses/',
+  path: '/admin/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCoursesFormRoute = AdminCoursesFormRouteImport.update({
+  id: '/admin/courses/form',
+  path: '/admin/courses/form',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,13 +138,20 @@ export interface FileRoutesByFullPath {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
   '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
   '/admin': typeof AdminIndexRoute
   '/courses': typeof CoursesIndexRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses': typeof AdminCoursesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,13 +160,20 @@ export interface FileRoutesByTo {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
   '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
   '/admin': typeof AdminIndexRoute
   '/courses': typeof CoursesIndexRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses': typeof AdminCoursesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -127,13 +183,20 @@ export interface FileRoutesById {
   '/competences': typeof CompetencesRoute
   '/error': typeof ErrorRoute
   '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
   '/admin/job': typeof AdminJobRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
   '/team/join': typeof TeamJoinRoute
   '/admin/': typeof AdminIndexRoute
   '/courses/': typeof CoursesIndexRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses/': typeof AdminCoursesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -144,13 +207,20 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
     | '/admin/job'
     | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
     | '/admin'
     | '/courses'
+    | '/admin/courses/form'
+    | '/admin/courses'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -159,13 +229,20 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
     | '/admin/job'
     | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
     | '/admin'
     | '/courses'
+    | '/admin/courses/form'
+    | '/admin/courses'
   id:
     | '__root__'
     | '/'
@@ -174,13 +251,20 @@ export interface FileRouteTypes {
     | '/competences'
     | '/error'
     | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
     | '/admin/job'
     | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/courses/$courseId'
     | '/services/$serviceId'
     | '/team/join'
     | '/admin/'
     | '/courses/'
+    | '/admin/courses/form'
+    | '/admin/courses/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -190,13 +274,20 @@ export interface RootRouteChildren {
   CompetencesRoute: typeof CompetencesRoute
   ErrorRoute: typeof ErrorRoute
   FaqRoute: typeof FaqRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminContactRoute: typeof AdminContactRoute
   AdminJobRoute: typeof AdminJobRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminProfileRoute: typeof AdminProfileRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
   ServicesServiceIdRoute: typeof ServicesServiceIdRoute
   TeamJoinRoute: typeof TeamJoinRoute
   AdminIndexRoute: typeof AdminIndexRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
+  AdminCoursesFormRoute: typeof AdminCoursesFormRoute
+  AdminCoursesIndexRoute: typeof AdminCoursesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -278,6 +369,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesCourseIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/admin/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/admin/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -292,6 +404,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminJobRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/contact': {
+      id: '/admin/contact'
+      path: '/admin/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AdminContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/admin/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/': {
+      id: '/admin/courses/'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminCoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/form': {
+      id: '/admin/courses/form'
+      path: '/admin/courses/form'
+      fullPath: '/admin/courses/form'
+      preLoaderRoute: typeof AdminCoursesFormRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -302,13 +442,20 @@ const rootRouteChildren: RootRouteChildren = {
   CompetencesRoute: CompetencesRoute,
   ErrorRoute: ErrorRoute,
   FaqRoute: FaqRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
+  AdminContactRoute: AdminContactRoute,
   AdminJobRoute: AdminJobRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminProfileRoute: AdminProfileRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   CoursesCourseIdRoute: CoursesCourseIdRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
   TeamJoinRoute: TeamJoinRoute,
   AdminIndexRoute: AdminIndexRoute,
   CoursesIndexRoute: CoursesIndexRoute,
+  AdminCoursesFormRoute: AdminCoursesFormRoute,
+  AdminCoursesIndexRoute: AdminCoursesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

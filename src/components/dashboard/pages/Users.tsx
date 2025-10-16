@@ -1,11 +1,10 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
-import type { CreateJobDTO, UpdateJobDTO } from '@/api/job';
 import EntityEditDialog from '@/components/shared/AppDialog';
 import type { EntryType } from '@/components/shared/entity/SortedCombobox';
 import EntitySelect from '@/components/shared/entity/SortedCombobox';
 import { Button } from '@/components/ui/button';
-import type { JobOfferTableType } from '@/db';
+import type { UserTableType } from '@/db';
 import FlexTable, { type Emits } from '@/lib/table/FlexTable';
 import {
   createActionsColumn,
@@ -16,7 +15,6 @@ import {
 } from '@/lib/table/helpers/columnFactory';
 import { useEntityEditor } from '@/lib/table/hooks/forms/useEntityEditor';
 import { useDefaultTableHandlers } from '@/lib/table/hooks/useTableServerFilters';
-import useJobStore from '@/stores/job.store';
 import type {
   ColumnDef,
   ColumnFilter,
@@ -33,9 +31,11 @@ import z from 'zod';
 import GenericForm, {
   type GenericFormField,
 } from '@/components/shared/entity/GenericForm';
+import useUsersStore from '@/stores/users.store';
+import type { CreateUserDto, UpdateUserDto } from '@/api/user';
 
-export default function JobPage() {
-  const store = useJobStore();
+export default function UsersPage() {
+  const store = useUsersStore();
   const { items, fetchData } = store;
   const { t } = useTranslation();
   const [contractFilter, setContractFilter] = useState('all');
@@ -67,32 +67,32 @@ export default function JobPage() {
     onSave,
     confirmDelete,
     onDeleteTrigger,
-  } = useEntityEditor<CreateJobDTO, UpdateJobDTO, JobOfferTableType>(store);
+  } = useEntityEditor<CreateUserDto, UpdateUserDto, UserTableType>(store);
 
-  const columns: ColumnDef<JobOfferTableType>[] = [
+  const columns: ColumnDef<UserTableType>[] = [
     createSelectColumn(t),
     createTextColumn(t, {
-      accessorKey: 'title',
-      headerKey: 'common.title',
+      accessorKey: 'name',
+      headerKey: 'common.name',
       className: 'lg:max-w-xs line-clamp-2 max-w-[12rem]',
     }),
     createTextColumn(t, {
-      accessorKey: 'location',
-      headerKey: 'common.location',
+      accessorKey: 'email',
+      headerKey: 'common.email',
       className: 'ml-4',
     }),
     createBadgeColumn(t, {
-      accessorKey: 'contract',
-      headerKey: 'common.contract',
+      accessorKey: 'role',
+      headerKey: 'common.role',
       className(entity) {
         const base = 'ml-1';
-        if (entity.contract === 'Stage') {
+        if (entity.role === 'admin') {
           return `${base} bg-orange-400`;
         }
-        if (entity.contract === 'CDD') {
+        if (entity.role === 'maintainer') {
           return `${base} bg-green-400`;
         }
-        if (entity.contract === 'Freelance') {
+        if (entity.role === 'user') {
           return `${base} bg-pink-400`;
         }
         return `${base}`;
@@ -120,29 +120,38 @@ export default function JobPage() {
     }
   };
 
-  const jobFormSchema = z.object({
-    title: z.string().min(2, {
-      error: t('admin.job.form.title'),
+  const userFormSchema = z.object({
+    name: z.string().min(2, {
+      error: t('admin.users.form.title'),
     }),
-    location: z.string().min(2, {
-      error: t('admin.job.form.location'),
+    email: z.email().min(2, {
+      error: t('admin.users.form.location'),
     }),
-    contract: z.enum(['CDI', 'CDD', 'Stage', 'Freelance']).nullable(),
+    password: z.string().min(6, {
+      error: t('admin.users.form.location'),
+    }),
+    role: z.enum(['user', 'maintainer']).nullable(),
   });
 
-  const fields: GenericFormField<JobOfferTableType>[] = [
-    { name: 'title', label: t('common.title'), type: 'text', required: true },
+  const fields: GenericFormField<UserTableType>[] = [
+    { name: 'name', label: t('common.email'), type: 'text', required: true },
     {
-      name: 'location',
-      label: t('admin.job.form.label.location'),
+      name: 'email',
+      label: t('common.email'),
       type: 'text',
       required: true,
     },
     {
-      name: 'contract',
-      label: t('admin.job.form.label.contract'),
+      name: 'password',
+      label: t('common.password'),
+      type: 'password',
+      required: true,
+    },
+    {
+      name: 'role',
+      label: t('common.role'),
       type: 'select',
-      options: Object.values(['CDI', 'CDD', 'Stage', 'Freelance'] as const),
+      options: Object.values(['user', 'maintainer'] as const),
     },
   ];
 
@@ -164,7 +173,7 @@ export default function JobPage() {
             {...props}
             value={contractFilter}
             handleChange={(v) => {
-              handleFiltersUpdate([{ id: 'contract', value: v }]);
+              handleFiltersUpdate([{ id: 'role', value: v }]);
               setContractFilter(v);
             }}
           />
@@ -177,7 +186,7 @@ export default function JobPage() {
         onOpenChange={onOpenDialog}
         contentSlot={
           <GenericForm
-            schema={jobFormSchema}
+            schema={userFormSchema}
             fields={fields}
             entity={entityModel}
             editionMode={editionMode}
@@ -213,9 +222,9 @@ const TableFilters = <T extends Record<string, unknown>>({
           id: 'all',
           label: t('common.all'),
         },
-        ...['CDD', 'CDI', 'Freelance', 'Stage'].map((type) => ({
+        ...['user', 'maintainer'].map((type) => ({
           id: type,
-          label: t(`admin.job.form.contracts.${type}`),
+          label: t(`admin.users.form.roles.${type}`),
         })),
       ] as EntryType[],
     []
@@ -246,7 +255,7 @@ const TableAssets = <T extends Record<string, unknown>>({
         className='text-lg font-bold lg:text-2xl'
         data-testid='organizations-title'
       >
-        {t('admin.job.id')}
+        {t('admin.users.id')}
       </h1>
       <Button
         variant='default'

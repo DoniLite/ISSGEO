@@ -77,7 +77,7 @@ export default function useTestimonialStore(): TestimonialStore &
     query: paginationHandler.query,
     pagination: paginationHandler.pagination,
     defaultEntity: { name: '' },
-    translationPath: '',
+    translationPath: 'admin.testimonials',
 
     fetchData,
     create,

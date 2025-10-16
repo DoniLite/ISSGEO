@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
-import type { ContactTableType } from '@/db';
+import type { TestimonialsTableType } from '@/db';
 import FlexTable, { type Emits } from '@/lib/table/FlexTable';
 import {
   createActionsColumn,
@@ -21,11 +21,14 @@ import { useTranslation } from 'react-i18next';
 // import JobForm from '../components/JobForm';
 import DeleteAlertDialog from '@/components/shared/ConfirDeleteDialog';
 import Layout from '../Layout';
-import useContactStore from '@/stores/contact.store';
-import type { CreateContactDTO, UpdateContactDTO } from '@/api/contact';
+import useTestimonialStore from '@/stores/testimonials.store';
+import type {
+  CreateTestimonialDTO,
+  UpdateTestimonialDTO,
+} from '@/api/testimonials';
 
-export default function ContactPage() {
-  const store = useContactStore();
+export default function TestimonialsPage() {
+  const store = useTestimonialStore();
   const { items, fetchData } = store;
   const { t } = useTranslation();
 
@@ -48,27 +51,34 @@ export default function ContactPage() {
     openUpdateDialog,
     confirmDelete,
     onDeleteTrigger,
-  } = useEntityEditor<CreateContactDTO, UpdateContactDTO, ContactTableType>(
-    store
-  );
+  } = useEntityEditor<
+    CreateTestimonialDTO,
+    UpdateTestimonialDTO,
+    TestimonialsTableType
+  >(store);
 
-  const columns: ColumnDef<ContactTableType>[] = [
+  const columns: ColumnDef<TestimonialsTableType>[] = [
     createSelectColumn(t),
     createTextColumn(t, {
       accessorKey: 'name',
       headerKey: 'common.name',
       className: 'lg:max-w-xs line-clamp-2 max-w-[12rem]',
     }),
-    createTextColumn(t, {
-      accessorKey: 'email',
-      headerKey: 'common.email',
-      className: 'ml-4 line-clamp-1',
+    createTextColumn<TestimonialsTableType, number>(t, {
+      accessorKey: 'starNumber',
+      headerKey: 'common.starNumber',
+      getEntityValue: (starCount) => (
+        <div className='flex items-center gap-2'>
+          <div className='text-yellow-400'>{'★'.repeat(starCount)}</div>
+        </div>
+      ),
+      className: 'ml-3',
     }),
-    createTextColumn<ContactTableType, string>(t, {
+    createTextColumn<TestimonialsTableType, string>(t, {
       headerKey: 'common.message',
       accessorKey: 'message',
       getEntityValue: (v) => <p className='line-clamp-2 w-full'>{v}</p>,
-      className: 'max-w-lg',
+      className: 'max-w-xs md:max-w-lg',
     }),
     createDateColumn(t, {
       accessorKey: 'createdAt',
@@ -130,7 +140,7 @@ const TableAssets = <T extends Record<string, unknown>>(_: {
         className='text-lg font-bold lg:text-2xl'
         data-testid='organizations-title'
       >
-        {t('admin.contact.id')}
+        {t('admin.testimonials.id')}
       </h1>
     </div>
   );

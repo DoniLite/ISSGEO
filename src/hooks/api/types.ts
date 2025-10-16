@@ -6,7 +6,7 @@ import type {
   ContactTableType as Contact,
   UserTableType as User,
   TestimonialsTableType as Testimonials,
-  JobOfferTableType as Job
+  JobOfferTableType as Job,
 } from '@/db';
 import type {
   PaginatedResponse,
@@ -72,22 +72,33 @@ interface DefaultDeleteResponse {
   deleted: boolean;
 }
 
+type DeleteMultipleBody = { ids: string[] };
+
 export interface ApiRoutes {
   users: {
     '/users': {
       GET: {
         response: PaginatedResponse<User>;
-        params?: PaginationQuery;
+        params: PaginationQuery;
       };
       POST: {
         response: User;
         body: CreateUserDto;
+      };
+      DELETE: {
+        body: DeleteMultipleBody;
+        response: number;
       };
     };
     '/users/login': {
       POST: {
         body: LoginDTO;
         response: Pick<User, 'id' | 'name' | 'email' | 'image'>;
+      };
+    };
+    '/users/logout': {
+      GET: {
+        response: { authenticated: false };
       };
     };
     '/users/:id': {
@@ -101,6 +112,13 @@ export interface ApiRoutes {
         response: DefaultDeleteResponse;
       };
     };
+    '/users/me': {
+      GET: {
+        response:
+          | Pick<User, 'id' | 'email' | 'name' | 'image'>
+          | { authenticated: false; code?: number; message?: string };
+      };
+    };
   };
   contact: {
     '/contact': {
@@ -111,6 +129,10 @@ export interface ApiRoutes {
       POST: {
         response: Contact;
         body: CreateContactDTO;
+      };
+      DELETE: {
+        body: DeleteMultipleBody;
+        response: number;
       };
     };
     '/contact/:id': {
@@ -130,6 +152,10 @@ export interface ApiRoutes {
         response: Contact;
         body: CreateTestimonialDTO;
       };
+      DELETE: {
+        body: DeleteMultipleBody;
+        response: number;
+      };
     };
     '/testimonials/:id': {
       DELETE: {
@@ -147,6 +173,10 @@ export interface ApiRoutes {
       POST: {
         response: Job;
         body: CreateJobDTO;
+      };
+      DELETE: {
+        body: DeleteMultipleBody;
+        response: number;
       };
     };
     '/job/:id': {

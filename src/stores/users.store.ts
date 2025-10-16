@@ -3,31 +3,32 @@ import type { BaseStore, PaginatedStore } from './base.store';
 import { useStoreAsyncOperations } from '@/lib/table/hooks/store/useStoreAsyncOperations';
 import { apiClient } from '@/hooks/api';
 import { useTableServerPaginationHandler } from '@/lib/table/hooks/useTableServerPaginationHandler';
-import type { ContactTableType } from '@/db';
+import type { UserTableType } from '@/db';
 import type { PaginationQuery } from '@/lib/interfaces/pagination';
-import type { CreateContactDTO } from '@/api/contact';
 import { useCallback } from 'react';
+import type { CreateUserDto, UpdateUserDto } from '@/api/user';
 
-interface ContactStore extends BaseStore {
-  create: (data: CreateContactDTO) => Promise<void>;
+interface UsersStore extends BaseStore {
+  create: (data: CreateUserDto) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
   deleteMultiple: (ids: string[]) => Promise<void>;
+  update: (id: string, data: UpdateUserDto) => Promise<void>;
 }
 
-export default function useContactStore(): ContactStore &
-  PaginatedStore<ContactTableType> {
+export default function useUsersStore(): UsersStore &
+  PaginatedStore<UserTableType> {
   const { loading, error, withAsyncOperation, resetState } =
     useStoreAsyncOperations();
 
   const refetchFunction = useCallback(async (query: PaginationQuery) => {
-    const res = await apiClient.call('contact', '/contact', 'GET', {
+    const res = await apiClient.call('users', '/users', 'GET', {
       params: query,
     });
     return res.data;
   }, []);
 
   const paginationHandler = useTableServerPaginationHandler<
-    ContactTableType,
+    UserTableType,
     PaginationQuery
   >({
     refetchFunction,
@@ -39,28 +40,38 @@ export default function useContactStore(): ContactStore &
     }
   );
 
-  const create = withAsyncOperation(async (data: CreateContactDTO) => {
-    const res = await apiClient.call('contact', '/contact', 'POST', {
+  const create = withAsyncOperation(async (data: CreateUserDto) => {
+    const res = await apiClient.call('users', '/users', 'POST', {
       body: data,
     });
-    const newContact = res.data;
-    paginationHandler.handlePostCreate(newContact);
+    const newJob = res.data;
+    paginationHandler.handlePostCreate(newJob);
+  });
+
+  const update = withAsyncOperation(async (id: string, data: UpdateUserDto) => {
+    const res = await apiClient.call('users', '/users/:id', 'PATCH', {
+      body: data,
+      params: { id },
+    });
+    if (res.status >= 200 && res.status < 300) {
+      paginationHandler.handlePostUpdatePartial(id, data);
+    }
   });
 
   const deleteOne = withAsyncOperation(async (id: string) => {
-    await apiClient.call('contact', '/contact/:id', 'DELETE', {
+    await apiClient.call('users', '/users/:id', 'DELETE', {
       params: { id },
     });
 
-    await paginationHandler.handleBulkDelete([id]);
+    paginationHandler.handleBulkDelete([id]);
   });
 
   const deleteMultiple = withAsyncOperation(async (ids: string[]) => {
-    await apiClient.call('contact', '/contact', 'DELETE', {
+    await apiClient.call('users', '/users', 'DELETE', {
       body: { ids },
     });
 
-    await paginationHandler.handleBulkDelete(ids);
+    paginationHandler.handleBulkDelete(ids);
   });
 
   const goToPage = withAsyncOperation(async (page: number) => {
@@ -85,17 +96,14 @@ export default function useContactStore(): ContactStore &
     allItems: paginationHandler.allItems,
     query: paginationHandler.query,
     pagination: paginationHandler.pagination,
-    defaultEntity: {
-      name: '',
-      email: '',
-      message: '',
-    },
-    translationPath: 'admin.contact',
+    defaultEntity: { email: '', password: '' },
+    translationPath: 'admin.job',
 
     fetchData,
     create,
     deleteOne,
     deleteMultiple,
+    update,
     goToPage,
     updateFilters,
     updatePageSize,

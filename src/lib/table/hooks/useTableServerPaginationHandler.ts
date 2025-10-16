@@ -148,7 +148,7 @@ export function useTableServerPaginationHandler<
    * Handles pagination state after updating an existing item
    * Updates the item in place if it exists in the current page
    */
-  const handlePostUpdate = useCallback((updatedItem: Partial<T>) => {
+  const handlePostUpdate = useCallback((updatedItem: T) => {
     setItems((prev) => {
       const index = prev.findIndex((item) => item.id === updatedItem.id);
       if (index === -1) {
@@ -156,7 +156,6 @@ export function useTableServerPaginationHandler<
       }
       const newItems = [...prev];
       newItems[index] = {
-        ...newItems[index],
         ...updatedItem,
       } as T;
       return newItems;

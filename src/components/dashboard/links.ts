@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Book, Contact, Handshake } from 'lucide-react';
+import { Calendar, Home, Book, Contact, Handshake, User2, HandHeart } from 'lucide-react';
 
 export const menuLinks = [
   {
@@ -7,9 +7,9 @@ export const menuLinks = [
     icon: Home,
   },
   {
-    title: 'inbox',
-    url: '/admin/inbox',
-    icon: Inbox,
+    title: 'users',
+    url: '/admin/users',
+    icon: User2,
   },
   {
     title: 'calendar',
@@ -25,6 +25,11 @@ export const menuLinks = [
     title: 'contact',
     url: '/admin/contact',
     icon: Contact,
+  },
+  {
+    title: 'testimonials',
+    url: '/admin/testimonials',
+    icon: HandHeart,
   },
   {
     title: 'job',

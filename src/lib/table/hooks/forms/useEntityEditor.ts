@@ -132,7 +132,9 @@ export function useEntityEditor<C, U, T extends EntityWithId>(
   const handleCreate = useCallback(
     async (createRequest: C) => {
       try {
-        if (!store.create) throw new Error('Create not implemented on store');
+        if (!store.create) {
+          throw new Error('Create not implemented on store');
+        }
         await store.create(createRequest);
         setOpenDialog(false);
         showToastSuccess(toastMessages.createSuccess);
@@ -146,7 +148,9 @@ export function useEntityEditor<C, U, T extends EntityWithId>(
   const handleUpdate = useCallback(
     async (updateRequest: U) => {
       try {
-        if (!store.update) throw new Error('Update not implemented on store');
+        if (!store.update) {
+          throw new Error('Update not implemented on store');
+        }
         // entityModel.id could be undefined — but store.update expects Required<T>['id']
         const id = entityModel.id as Required<T>['id'];
         await store.update(id, updateRequest);

@@ -118,13 +118,17 @@ class ApiClient {
         }
       });
       const query = searchParams.toString();
-      if (query) url += `?${query}`;
+      if (query) {
+        url += `?${query}`;
+      }
     }
     return url;
   }
 
   private interpolatePath(path: string, params?: Record<string, any>) {
-    if (!params) return path;
+    if (!params) {
+      return path;
+    }
     return path.replace(/:([a-zA-Z]+)/g, (_, key) => params[key] ?? `:${key}`);
   }
 

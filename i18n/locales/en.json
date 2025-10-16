@@ -38,6 +38,7 @@
 		"save": "Save",
 		"update": "Update",
 		"updatedAt": "Updated At",
+		"createdAt": "Created  At",
 		"last_update": "Last update",
 		"users": "Users",
 		"name": "Name",
@@ -66,7 +67,11 @@
 			"page": "Page"
 		},
 		"location": "Location",
-		"contract": "Contract"
+		"contract": "Contract",
+		"profile": "Profile",
+		"logout": "Logout",
+		"starNumber": "Start Number",
+		"message": "Message"
 	},
 	"them": {
 		"all": "All"
@@ -258,7 +263,9 @@
 		"search": "Search",
 		"settings": "Settings",
 		"contact": "Contact",
-		"job": "Job"
+		"job": "Job",
+		"users": "Users",
+		"testimonials": "Testimonials"
 	},
 	"missions": {
 		"sectionTitle": "Our Missions: Shaping the Future of the Territory",
