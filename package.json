@@ -26,7 +26,8 @@
 		"generate:migrations": "bunx drizzle-kit generate",
 		"seed:db": "bun ./src/seeders/index.ts",
 		"init:env": "bun ./scripts/init.ts",
-		"init:all": "bun init:env && bun wake:db && bun push:db && bun seed:db"
+		"init:all": "bun init:env && bun wake:db && bun push:db && bun seed:db",
+		"find:keys": "bun run ./scripts/findKeys.ts"
 	},
 	"dependencies": {
 		"@hono/node-server": "^1.19.5",

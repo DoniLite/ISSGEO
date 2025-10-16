@@ -1,6 +1,6 @@
-import ContactPage from '@/components/dashboard/pages/Contact';
+import TrainingCreationForm from '@/components/dashboard/pages/FormationForm';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/admin/courses/form')({
-  component: ContactPage,
+  component: TrainingCreationForm,
 });

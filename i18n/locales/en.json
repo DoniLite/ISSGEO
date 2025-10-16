@@ -508,6 +508,63 @@
 					"Stage": "Internship"
 				}
 			}
+		},
+		"formations": {
+			"form": {
+				"step1": {
+					"title": "Basic Information",
+					"title_label": "Training title",
+					"title_placeholder": "e.g. Advanced React Course",
+					"description_label": "Description",
+					"description_placeholder": "Describe the training...",
+					"duration_label": "Duration (hours)",
+					"duration_placeholder": "40"
+				},
+				"step2": {
+					"title": "Price and Thematic",
+					"min_price_label": "Minimum price (FCFA)",
+					"min_price_placeholder": "50000",
+					"max_price_label": "Maximum price (FCFA)",
+					"max_price_placeholder": "100000",
+					"thematic_label": "Thematic",
+					"thematic_placeholder": "Select a thematic",
+					"new_thematic": "New thematic",
+					"create_thematic": {
+						"title_label": "Thematic name",
+						"title_placeholder": "e.g. Artificial Intelligence",
+						"icon_label": "Icon",
+						"submit": "Add thematic"
+					}
+				},
+				"step3": {
+					"title": "Target audience and content",
+					"target_label": "Target audience",
+					"target_placeholder": "e.g. Developers, Designers, Students...",
+					"objectives_label": "Learning objectives",
+					"objectives_placeholder": "Add a learning objective",
+					"modules_label": "Program modules",
+					"modules_placeholder": "Add a module"
+				},
+				"step4": {
+					"title": "Key competencies",
+					"add_competency": "Add a competency",
+					"competency_title_label": "Competency title",
+					"competency_title_placeholder": "e.g. Full-Stack Development",
+					"competency_description_label": "Description",
+					"competency_description_placeholder": "Describe the competency...",
+					"competency_icon_label": "Icon",
+					"competency_sectors_label": "Sectors",
+					"competency_sectors_placeholder": "Add a sector",
+					"competency_advantages_label": "Advantages",
+					"competency_advantages_placeholder": "Add an advantage",
+					"add_button": "Add",
+					"cancel_button": "Cancel"
+				},
+				"icons": {
+					"selection_label": "Select an icon",
+					"search_icons_label": "Search for an icon..."
+				}
+			}
 		}
 	}
 }

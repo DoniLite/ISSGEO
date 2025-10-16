@@ -538,6 +538,63 @@
 					"Stage": "Stage"
 				}
 			}
+		},
+		"formations": {
+			"form": {
+				"step1": {
+					"title": "Informations De Base",
+					"title_label": "Titre de la formation",
+					"title_placeholder": "Ex: Formation React Avancée",
+					"description_label": "Description",
+					"description_placeholder": "Décrivez la formation...",
+					"duration_label": "Durée (heures)",
+					"duration_placeholder": "40"
+				},
+				"step2": {
+					"title": "Prix et thématique",
+					"min_price_label": "Prix minimum (FCFA)",
+					"min_price_placeholder": "50000",
+					"max_price_label": "Prix maximum (FCFA)",
+					"max_price_placeholder": "100000",
+					"thematic_label": "Thématique",
+					"thematic_placeholder": "Sélectionner une thématique",
+					"new_thematic": "Nouvelle thématique",
+					"create_thematic": {
+						"title_label": "Nom de la thématique",
+						"title_placeholder": "Ex: Intelligence Artificielle",
+						"icon_label": "Icône",
+						"submit": "Ajouter la thématique"
+					}
+				},
+				"step3": {
+					"title": "Public cible et contenu",
+					"target_label": "Public cible",
+					"target_placeholder": "Ex: Développeurs, Designers, Étudiants...",
+					"objectives_label": "Objectifs d'apprentissage",
+					"objectives_placeholder": "Ajouter un objectif",
+					"modules_label": "Modules du programme",
+					"modules_placeholder": "Ajouter un module"
+				},
+				"step4": {
+					"title": "Compétences clés",
+					"add_competency": "Ajouter une compétence",
+					"competency_title_label": "Titre de la compétence",
+					"competency_title_placeholder": "Ex: Développement Full-Stack",
+					"competency_description_label": "Description",
+					"competency_description_placeholder": "Décrivez la compétence...",
+					"competency_icon_label": "Icône",
+					"competency_sectors_label": "Secteurs",
+					"competency_sectors_placeholder": "Ajouter un secteur",
+					"competency_advantages_label": "Avantages",
+					"competency_advantages_placeholder": "Ajouter un avantage",
+					"add_button": "Ajouter",
+					"cancel_button": "Annuler"
+				},
+				"icons": {
+					"selection_label": "Sélectionner une icône",
+					"search_icons_label": "Rechercher une icône..."
+				}
+			}
 		}
 	}
 }
