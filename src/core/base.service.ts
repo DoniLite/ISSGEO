@@ -1,8 +1,11 @@
-import type { Context } from "hono";
-import type { BaseRepository } from "./base.repository";
-import { ValidateDTO } from "./decorators";
-import type { BaseEntity } from "./types/base";
-import type { PaginatedResponse, PaginationQuery } from "@/lib/interfaces/pagination";
+import type { Context } from 'hono';
+import type { BaseRepository, EntityStatistics } from './base.repository';
+import { ValidateDTO } from './decorators';
+import type { BaseEntity } from './types/base';
+import type {
+  PaginatedResponse,
+  PaginationQuery,
+} from '@/lib/interfaces/pagination';
 
 export abstract class BaseService<
   T extends BaseEntity,
@@ -54,6 +57,33 @@ export abstract class BaseService<
     return this.repository.delete(id);
   }
 
+  /**
+   * Delete multiple entities by their IDs
+   * @param ids - Array of entity IDs to delete
+   * @returns Object with deleted count and failed IDs
+   */
+  async deleteMultiple(ids: (string | number)[]): Promise<{
+    deletedCount: number;
+    requestedCount: number;
+    success: boolean;
+  }> {
+    if (ids.length === 0) {
+      return {
+        deletedCount: 0,
+        requestedCount: 0,
+        success: true,
+      };
+    }
+
+    const deletedCount = await this.repository.deleteMultiple(ids);
+
+    return {
+      deletedCount,
+      requestedCount: ids.length,
+      success: deletedCount === ids.length,
+    };
+  }
+
   async findBy<V>(field: keyof T, value: V): Promise<T[]> {
     return this.repository.findBy(field, value);
   }
@@ -68,5 +98,13 @@ export abstract class BaseService<
 
   async exists(id: string | number): Promise<boolean> {
     return this.repository.exists(id);
+  }
+
+  /**
+   * Get statistics for the entity
+   * @returns EntityStatistics with monthly, weekly, and yearly data
+   */
+  async getStatistics(): Promise<EntityStatistics> {
+    return this.repository.getStatistics();
   }
 }

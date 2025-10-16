@@ -1,95 +1,75 @@
+import buildQuery from '@/api/helpers/buildQuery';
+import {
+  adminMiddleware,
+  authMiddleware,
+} from '@/api/middlewares/auth.middleware';
+import { BaseController } from '@/core/base.controller';
+import type { TrainingTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
+import type { CreateCourseDTO, UpdateCourseDTO } from '../DTO/courses.dto';
+import type { CourseService } from '../services/courses.service';
 
-const courseApp = webFactory.createApp();
+export class CourseController extends BaseController<
+  TrainingTableType,
+  CreateCourseDTO,
+  UpdateCourseDTO,
+  CourseService
+> {
+  constructor() {
+    const service = ServiceFactory.getCourseService();
+    const app = webFactory.createApp();
 
-courseApp.get('/', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = await service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        post: [authMiddleware],
+        patch: [authMiddleware],
+        delete: [authMiddleware, adminMiddleware],
 
-courseApp.post('/', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
-  }
-  return c.json(data);
-});
-
-courseApp.patch('/:id', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const id = c.req.param('id');
-  const dto = await c.req.json();
-
-  const res = await service.update(id, dto, c);
-  if (!res) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
 
-  return c.json({ updated: true, rows: res.length });
-});
+  protected override registerCustomRoutes(): void {
+    this.app.get('/key-competency', async (c) => {
+      const query = buildQuery(c.req.query());
+      const rows = await this.service.findPaginatedCompetency(query);
+      return c.json(rows);
+    });
 
-courseApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const id = c.req.param('id');
+    this.app.post('/key-competency', async (c) => {
+      const dto = await c.req.json();
+      const data = await this.service.createCompetency(dto, c);
+      if (!data) {
+        return c.notFound();
+      }
+      return c.json(data);
+    });
 
-  const res = await service.delete(id);
+    this.app.patch('/key-competency/:id', async (c) => {
+      const id = c.req.param('id');
+      const dto = await c.req.json();
+      const res = await this.service.updateCompetency(id, dto, c);
+      if (!res) {
+        return c.notFound();
+      }
+      return c.json({ updated: true, rows: res.length });
+    });
 
-  if (!res) {
-    return c.notFound();
+    this.app.delete('/key-competency/:id', async (c) => {
+      const id = c.req.param('id');
+      const res = await this.service.deleteCompetency(id);
+      if (!res) {
+        return c.notFound();
+      }
+      return c.json({ deleted: res });
+    });
   }
+}
 
-  return c.json({ deleted: res });
-});
-
-courseApp.get('/key-competency', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = await service.findPaginatedCompetency(query);
-
-  return c.json(rows);
-});
-
-courseApp.post('/key-competency', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const dto = await c.req.json();
-  const data = await service.createCompetency(dto, c);
-  if (!data) {
-    return c.notFound();
-  }
-  return c.json(data);
-});
-
-courseApp.patch('/key-competency/:id', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const id = c.req.param('id');
-  const dto = await c.req.json();
-
-  const res = await service.updateCompetency(id, dto, c);
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ updated: true, rows: res.length });
-});
-
-courseApp.delete('/key-competency/:id', async (c) => {
-  const service = ServiceFactory.getCourseService();
-  const id = c.req.param('id');
-
-  const res = await service.deleteCompetency(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default courseApp;
+const courseController = new CourseController();
+const app = courseController.getApp();
+export default app;

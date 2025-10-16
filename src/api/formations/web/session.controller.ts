@@ -1,51 +1,39 @@
+import { BaseController } from '@/core/base.controller';
+import type { TrainingSessionTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
+import type { CreateSessionDTO, UpdateSessionDTO } from '../DTO/session.dto';
+import type { SessionService } from '../services/session.service';
+import {
+  authMiddleware,
+  adminMiddleware,
+} from '@/api/middlewares/auth.middleware';
 
-const sessionApp = webFactory.createApp();
+export class SessionController extends BaseController<
+  TrainingSessionTableType,
+  CreateSessionDTO,
+  UpdateSessionDTO,
+  SessionService
+> {
+  constructor() {
+    const service = ServiceFactory.getSessionService();
+    const app = webFactory.createApp();
 
-sessionApp.get('/', async (c) => {
-  const service = ServiceFactory.getSessionService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = await service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        post: [authMiddleware],
+        patch: [authMiddleware],
+        delete: [authMiddleware, adminMiddleware],
 
-sessionApp.post('/', async (c) => {
-  const service = ServiceFactory.getSessionService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
-  return c.json(data);
-});
+}
 
-sessionApp.patch('/:id', async (c) => {
-  const service = ServiceFactory.getSessionService();
-  const id = c.req.param('id');
-  const dto = await c.req.json();
+const sessionController = new SessionController()
+const app = sessionController.getApp()
 
-  const res = await service.update(id, dto, c);
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ updated: true, rows: res.length });
-});
-
-sessionApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getSessionService();
-  const id = c.req.param('id');
-
-  const res = await service.delete(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default sessionApp;
+export default app;

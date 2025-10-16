@@ -15,6 +15,7 @@ export class CreateJobDTO extends BaseCreateDTO {
   contract!: JobOfferTableType['contract'];
 }
 
+@DTO()
 export class UpdateJobDTO extends BaseUpdateDTO {
   @IsOptional()
   @IsString()

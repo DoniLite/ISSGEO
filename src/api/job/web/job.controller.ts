@@ -1,55 +1,38 @@
-import buildQuery from '@/api/helpers/buildQuery';
+import {
+  authMiddleware,
+  adminMiddleware,
+} from '@/api/middlewares/auth.middleware';
+import { BaseController } from '@/core/base.controller';
+import type { JobOfferTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
+import type { CreateJobDTO, UpdateJobDTO } from '../DTO/job.dto';
+import type { JobService } from '../service/job.service';
 
-const jobApp = webFactory.createApp();
+export class JobController extends BaseController<
+  JobOfferTableType,
+  CreateJobDTO,
+  UpdateJobDTO,
+  JobService
+> {
+  constructor() {
+    const service = ServiceFactory.getJobService();
+    const app = webFactory.createApp();
 
-jobApp.get('/', async (c) => {
-  const service = ServiceFactory.getJobService();
-  const query = buildQuery(c.req.query());
-  const rows = await service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        post: [authMiddleware],
+        patch: [authMiddleware],
+        delete: [authMiddleware, adminMiddleware],
 
-jobApp.post('/', async (c) => {
-  const service = ServiceFactory.getJobService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
-  return c.json(data);
-});
+}
 
-jobApp.patch('/:id', async (c) => {
-  const service = ServiceFactory.getJobService();
-  const id = c.req.param('id');
-  const dto = await c.req.json();
+const jobController = new JobController();
 
-  console.log('patch id ===>', id);
-  console.log('patch dto ===>', dto);
-
-  const res = await service.update(id, dto, c);
-  console.log('patch res ===>', res)
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ updated: true, rows: res.length });
-});
-
-jobApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getJobService();
-  const id = c.req.param('id');
-
-  const res = await service.delete(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default jobApp;
+export default jobController.getApp();
