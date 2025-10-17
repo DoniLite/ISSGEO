@@ -1,6 +1,7 @@
 import {
 	Sidebar,
 	SidebarContent,
+	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
@@ -11,6 +12,7 @@ import {
 import { menuLinks } from "./links";
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
+import UserDash from "./DashBoardUser";
 
 export function AppSidebar() {
 	const { t } = useTranslation();
@@ -35,6 +37,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <UserDash />
+      </SidebarFooter>
     </Sidebar>
   );
 }

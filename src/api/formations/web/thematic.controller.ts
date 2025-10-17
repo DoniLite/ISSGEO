@@ -1,51 +1,36 @@
+import type { ThematicTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
+import type { CreateThematicDTO, UpdateThematicDTO } from '../DTO/thematic.dto';
+import type { ThematicService } from '../services/thematic.service';
+import { BaseController } from '@/core/base.controller';
+import { adminMiddleware, authMiddleware } from '@/api/middlewares/auth.middleware';
 
-const thematicApp = webFactory.createApp();
+export class ThematicController extends BaseController<
+  ThematicTableType,
+  CreateThematicDTO,
+  UpdateThematicDTO,
+  ThematicService
+> {
+  constructor() {
+    const service = ServiceFactory.getThematicService();
+    const app = webFactory.createApp();
 
-thematicApp.get('/', async (c) => {
-  const service = ServiceFactory.getThematicService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = await service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        post: [authMiddleware],
+        patch: [authMiddleware],
+        delete: [authMiddleware, adminMiddleware],
 
-thematicApp.post('/', async (c) => {
-  const service = ServiceFactory.getThematicService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
-  return c.json(data);
-});
+}
 
-thematicApp.patch('/:id', async (c) => {
-  const service = ServiceFactory.getThematicService();
-  const id = c.req.param('id');
-  const dto = await c.req.json();
+const thematicController = new ThematicController()
+const app = thematicController.getApp()
 
-  const res = await service.update(id, dto, c);
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ updated: true, rows: res.length });
-});
-
-thematicApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getThematicService();
-  const id = c.req.param('id');
-
-  const res = await service.delete(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default thematicApp;
+export default app;

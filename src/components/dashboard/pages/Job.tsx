@@ -10,6 +10,7 @@ import FlexTable, { type Emits } from '@/lib/table/FlexTable';
 import {
   createActionsColumn,
   createBadgeColumn,
+  createDateColumn,
   createSelectColumn,
   createTextColumn,
 } from '@/lib/table/helpers/columnFactory';
@@ -96,6 +97,10 @@ export default function JobPage() {
         }
         return `${base}`;
       },
+    }),
+    createDateColumn(t, {
+      accessorKey: 'createdAt',
+      headerKey: 'common.createdAt',
     }),
     createActionsColumn({
       onDelete: onDeleteTrigger,

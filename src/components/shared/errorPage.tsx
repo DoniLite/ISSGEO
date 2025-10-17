@@ -25,12 +25,12 @@ export default function ErrorPage({ error, info, reset }: ErrorComponentProps) {
             <span> stack: {error.stack}</span>
             <span> info: {info?.componentStack}</span>
             {/* </> */}
-            {window.process?.env?.NODE_ENV === 'development' && (
+            {/* {window.process?.env?.NODE_ENV === 'development' && (
               <>
                 <span> stack: {error.stack}</span>
                 <span> info: {info?.componentStack}</span>
               </>
-            )}
+            )} */}
           </Alert>
         </CardContent>
         <CardFooter className='flex gap-4'>

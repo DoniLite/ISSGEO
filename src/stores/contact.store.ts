@@ -11,6 +11,7 @@ import { useCallback } from 'react';
 interface ContactStore extends BaseStore {
   create: (data: CreateContactDTO) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
+  deleteMultiple: (ids: string[]) => Promise<void>;
 }
 
 export default function useContactStore(): ContactStore &
@@ -47,11 +48,19 @@ export default function useContactStore(): ContactStore &
   });
 
   const deleteOne = withAsyncOperation(async (id: string) => {
-    await apiClient.call('contact', '/contact', 'DELETE', {
+    await apiClient.call('contact', '/contact/:id', 'DELETE', {
       params: { id },
     });
 
-    paginationHandler.handleBulkDelete([id]);
+    await paginationHandler.handleBulkDelete([id]);
+  });
+
+  const deleteMultiple = withAsyncOperation(async (ids: string[]) => {
+    await apiClient.call('contact', '/contact', 'DELETE', {
+      body: { ids },
+    });
+
+    await paginationHandler.handleBulkDelete(ids);
   });
 
   const goToPage = withAsyncOperation(async (page: number) => {
@@ -71,15 +80,22 @@ export default function useContactStore(): ContactStore &
   return {
     loading,
     error,
-    reset: resetState,
+    resetState,
     items: paginationHandler.items,
     allItems: paginationHandler.allItems,
     query: paginationHandler.query,
     pagination: paginationHandler.pagination,
+    defaultEntity: {
+      name: '',
+      email: '',
+      message: '',
+    },
+    translationPath: 'admin.contact',
 
     fetchData,
     create,
     deleteOne,
+    deleteMultiple,
     goToPage,
     updateFilters,
     updatePageSize,

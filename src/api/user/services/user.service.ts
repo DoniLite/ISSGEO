@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { BaseService } from '@/core/base.service';
 import type { UserTableType } from '@/db';
 import {
@@ -11,8 +12,8 @@ import type { Context } from 'hono';
 import { Service, ValidateDTO } from '@/core/decorators';
 import { compareHash, hashSomething } from '@/api/helpers/hash';
 import { HTTPException } from 'hono/http-exception';
-import { sign } from 'hono/jwt';
-import { setCookie } from 'hono/cookie';
+import { sign, verify } from 'hono/jwt';
+import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 
 @Service()
 export class UserService extends BaseService<
@@ -51,9 +52,7 @@ export class UserService extends BaseService<
   async login(
     dto: LoginDTO,
     context: Context
-  ): Promise<
-    Pick<UserTableType, 'id' | 'email' | 'name' | 'image'>
-  > {
+  ): Promise<Pick<UserTableType, 'id' | 'email' | 'name' | 'image'>> {
     const res = await this.findOneBy('email', dto.email);
 
     if (!res) {
@@ -103,6 +102,54 @@ export class UserService extends BaseService<
       name: res.name,
       image: res.image,
     };
+  }
+
+  logout(context: Context) {
+    try {
+      deleteCookie(context, 'session');
+      return {
+        authenticated: false,
+      };
+    } catch (e) {
+      console.error(e);
+      return {
+        authenticated: false,
+      };
+    }
+  }
+
+  async getMe(
+    context: Context
+  ): Promise<
+    | Pick<UserTableType, 'id' | 'email' | 'name' | 'image'>
+    | { authenticated: false; code?: number; message?: string }
+  > {
+    const sessionCookie = getCookie(context, 'session');
+    if (!sessionCookie) {
+      return { authenticated: false };
+    }
+
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+      throw new HTTPException(500, {
+        message: 'some data are missing for this operation \n => JWT_SECRET',
+      });
+    }
+
+    try {
+      const payload = await verify(sessionCookie, secret);
+      const res = await this.repository.findById(payload.userId as string);
+
+      if (!res) {
+        return { authenticated: false, code: 404, message: 'No user found' };
+      }
+
+      return { id: res.id, email: res.email, name: res.name, image: res.image };
+    } catch (e) {
+      console.log('jwt error ===>', e);
+      return { authenticated: false };
+    }
   }
 
   @ValidateDTO(UpdateUserPasswordDTO)
