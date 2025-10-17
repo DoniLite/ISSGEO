@@ -1,5 +1,10 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
+
+ARG DATABASE_URL
+ARG ADMIN_PASSWORD
+
+
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
@@ -23,6 +28,8 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
+ENV DATABASE_URL=${DATABASE_URL}
+ENV ADMIN_PASSWORD=${ADMIN_PASSWORD}
 # RUN bun test
 RUN bun run build:client
 RUN bun run migrate:db
