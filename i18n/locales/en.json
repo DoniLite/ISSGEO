@@ -12,13 +12,56 @@
 		"cancel": "Cancel",
 		"deleting": "Deleting...",
 		"toast": {
+			"generalAlreadySubmitted": "General form already submitted.",
+			"actionNotAllowed": "Action not allowed",
+			"fillGeneralFirst": "Please fill out the general form first.",
+			"noOrganizationFound": "No organization found",
+			"warning": "Please fill out the general form first.",
+			"tokenExpired": "The token has expired, please log in again.",
+			"successAuthentication": "Authentication successful! You can now submit the form",
+			"error": {
+				"unexpected": {
+					"title": "An unexpected error occurred",
+					"description": "An unexpected error occurred, please try again later or contact support if the problem persists."
+				},
+				"default": {
+					"title": "An error occurred",
+					"description": "An error occurred, please try again."
+				},
+				"notFound": {
+					"title": "Not found",
+					"description": "The requested resource was not found",
+					"resource": "{resource} not found"
+				},
+				"badRequest": {
+					"title": "Bad Request",
+					"description": "The request sent is not valid or is missing required data."
+				},
+				"generic": "The operation failed.",
+				"imageRead": "Failed to process image",
+				"imageReadDesc": "The image processing failed, please review your image format",
+				"load": "Failed to load data",
+				"validation": {
+					"title": "Validation Error",
+					"description": "Please check the form fields and try again."
+				},
+				"server": {
+					"title": "Server Error",
+					"description": "An unexpected error occurred. Please try again or contact support if the problem persists."
+				}
+			},
+			"success": {
+				"genericTitle": "Success",
+				"genericUpdate": "Successfully updated",
+				"genericCreate": "Successfully created"
+			},
 			"deleteAlert": {
 				"single": {
-					"title": "Delete item",
+					"title": "Delete Item",
 					"description": "Are you sure you want to delete this item? This action cannot be undone."
 				},
 				"multiple": {
-					"title": "Delete items",
+					"title": "Delete selected items",
 					"description": "Are you sure you want to delete {{count}} items? This action cannot be undone."
 				}
 			}
@@ -71,7 +114,22 @@
 		"profile": "Profile",
 		"logout": "Logout",
 		"starNumber": "Start Number",
-		"message": "Message"
+		"message": "Message",
+		"email": "Email",
+		"role": "Role",
+		"password": "Password",
+		"user": "User",
+		"maintainer": "Maintainer",
+		"priceMin": "Minimum Price",
+		"priceMax": "Maximum Price",
+		"participants": "Participants",
+		"enrolled": "Enrolled",
+		"details": "Details",
+		"price": "Price",
+		"Stage": "Internship",
+		"CDD": "Fixed-term contract",
+		"CDI":"Permanent contract",
+		"Freelance": "Freelancer"
 	},
 	"them": {
 		"all": "All"
@@ -470,15 +528,51 @@
 		}
 	},
 	"admin": {
+		"users": {
+			"id": "Users",
+			"description": "Browse the statistics comes from your last inserted users",
+			"form": {
+				"create": {
+					"title": "Create new user",
+					"description": "Fill your information to add the new entity"
+				},
+				"update": {
+					"title": "Update the user",
+					"description": "Update the field you want to change and submit it"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "User created successfully!",
+						"description": "You have a new user in your database now"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "User updated successfully!",
+						"description": "The user have been updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "User deleted successfully!",
+						"titleMultiple": "Users deleted successfully!",
+						"descriptionMultiple": "The users have been retrieved from the database",
+						"description": "The user have been retrieved from the database"
+					}
+				}
+			}
+		},
 		"login": {
 			"welcome": "Welcome",
 			"description": "Fill your connection data",
 			"input": {
-				"login:input": {
+				"login": {
 					"label": "Email",
 					"placeholder": "Email"
 				},
-				"password:input": {
+				"password": {
 					"label": "Password",
 					"placeholder": "Password"
 				},
@@ -488,6 +582,14 @@
 		"job": {
 			"id": "Jobs",
 			"form": {
+				"create": {
+					"title": "Create new job",
+					"description": "Fill your information to add the new entity"
+				},
+				"update": {
+					"title": "Update the job",
+					"description": "Update the field you want to change and submit it"
+				},
 				"errors": {
 					"title": "The title must contain at least two letters",
 					"location": "The location must contain at least two letters"
@@ -507,9 +609,33 @@
 					"Freelance": "Freelancer",
 					"Stage": "Internship"
 				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Job created successfully!",
+						"description": "You have a new job in your database now"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Job updated successfully!",
+						"description": "The job have been updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Job deleted successfully!",
+						"titleMultiple": "Jobs deleted successfully!",
+						"descriptionMultiple": "The jobs have been retrieved from the database",
+						"description": "The job have been retrieved from the database"
+					}
+				}
 			}
 		},
 		"formations": {
+			"id": "Courses",
+			"description": "Browse the statistics comes from your last inserted courses",
 			"form": {
 				"step1": {
 					"title": "Basic Information",
@@ -557,6 +683,7 @@
 					"competency_sectors_placeholder": "Add a sector",
 					"competency_advantages_label": "Advantages",
 					"competency_advantages_placeholder": "Add an advantage",
+					"key_competency_placeholder": "Select key competencies",
 					"add_button": "Add",
 					"cancel_button": "Cancel"
 				},
@@ -565,6 +692,64 @@
 					"search_icons_label": "Search for an icon..."
 				}
 			}
+		},
+		"session": {
+			"id": "Courses Calendar",
+			"description": "Browse the statistics comes from your last inserted courses calendar",
+			"form": {
+				"create": {
+					"title": "Create new Calendar",
+					"description": "Fill your information to add the new entity"
+				},
+				"update": {
+					"title": "Update the Calendar",
+					"description": "Update the field you want to change and submit it"
+				},
+				"errors": {
+					"title": "The title must contain at least two letters",
+					"location": "The location must contain at least two letters"
+				},
+				"label": {
+					"startDate": "Start Date",
+					"moduleId": "Training Module"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Calendar created successfully!",
+						"description": "You have a new job in your database now"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Calendar updated successfully!",
+						"description": "The job have been updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Calendar deleted successfully!",
+						"titleMultiple": "Calendars deleted successfully!",
+						"descriptionMultiple": "The calendars have been retrieved from the database",
+						"description": "The calendar have been retrieved from the database"
+					}
+				}
+			}
+		},
+		"testimonials": {
+			"id": "Testimonials",
+			"description": "Browse the statistics comes from your last inserted testimonials"
+		},
+		"contact": {
+			"id": "Contact",
+			"description": "Browse the statistics comes from your last inserted contacts"
+		},
+		"key_competency": {
+			"id": "Key Competency"
+		},
+		"thematic": {
+			"id": "Thematic"
 		}
 	}
 }
