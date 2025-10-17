@@ -30,7 +30,7 @@ export default function Team() {
 					<div className="w-[70%] md:w-[80%] xl:w-[45%] mt-8 lg:mt-0 flex mx-auto justify-center">
 						<Slider
 							items={teamMembers.map((member) => (
-								<TeamMemberCard {...member} />
+								<TeamMemberCard key={member.title} {...member} />
 							))}
 							iconsVariants={{ next: "ghost", prev: "ghost" }}
 						/>

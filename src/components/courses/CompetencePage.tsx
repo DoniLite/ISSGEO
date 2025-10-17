@@ -53,7 +53,7 @@ export default function CompetencesPage() {
 									</h4>
 									<ul className="list-disc list-inside text-muted-foreground pl-4">
 										{comp.advantages.map((a) => (
-											<li>{a}</li>
+											<li key={a}>{a}</li>
 										))}
 									</ul>
 								</div>

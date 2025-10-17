@@ -52,7 +52,7 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 						<DollarSign className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
 							{t("pages.formations.priceRange")} {training.priceMin}-
-							{training.priceMax}€
+							{training.priceMax}$
 						</span>
 					</div>
 					<div className="flex items-center text-muted-foreground">

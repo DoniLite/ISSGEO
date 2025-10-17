@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1759941756380,
+      "tag": "0000_organic_vapor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1759942243099,
+      "tag": "0001_round_bushwacker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760201353171,
+      "tag": "0002_breezy_the_hood",
+      "breakpoints": true
+    }
+  ]
+}
