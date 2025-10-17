@@ -13,6 +13,7 @@ export interface RouteMiddlewares {
   delete?: MiddlewareHandler[];
   getById?: MiddlewareHandler[];
   stats?: MiddlewareHandler[];
+  allRoute?: MiddlewareHandler[];
   [key: `${string}`]: MiddlewareHandler[] | undefined;
 }
 
@@ -26,6 +27,7 @@ export interface ControllerOptions {
     | 'deleteMultiple'
     | 'getById'
     | 'stats'
+    | 'all'
   )[];
 }
 
@@ -76,6 +78,11 @@ export abstract class BaseController<
       this.app.get('/', ...getMiddlewares, (c) => this.list(c));
     }
 
+    if (!excludeRoutes.includes('all')) {
+      const allRouteMiddlewares = [...(middlewares.allRoute || [])];
+      this.app.get('/all', ...allRouteMiddlewares, (c) => this.listAll(c));
+    }
+
     // GET /stats - Statistics
     if (!excludeRoutes.includes('stats')) {
       const statsMiddlewares = [...(middlewares.stats || [])];
@@ -113,7 +120,6 @@ export abstract class BaseController<
       const deleteMiddlewares = [...(middlewares.delete || [])];
       this.app.delete('/', ...deleteMiddlewares, (c) => this.deleteMultiple(c));
     }
-
   }
 
   /**
@@ -123,6 +129,16 @@ export abstract class BaseController<
     try {
       const query = buildQuery(c.req.query()) as PaginationQuery;
       const result = await this.service.findPaginated(query);
+      return c.json(result);
+    } catch (error) {
+      return this.handleError(c, error);
+    }
+  }
+
+  protected async listAll(c: Context) {
+    try {
+      const query = c.req.query();
+      const result = await this.service.findAll(query as Partial<T>);
       return c.json(result);
     } catch (error) {
       return this.handleError(c, error);

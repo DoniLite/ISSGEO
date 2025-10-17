@@ -1,34 +1,37 @@
 /** biome-ignore-all lint/correctness/useHookAtTopLevel: - */
-import type { BaseStore, PaginatedStore } from './base.store';
+import type { BaseStore, PaginatedStore } from '../base.store';
 import { useStoreAsyncOperations } from '@/lib/table/hooks/store/useStoreAsyncOperations';
 import { apiClient } from '@/hooks/api';
 import { useTableServerPaginationHandler } from '@/lib/table/hooks/useTableServerPaginationHandler';
-import type { UserTableType } from '@/db';
+import type { TrainingSessionTableType } from '@/db';
 import type { PaginationQuery } from '@/lib/interfaces/pagination';
 import { useCallback } from 'react';
-import type { CreateUserDto, UpdateUserDto } from '@/api/user';
+import type {
+  CreateSessionDTO,
+  UpdateSessionDTO,
+} from '@/api/formations/DTO/session.dto';
 
-interface UsersStore extends BaseStore {
-  create: (data: CreateUserDto) => Promise<void>;
+interface SessionStore extends BaseStore {
+  create: (data: CreateSessionDTO) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
   deleteMultiple: (ids: string[]) => Promise<void>;
-  update: (id: string, data: UpdateUserDto) => Promise<void>;
+  update: (id: string, data: UpdateSessionDTO) => Promise<void>;
 }
 
-export default function useUsersStore(): UsersStore &
-  PaginatedStore<UserTableType> {
+export default function useSessionStore(): SessionStore &
+  PaginatedStore<TrainingSessionTableType> {
   const { loading, error, withAsyncOperation, resetState } =
     useStoreAsyncOperations();
 
   const refetchFunction = useCallback(async (query: PaginationQuery) => {
-    const res = await apiClient.call('users', '/users', 'GET', {
+    const res = await apiClient.call('session', '/session', 'GET', {
       params: query,
     });
     return res.data;
   }, []);
 
   const paginationHandler = useTableServerPaginationHandler<
-    UserTableType,
+    TrainingSessionTableType,
     PaginationQuery
   >({
     refetchFunction,
@@ -40,26 +43,28 @@ export default function useUsersStore(): UsersStore &
     }
   );
 
-  const create = withAsyncOperation(async (data: CreateUserDto) => {
-    const res = await apiClient.call('users', '/users', 'POST', {
+  const create = withAsyncOperation(async (data: CreateSessionDTO) => {
+    const res = await apiClient.call('session', '/session', 'POST', {
       body: data,
     });
     const newJob = res.data;
     paginationHandler.handlePostCreate(newJob);
   });
 
-  const update = withAsyncOperation(async (id: string, data: UpdateUserDto) => {
-    const res = await apiClient.call('users', '/users/:id', 'PATCH', {
-      body: data,
-      params: { id },
-    });
-    if (res.status >= 200 && res.status < 300) {
-      paginationHandler.handlePostUpdatePartial(id, data);
+  const update = withAsyncOperation(
+    async (id: string, data: UpdateSessionDTO) => {
+      const res = await apiClient.call('session', '/session/:id', 'PATCH', {
+        body: data,
+        params: { id },
+      });
+      if (res.status >= 200 && res.status < 300) {
+        paginationHandler.handlePostUpdatePartial(id, data);
+      }
     }
-  });
+  );
 
   const deleteOne = withAsyncOperation(async (id: string) => {
-    await apiClient.call('users', '/users/:id', 'DELETE', {
+    await apiClient.call('session', '/session/:id', 'DELETE', {
       params: { id },
     });
 
@@ -67,7 +72,7 @@ export default function useUsersStore(): UsersStore &
   });
 
   const deleteMultiple = withAsyncOperation(async (ids: string[]) => {
-    await apiClient.call('users', '/users', 'DELETE', {
+    await apiClient.call('session', '/session', 'DELETE', {
       body: { ids },
     });
 
@@ -96,8 +101,8 @@ export default function useUsersStore(): UsersStore &
     allItems: paginationHandler.allItems,
     query: paginationHandler.query,
     pagination: paginationHandler.pagination,
-    defaultEntity: { email: '', password: '' },
-    translationPath: 'admin.users',
+    defaultEntity: { startDate: '', location: '' },
+    translationPath: 'admin.session',
 
     fetchData,
     create,

@@ -28,12 +28,15 @@ import {
 } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
 import { EditionMode } from '@/lib/table/hooks/forms/useEntityEditor';
+import type { EntryType } from './SortedCombobox';
+import EntitySelect from './SortedCombobox';
 
 export interface GenericFormField<T extends FieldValues> {
   name: keyof T;
   label: string;
-  type: (typeof inputTypes)[number] | 'textarea' | 'select';
+  type: (typeof inputTypes)[number] | 'textarea' | 'select' | 'combobox';
   options?: string[]; // pour select
+  entries?: EntryType[];
   placeholder?: string;
   required?: boolean;
 }
@@ -47,6 +50,7 @@ interface GenericFormProps<T extends FieldValues, CreateDTO, UpdateDTO> {
   error?: Record<string, string> | null;
   onSubmit: (data: CreateDTO | UpdateDTO) => void;
   onCancel?: () => void;
+  onSearch?: (q: string) => void;
 }
 
 const inputTypes = [
@@ -85,6 +89,7 @@ export default function GenericForm<
   loading = false,
   onSubmit,
   onCancel,
+  onSearch,
   editionMode,
 }: GenericFormProps<T, CreateDTO, UpdateDTO>) {
   const { t } = useTranslation();
@@ -146,12 +151,27 @@ export default function GenericForm<
                                 <SelectContent>
                                   {field.options?.map((opt) => (
                                     <SelectItem key={opt} value={opt}>
-                                      {t(opt)}
+                                      {t(`common.${opt}`)}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
                               </Select>
                             );
+
+                          case 'combobox':
+                            return (
+                              <EntitySelect
+                                entries={field.entries as EntryType[]}
+                                placeholder={t(
+                                  'admin.formations.form.step2.thematic_placeholder'
+                                )}
+                                value={rhfField.value}
+                                onSelected={rhfField.onChange}
+                                onSearch={(query) => onSearch?.(query)}
+                                clearable
+                              />
+                            );
+
                           default:
                             // Gère tous les types d'input standard
                             return (

@@ -8,6 +8,7 @@ import { logger } from 'hono/logger';
 import { HTTPException } from 'hono/http-exception';
 import api from './api/index.controller';
 import { ServiceFactory } from './factory/service.factory';
+import { authServerMiddleware } from './api/middlewares/auth.middleware';
 
 const app = new Hono();
 
@@ -26,6 +27,7 @@ app.notFound((c) => {
 });
 
 app.use(logger());
+app.use('/admin/*', authServerMiddleware);
 app.use('/static/*', serveStatic({ root: './' }));
 if (process.env.NODE_ENV === 'production') {
   app.use(compress());

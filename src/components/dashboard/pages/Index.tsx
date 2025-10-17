@@ -3,6 +3,7 @@ import Layout from '../Layout';
 import { ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth.store';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function IndexPage() {
   const { me } = useAuthStore();
@@ -10,6 +11,25 @@ export default function IndexPage() {
   useEffect(() => {
     me();
   }, []);
+
+  const mocks: CardStatType[] = [
+    {
+      entityTitle: 'admin.formations.id',
+      entityDescriptionKey: 'admin.formations.description',
+    },
+    {
+      entityTitle: 'admin.contact.id',
+      entityDescriptionKey: 'admin.contact.description',
+    },
+    {
+      entityTitle: 'admin.testimonials.id',
+      entityDescriptionKey: 'admin.testimonials.description',
+    },
+    {
+      entityTitle: 'admin.users.id',
+      entityDescriptionKey: 'admin.users.description',
+    },
+  ];
 
   return (
     <Layout>
@@ -21,7 +41,11 @@ export default function IndexPage() {
 
       <section className='my-8 w-full grid gap-8 lg:gap-12'>
         {mocks.map((m) => (
-          <CardStatSection key={m.entityTitle} entityTitle={m.entityTitle} />
+          <CardStatSection
+            key={m.entityTitle}
+            entityTitle={m.entityTitle}
+            entityDescriptionKey={m.entityDescriptionKey}
+          />
         ))}
       </section>
     </Layout>
@@ -30,20 +54,20 @@ export default function IndexPage() {
 
 interface CardStatType {
   entityTitle: string;
+  entityDescriptionKey: string;
 }
 
-function CardStatSection({ entityTitle }: CardStatType) {
+function CardStatSection({ entityTitle, entityDescriptionKey }: CardStatType) {
+  const { t } = useTranslation();
   return (
     <Card>
       <CardContent>
         <div className='lg:my-8 my-4'>
           <h1 className='font-bold lg:text-4xl text-2xl text-primary dark:text-secondary'>
-            {entityTitle}
+            {t(entityTitle)}
           </h1>
           <p className='text-muted-foreground line-clamp-2'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-            totam autem vitae repellat voluptates odit assumenda nisi
-            consequuntur possimus dolorem.
+            {t(entityDescriptionKey)}
           </p>
         </div>
 
@@ -78,18 +102,3 @@ function CardStatSection({ entityTitle }: CardStatType) {
     </Card>
   );
 }
-
-const mocks: CardStatType[] = [
-  {
-    entityTitle: 'Formations',
-  },
-  {
-    entityTitle: 'Contacts',
-  },
-  {
-    entityTitle: 'Messages',
-  },
-  {
-    entityTitle: 'Testimonials',
-  },
-];

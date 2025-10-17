@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: <> */
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -13,6 +13,14 @@ import { Label } from '@/components/ui/label';
 import EntitySelect from '@/components/shared/entity/SortedCombobox';
 import { Select, SelectContent, SelectTrigger } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
+import useCoursesStore from '@/stores/formations/courses.store';
+import useThematicStoreStore from '@/stores/formations/thematic.store';
+import useKeyCompetencyStore from '@/stores/formations/keyCompetency.store';
+import type { KeyCompetencyTableType, TrainingTableType } from '@/db';
+import type { CreateCourseDTO } from '@/api/formations/DTO/courses.dto';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import { EditionMode } from '@/lib/table/hooks/forms/useEntityEditor';
+import type { PaginationQuery } from '@/lib/interfaces/pagination';
 
 // Schema de validation
 const trainingSchema = z.object({
@@ -196,23 +204,71 @@ function ArrayInput({
 }
 
 export default function TrainingCreationForm() {
+  const courseStore = useCoursesStore();
+  const thematicStore = useThematicStoreStore();
+  const keyCompetencyStore = useKeyCompetencyStore();
+  const navigate = useNavigate();
+  const { courseId } = useSearch({
+    strict: true,
+    from: '/admin/courses/form',
+  });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
+  useEffect(() => {
+    thematicStore.fetchData();
+    if (courseId) {
+      courseStore.findOne(courseId).then((d) => {
+        if (d) {
+          reset({
+            title: d.title,
+            description: d.description,
+            duration: d.duration,
+            priceMax: d.priceMax,
+            priceMin: d.priceMin,
+            participants: d.participants as number,
+            thematicId: d.thematicId as string,
+            targetAudience: d.targetAudience as string,
+            learningOutcomes: d.learningOutcomes as string[],
+            modules: d.modules as string[],
+          });
+          setModule(d);
+          setEditionState(EditionMode.UPDATE);
+        }
+      });
+      keyCompetencyStore.fetchData({ moduleId: courseId } as PaginationQuery);
+    }
+  }, []);
+
   const { t } = useTranslation();
-  const [thematics, setThematics] = useState([
-    { id: '1', label: 'Développement Web' },
-    { id: '2', label: 'Data Science' },
-    { id: '3', label: 'Design UX/UI' },
-  ]);
-  const [competencies, setCompetencies] = useState<CompetencyFormData[]>([]);
   const [currentCompetency, setCurrentCompetency] =
     useState<CompetencyFormData | null>(null);
   const [showNewThematic, setShowNewThematic] = useState(false);
   const [newThematicName, setNewThematicName] = useState('');
   const [newThematicIcon, setNewThematicIcon] = useState('');
+  const [newModule, setModule] = useState<TrainingTableType>();
+  const [selectedCompetency, setSelectedCompetency] = useState<
+    KeyCompetencyTableType[]
+  >([]);
+  const [editionState, setEditionState] = useState<EditionMode>(
+    EditionMode.CREATE
+  );
+  const printedCompetency = useMemo(
+    () => keyCompetencyStore.items,
+    [keyCompetencyStore.items]
+  );
+  const thematicEntries = useMemo(
+    () =>
+      thematicStore.items.map((e) => ({
+        label: e.name,
+        id: e.id as string,
+      })),
+    [thematicStore.items]
+  );
 
   const {
     register,
-    handleSubmit,
     control,
+    reset,
     watch,
     formState: { errors },
   } = useForm<TrainingFormData>({
@@ -224,36 +280,61 @@ export default function TrainingCreationForm() {
     },
   });
 
-  const addThematic = () => {
+  const addThematic = async () => {
     if (newThematicName && newThematicIcon) {
-      const newId = String(thematics.length + 1);
-      setThematics([...thematics, { id: newId, label: newThematicName }]);
+      await thematicStore.create({
+        name: newThematicName,
+        icon: newThematicIcon,
+      });
       setNewThematicName('');
       setNewThematicIcon('');
       setShowNewThematic(false);
     }
   };
 
-  const addCompetency = (competency: CompetencyFormData) => {
-    setCompetencies([...competencies, competency]);
-    setCurrentCompetency(null);
-  };
-
-  const onSubmit = (data: TrainingFormData) => {
-    const finalData = {
-      ...data,
-      competencies,
-    };
-    console.log('Formation créée:', finalData);
+  const addCompetency = async (competency: CompetencyFormData) => {
+    if (newModule?.id) {
+      const res = await keyCompetencyStore.create({
+        ...competency,
+        moduleId: newModule?.id,
+      });
+      if (res) {
+        setSelectedCompetency((prev) => [res, ...prev]);
+      }
+      setCurrentCompetency(null);
+    }
   };
 
   return (
     <div className='min-h-screen bg-background p-2 lg:p-4'>
       <div className='container mx-auto'>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <Stepper
             initialStep={1}
-            onFinalStepCompleted={handleSubmit(onSubmit)}
+            onFinalStepCompleted={() => {
+              console.log('final step');
+              navigate({
+                to: '/admin/courses',
+              });
+            }}
+            onStepChange={(stepNumber) => {
+              const formData = watch();
+              if (stepNumber === 4) {
+                if (editionState === EditionMode.CREATE) {
+                  console.log('form data ===>', formData);
+                  courseStore
+                    .create(formData as CreateCourseDTO)
+                    .then((course) => setModule(course));
+                } else if (newModule?.id) {
+                  console.log('form data ===>', formData);
+                  courseStore.update(newModule?.id, formData);
+                }
+              }
+            }}
             stepCircleContainerClassName='bg-card'
           >
             {/* Base information */}
@@ -385,12 +466,15 @@ export default function TrainingCreationForm() {
                     control={control}
                     render={({ field }) => (
                       <EntitySelect
-                        entries={thematics}
+                        entries={thematicEntries}
                         placeholder={t(
                           'admin.formations.form.step2.thematic_placeholder'
                         )}
                         value={field.value}
                         onSelected={field.onChange}
+                        onSearch={(query) =>
+                          thematicStore.fetchData({ search: query })
+                        }
                         clearable
                       />
                     )}
@@ -513,7 +597,7 @@ export default function TrainingCreationForm() {
                 </h3>
 
                 <div className='space-y-4'>
-                  {competencies.map((comp, index) => (
+                  {printedCompetency.map((comp, index) => (
                     <Card key={comp.title} className='p-4'>
                       <div className='flex items-start justify-between'>
                         <div className='flex items-start gap-3'>
@@ -527,7 +611,7 @@ export default function TrainingCreationForm() {
                             <p className='text-sm text-muted-foreground'>
                               {comp.description}
                             </p>
-                            {comp.sectors.length > 0 && (
+                            {comp.sectors && comp?.sectors?.length > 0 && (
                               <div className='flex gap-1 mt-2 flex-wrap'>
                                 {comp.sectors.map((sector) => (
                                   <span
@@ -546,8 +630,8 @@ export default function TrainingCreationForm() {
                           variant='ghost'
                           size='icon-sm'
                           onClick={() =>
-                            setCompetencies(
-                              competencies.filter((_, i) => i !== index)
+                            setSelectedCompetency(
+                              selectedCompetency.filter((_, i) => i !== index)
                             )
                           }
                         >
@@ -681,6 +765,7 @@ export default function TrainingCreationForm() {
                             currentCompetency.title &&
                             currentCompetency.description
                           ) {
+                            console.log('called');
                             addCompetency(currentCompetency);
                           }
                         }}

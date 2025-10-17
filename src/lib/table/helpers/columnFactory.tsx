@@ -141,7 +141,7 @@ export function createNameColumn<
   options: TextColumnOptions<T> = {}
 ): ColumnDef<T> {
   const {
-    accessorKey = 'name',
+    accessorKey = 'title',
     className = '',
     hasDescription = true,
     testId,
@@ -167,7 +167,7 @@ export function createNameColumn<
           ? getDescriptionFn(row.original)
           : hasDescription && row.original.description
             ? row.original.description
-            : '';
+            : undefined;
 
       if (onTitleClick) {
         return (
