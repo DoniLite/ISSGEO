@@ -10,6 +10,7 @@ import type {
   CreateCourseDTO,
   UpdateCourseDTO,
 } from '@/api/formations/DTO/courses.dto';
+import type { EntityStatistics } from '@/core/base.repository';
 
 interface CoursesStore extends BaseStore {
   create: (data: CreateCourseDTO) => Promise<TrainingTableType | undefined>;
@@ -17,6 +18,7 @@ interface CoursesStore extends BaseStore {
   deleteMultiple: (ids: string[]) => Promise<void>;
   update: (id: string, data: UpdateCourseDTO) => Promise<void>;
   findOne: (id: string) => Promise<TrainingTableType | undefined>;
+  stats: () => Promise<EntityStatistics | undefined>;
 }
 
 export default function useCoursesStore(): CoursesStore &
@@ -103,6 +105,11 @@ export default function useCoursesStore(): CoursesStore &
     }
   );
 
+  const stats = withAsyncOperation(async () => {
+    const { data } = await apiClient.call('courses', '/courses/stats', 'GET');
+    return data
+  });
+
   return {
     loading,
     error,
@@ -122,6 +129,7 @@ export default function useCoursesStore(): CoursesStore &
 
     fetchData,
     create,
+    stats,
     deleteOne,
     deleteMultiple,
     findOne,

@@ -7,11 +7,13 @@ import type { ContactTableType } from '@/db';
 import type { PaginationQuery } from '@/lib/interfaces/pagination';
 import type { CreateContactDTO } from '@/api/contact';
 import { useCallback } from 'react';
+import type { EntityStatistics } from '@/core/base.repository';
 
 interface ContactStore extends BaseStore {
   create: (data: CreateContactDTO) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
   deleteMultiple: (ids: string[]) => Promise<void>;
+  stats: () => Promise<EntityStatistics | undefined>;
 }
 
 export default function useContactStore(): ContactStore &
@@ -77,6 +79,11 @@ export default function useContactStore(): ContactStore &
     }
   );
 
+  const stats = withAsyncOperation(async () => {
+    const { data } = await apiClient.call('contact', '/contact/stats', 'GET');
+    return data;
+  });
+
   return {
     loading,
     error,
@@ -93,6 +100,7 @@ export default function useContactStore(): ContactStore &
     translationPath: 'admin.contact',
 
     fetchData,
+    stats,
     create,
     deleteOne,
     deleteMultiple,

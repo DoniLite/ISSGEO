@@ -18,7 +18,7 @@ import {
 class ApiClient {
   private defaultHeaders: Record<string, string>;
 
-  constructor(private baseURL: string = 'http://localhost:3000/api') {
+  constructor(private baseURL: string = '/api') {
     this.baseURL = baseURL;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
