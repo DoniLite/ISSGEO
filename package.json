@@ -77,7 +77,8 @@
 		"tailwindcss": "^4.1.11",
 		"tailwindcss-animate": "^1.0.7",
 		"zod": "^4.1.12",
-		"zustand": "^5.0.8"
+		"zustand": "^5.0.8",
+		"drizzle-kit": "^0.31.5"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.5",
@@ -89,7 +90,6 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"conventional-changelog-atom": "^5.0.0",
-		"drizzle-kit": "^0.31.5",
 		"lefthook": "^1.13.6"
 	}
 }
