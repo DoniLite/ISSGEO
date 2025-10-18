@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "bun --hot src/index.ts",
 		"generate:watch": "bun --watch generate",
-		"start": "NODE_ENV=production bun src/index.ts",
+		"start": "bun run migrate:db && bun run seed:db && NODE_ENV=production bun run src/index.ts",
 		"fmt": "bunx biome format --write",
 		"lint": "bunx biome lint --write",
 		"check": "bunx biome check --write",
