@@ -1,38 +1,37 @@
+import { BaseController } from '@/core/base.controller';
+import type { ContactTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
+import {
+  authMiddleware,
+  adminMiddleware,
+} from '@/api/middlewares/auth.middleware';
+import type { CreateContactDTO, UpdateContactDTO } from '../DTO/contact.dto';
+import type { ContactService } from '../service/contact.service';
 
-const contactApp = webFactory.createApp();
+export class ContactsController extends BaseController<
+  ContactTableType,
+  CreateContactDTO,
+  UpdateContactDTO,
+  ContactService
+> {
+  constructor() {
+    const service = ServiceFactory.getContactService();
+    const app = webFactory.createApp();
 
-contactApp.get('/', (c) => {
-  const service = ServiceFactory.getContactService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        delete: [authMiddleware, adminMiddleware],
 
-contactApp.post('/', async (c) => {
-  const service = ServiceFactory.getContactService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
-  return c.json(data);
-});
+}
 
-contactApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getContactService();
-  const id = c.req.param('id');
+const contactController = new ContactsController();
+const app = contactController.getApp();
 
-  const res = await service.delete(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default contactApp;
+export default app;

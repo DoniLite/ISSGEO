@@ -129,7 +129,10 @@
 		"Stage": "Internship",
 		"CDD": "Fixed-term contract",
 		"CDI":"Permanent contract",
-		"Freelance": "Freelancer"
+		"Freelance": "Freelancer",
+		"monthly": "Monthly",
+		"weekly": "Weekly",
+		"yearly": "Yearly"
 	},
 	"them": {
 		"all": "All"

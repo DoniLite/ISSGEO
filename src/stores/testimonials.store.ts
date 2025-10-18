@@ -7,10 +7,12 @@ import type { TestimonialsTableType } from '@/db';
 import type { PaginationQuery } from '@/lib/interfaces/pagination';
 import type { CreateTestimonialDTO } from '@/api/testimonials';
 import { useCallback } from 'react';
+import type { EntityStatistics } from '@/core/base.repository';
 
 interface TestimonialStore extends BaseStore {
   create: (data: CreateTestimonialDTO) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
+  stats: () => Promise<EntityStatistics | undefined>;
 }
 
 export default function useTestimonialStore(): TestimonialStore &
@@ -68,6 +70,15 @@ export default function useTestimonialStore(): TestimonialStore &
     }
   );
 
+  const stats = withAsyncOperation(async () => {
+    const { data } = await apiClient.call(
+      'testimonials',
+      '/testimonials/stats',
+      'GET'
+    );
+    return data;
+  });
+
   return {
     loading,
     error,
@@ -81,6 +92,7 @@ export default function useTestimonialStore(): TestimonialStore &
 
     fetchData,
     create,
+    stats,
     deleteOne,
     goToPage,
     updateFilters,

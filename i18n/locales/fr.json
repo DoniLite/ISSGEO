@@ -129,7 +129,10 @@
 		"Stage": "Stage",
 		"CDD": "Contrat à durée déterminée",
 		"CDI": "Contrat à durée indéterminée",
-		"Freelance": "Indépendant"
+		"Freelance": "Indépendant",
+		"monthly": "Mensuel",
+		"weekly": "Semestriel",
+		"yearly": "Anuel"
 	},
 	"them": {
 		"all": "Tous"

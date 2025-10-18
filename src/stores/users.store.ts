@@ -7,12 +7,14 @@ import type { UserTableType } from '@/db';
 import type { PaginationQuery } from '@/lib/interfaces/pagination';
 import { useCallback } from 'react';
 import type { CreateUserDto, UpdateUserDto } from '@/api/user';
+import type { EntityStatistics } from '@/core/base.repository';
 
 interface UsersStore extends BaseStore {
   create: (data: CreateUserDto) => Promise<void>;
   deleteOne: (id: string) => Promise<void>;
   deleteMultiple: (ids: string[]) => Promise<void>;
   update: (id: string, data: UpdateUserDto) => Promise<void>;
+  stats: () => Promise<EntityStatistics | undefined>;
 }
 
 export default function useUsersStore(): UsersStore &
@@ -88,6 +90,11 @@ export default function useUsersStore(): UsersStore &
     }
   );
 
+  const stats = withAsyncOperation(async () => {
+    const { data } = await apiClient.call('users', '/users/stats', 'GET');
+    return data;
+  });
+
   return {
     loading,
     error,
@@ -102,6 +109,7 @@ export default function useUsersStore(): UsersStore &
     fetchData,
     create,
     deleteOne,
+    stats,
     deleteMultiple,
     update,
     goToPage,

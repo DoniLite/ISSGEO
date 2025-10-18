@@ -1,38 +1,40 @@
+import { BaseController } from '@/core/base.controller';
+import type { TestimonialsTableType } from '@/db';
 import { ServiceFactory } from '@/factory/service.factory';
 import { webFactory } from '@/factory/web.factory';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
+import {
+  authMiddleware,
+  adminMiddleware,
+} from '@/api/middlewares/auth.middleware';
+import type {
+  CreateTestimonialDTO,
+  UpdateTestimonialDTO,
+} from '../DTO/testimonials.dto';
+import type { TestimonialsService } from '../service/testimonials.service';
 
-const testimonialsApp = webFactory.createApp();
+export class TestimonialsController extends BaseController<
+  TestimonialsTableType,
+  CreateTestimonialDTO,
+  UpdateTestimonialDTO,
+  TestimonialsService
+> {
+  constructor() {
+    const service = ServiceFactory.getTestimonialService();
+    const app = webFactory.createApp();
 
-testimonialsApp.get('/', async (c) => {
-  const service = ServiceFactory.getTestimonialService();
-  const query = c.req.query() as PaginationQuery;
-  const rows = await service.findPaginated(query);
+    super(service, app, {
+      middlewares: {
+        get: [],
 
-  return c.json(rows);
-});
+        delete: [authMiddleware, adminMiddleware],
 
-testimonialsApp.post('/', async (c) => {
-  const service = ServiceFactory.getTestimonialService();
-  const dto = await c.req.json();
-  const data = await service.create(dto, c);
-  if (!data) {
-    return c.notFound();
+        stats: [authMiddleware, adminMiddleware],
+      },
+    });
   }
-  return c.json(data);
-});
+}
 
-testimonialsApp.delete('/:id', async (c) => {
-  const service = ServiceFactory.getTestimonialService();
-  const id = c.req.param('id');
+const testimonialsController = new TestimonialsController();
+const app = testimonialsController.getApp();
 
-  const res = await service.delete(id);
-
-  if (!res) {
-    return c.notFound();
-  }
-
-  return c.json({ deleted: res });
-});
-
-export default testimonialsApp;
+export default app;

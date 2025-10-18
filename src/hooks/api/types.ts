@@ -18,6 +18,7 @@ import type {
 import type { CreateJobDTO, UpdateJobDTO } from '@/api/job';
 import type { CreateTestimonialDTO } from '@/api/testimonials';
 import type { CreateUserDto, LoginDTO, UpdateUserDto } from '@/api/user';
+import type { EntityStatistics } from '@/core/base.repository';
 import type {
   ContactTableType as Contact,
   UserTableType as User,
@@ -176,6 +177,11 @@ export interface ApiRoutes {
         response: number;
       };
     };
+    '/courses/stats': {
+      GET: {
+        response: EntityStatistics;
+      };
+    };
     '/courses/:id': {
       GET: {
         response: Course;
@@ -240,6 +246,11 @@ export interface ApiRoutes {
         response: number;
       };
     };
+    '/users/stats': {
+      GET: {
+        response: EntityStatistics;
+      };
+    };
     '/users/login': {
       POST: {
         body: LoginDTO;
@@ -285,6 +296,11 @@ export interface ApiRoutes {
         response: number;
       };
     };
+    '/contact/stats': {
+      GET: {
+        response: EntityStatistics;
+      };
+    };
     '/contact/:id': {
       DELETE: {
         params: { id: Contact['id'] };
@@ -305,6 +321,11 @@ export interface ApiRoutes {
       DELETE: {
         body: DeleteMultipleBody;
         response: number;
+      };
+    };
+    '/testimonials/stats': {
+      GET: {
+        response: EntityStatistics;
       };
     };
     '/testimonials/:id': {
