@@ -1,9 +1,6 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
 
-ARG DATABASE_URL
-ARG ADMIN_PASSWORD
-
 
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
@@ -28,12 +25,8 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-ENV DATABASE_URL=${DATABASE_URL}
-ENV ADMIN_PASSWORD=${ADMIN_PASSWORD}
 # RUN bun test
 RUN bun run build:client
-RUN bun run migrate:db
-RUN bun run seed:db
 
 # copy production dependencies and source code into final image
 FROM base AS release
@@ -43,8 +36,11 @@ COPY --from=prerelease /usr/src/app/static static
 COPY --from=prerelease /usr/src/app/i18n i18n
 COPY --from=prerelease /usr/src/app/package.json .
 COPY --from=prerelease /usr/src/app/tsconfig.json .
+COPY --from=prerelease /usr/src/app/drizzle.config.ts .
+COPY --from=prerelease /usr/src/app/drizzle drizzle
+
 
 # run the app
 USER bun
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "src/index.ts" ]
+ENTRYPOINT [ "bun", "run", "start" ]
