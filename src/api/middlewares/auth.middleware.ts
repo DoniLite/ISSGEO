@@ -1,7 +1,7 @@
 import type { Context, Next } from 'hono';
-import { getCookie } from 'hono/cookie';
+import { getCookie, setCookie } from 'hono/cookie';
 import { HTTPException } from 'hono/http-exception';
-import { jwt, verify } from 'hono/jwt';
+import { jwt, sign, verify } from 'hono/jwt';
 
 export const authMiddleware = jwt({
   secret: process.env.JWT_SECRET || '',
@@ -33,7 +33,26 @@ export const authServerMiddleware = async (c: Context, next: Next) => {
   }
 
   try {
-    await verify(sessionCookie, secret);
+    const payload = await verify(sessionCookie, secret);
+    const expireDate = new Date();
+    expireDate.setHours(expireDate.getHours() + 5);
+
+    const newPayload = {
+      userId: payload.id,
+      role: payload.role,
+      exp: expireDate.getTime(),
+    };
+
+    const token = await sign(newPayload, secret);
+
+    setCookie(c, 'session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax',
+      path: '/',
+      maxAge: 60 * 60 * 5,
+    });
+
     await next();
   } catch (e) {
     console.log('jwt error ===>', e);
