@@ -1,7 +1,13 @@
 import { relations } from "drizzle-orm";
-import { KeyCompetencyTable, TrainingTable } from "./training.schema";
+import {
+	KeyCompetencyTable,
+	ModuleTable,
+	TrainingTable,
+} from "./training.schema";
 import { ThematicTable } from "./thematic.schema";
 import { TrainingSessionTable } from "./session.schema";
+import { RollingTable } from "./rolling.schema";
+import { CheckoutTable } from "./checkout.schema";
 
 export const TrainingTableRelations = relations(
 	TrainingTable,
@@ -12,8 +18,31 @@ export const TrainingTableRelations = relations(
 		}),
 		sessions: many(TrainingSessionTable),
 		competences: many(KeyCompetencyTable),
+		modules: many(ModuleTable),
 	}),
 );
+
+export const ModuleTableRelations = relations(ModuleTable, ({ one }) => ({
+	training: one(TrainingTable, {
+		fields: [ModuleTable.courseId],
+		references: [TrainingTable.id],
+	}),
+}));
+
+export const RollingTableRelations = relations(RollingTable, ({ one }) => ({
+	session: one(TrainingSessionTable, {
+		fields: [RollingTable.sessionId],
+		references: [TrainingSessionTable.id],
+	}),
+	checkout: one(CheckoutTable),
+}));
+
+export const CheckoutTableRelations = relations(CheckoutTable, ({ one }) => ({
+	rolling: one(RollingTable, {
+		fields: [CheckoutTable.rollingId],
+		references: [RollingTable.id],
+	}),
+}));
 
 export const ThematicTableRelations = relations(ThematicTable, ({ many }) => ({
 	modules: many(TrainingTable),
@@ -21,11 +50,12 @@ export const ThematicTableRelations = relations(ThematicTable, ({ many }) => ({
 
 export const TrainingSessionTableRelations = relations(
 	TrainingSessionTable,
-	({ one }) => ({
+	({ one, many }) => ({
 		module: one(TrainingTable, {
 			fields: [TrainingSessionTable.moduleId],
 			references: [TrainingTable.id],
 		}),
+		rollings: many(RollingTable),
 	}),
 );
 
