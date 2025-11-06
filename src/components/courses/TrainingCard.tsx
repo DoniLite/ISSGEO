@@ -11,16 +11,37 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { MOCK_THEMATICS } from "@/lib/mock";
-import type { TrainingModule } from "@/lib/types";
+import type {
+	ModuleTableType,
+	ThematicTableType,
+	TrainingTableType,
+} from "@/db";
+import { useEffect, useState } from "react";
+import useThematicStoreStore from "@/stores/formations/thematic.store";
+import useModuleStore from "@/stores/formations/module.store";
 
 interface TrainingCardProps {
-	training: TrainingModule;
+	training: TrainingTableType;
 }
 
 export default function TrainingCard({ training }: TrainingCardProps) {
 	const { t } = useTranslation();
-	const thematic = MOCK_THEMATICS.find((t) => t.name === training.thematic);
+	const [thematic, setThematic] = useState<ThematicTableType | undefined>(
+		undefined,
+	);
+	const [modules, setModules] = useState<ModuleTableType[]>([]);
+	const thematicStore = useThematicStoreStore();
+	const moduleStore = useModuleStore();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
+	useEffect(() => {
+		thematicStore.findOne(training.thematicId as string).then((res) => {
+			setThematic(res);
+		});
+		moduleStore.fetchAll({ courseId: training.id as string }).then((res) => {
+			setModules(res || []);
+		});
+	}, []);
 
 	return (
 		<Card className="flex flex-col h-full hover:shadow-lg transition-shadow">
@@ -45,7 +66,7 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 					<div className="flex items-center text-muted-foreground">
 						<Clock className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
-							{t("pages.formations.duration")} {training.duration}h
+							{t("pages.formations.duration")} {training.totalDuration}h
 						</span>
 					</div>
 					<div className="flex items-center text-muted-foreground">
@@ -71,9 +92,9 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 				<div className="mt-4">
 					<h4 className="text-sm font-semibold mb-1">Compétences Clés:</h4>
 					<div className="flex flex-wrap gap-1">
-						{training.detailedModules.slice(0, 3).map((key) => (
-							<Badge key={key} variant="outline" className="text-xs">
-								{key}
+						{modules.slice(0, 3).map((key) => (
+							<Badge key={key.id} variant="outline" className="text-xs">
+								{key.title}
 							</Badge>
 						))}
 					</div>
@@ -82,7 +103,10 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 
 			<CardFooter>
 				<Button asChild className="w-full">
-					<Link to={`/courses/$courseId`} params={{ courseId: training.id }}>
+					<Link
+						to={`/courses/$courseId`}
+						params={{ courseId: training.id as string }}
+					>
 						{t("pages.formations.viewDetails")}
 					</Link>
 				</Button>

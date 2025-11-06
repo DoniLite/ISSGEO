@@ -376,36 +376,35 @@ export const MOCK_JOB_OFFERS: JobOffer[] = [
 	},
 ];
 
-
 export const mockTestimonials: Base<TestimonialsTableType>[] = [
-  {
-    name: 'Aïcha Diallo',
-    message:
-      "Grâce à cette plateforme, j'ai pu lancer mon premier site web en moins d'une semaine. L'expérience utilisateur est incroyable !",
-    starNumber: 3,
-  },
-  {
-    name: 'Jean-Baptiste Kouassi',
-    message:
-      'Simple, rapide et efficace. Je recommande à tous ceux qui veulent créer des projets sans se prendre la tête.',
-    starNumber: 5,
-  },
-  {
-    name: 'Mariam Traoré',
-    message:
-      "Le support est super réactif. Ils m'ont aidée à configurer mon projet en un temps record.",
-    starNumber: 3,
-  },
-  {
-    name: 'Ousmane Sow',
-    message:
-      'En tant que développeur freelance, cette solution m’a fait gagner énormément de temps et m’a permis d’attirer de nouveaux clients.',
-    starNumber: 4,
-  },
-  {
-    name: 'Fatoumata Koné',
-    message:
-      'J’adore la simplicité et le design de l’interface. Tout est clair et bien organisé.',
-    starNumber: 3,
-  },
+	{
+		name: "Aïcha Diallo",
+		message:
+			"Grâce à cette plateforme, j'ai pu lancer mon premier site web en moins d'une semaine. L'expérience utilisateur est incroyable !",
+		starNumber: 3,
+	},
+	{
+		name: "Jean-Baptiste Kouassi",
+		message:
+			"Simple, rapide et efficace. Je recommande à tous ceux qui veulent créer des projets sans se prendre la tête.",
+		starNumber: 5,
+	},
+	{
+		name: "Mariam Traoré",
+		message:
+			"Le support est super réactif. Ils m'ont aidée à configurer mon projet en un temps record.",
+		starNumber: 3,
+	},
+	{
+		name: "Ousmane Sow",
+		message:
+			"En tant que développeur freelance, cette solution m’a fait gagner énormément de temps et m’a permis d’attirer de nouveaux clients.",
+		starNumber: 4,
+	},
+	{
+		name: "Fatoumata Koné",
+		message:
+			"J’adore la simplicité et le design de l’interface. Tout est clair et bien organisé.",
+		starNumber: 3,
+	},
 ];

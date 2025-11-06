@@ -1,23 +1,23 @@
-import { DTO } from '@/core/decorators';
-import { BaseCreateDTO, BaseUpdateDTO } from '@/core/dto';
-import { IsOptional, IsString } from 'class-validator';
+import { DTO } from "@/core/decorators";
+import { BaseCreateDTO, BaseUpdateDTO } from "@/core/dto";
+import { IsOptional, IsString } from "class-validator";
 
 @DTO()
 export class CreateThematicDTO extends BaseCreateDTO {
-  @IsString()
-  name!: string;
+	@IsString()
+	name!: string;
 
-  @IsString()
-  icon!: string;
+	@IsString()
+	icon!: string;
 }
 
 @DTO()
 export class UpdateThematicDTO extends BaseUpdateDTO {
-  @IsOptional()
-  @IsString()
-  name?: string;
+	@IsOptional()
+	@IsString()
+	name?: string;
 
-  @IsOptional()
-  @IsString()
-  icon?: string;
+	@IsOptional()
+	@IsString()
+	icon?: string;
 }

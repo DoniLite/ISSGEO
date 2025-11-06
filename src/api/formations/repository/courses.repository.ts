@@ -2,6 +2,7 @@ import { BaseRepository } from '@/core/base.repository';
 import {
   TrainingTable,
   type KeyCompetencyTableType,
+  type ModuleTableType,
   type TrainingTableType,
 } from '@/db';
 import type { CreateCourseDTO, UpdateCourseDTO } from '../DTO/courses.dto';
@@ -15,6 +16,8 @@ import type {
   PaginatedResponse,
   PaginationQuery,
 } from '@/lib/interfaces/pagination';
+import { ModuleRepository } from './modules.repository';
+import type { CreateModuleTDO, UpdateModuleDTO } from '../DTO/modules.dto';
 
 @Repository('courses')
 export class CoursesRepository extends BaseRepository<
@@ -24,39 +27,75 @@ export class CoursesRepository extends BaseRepository<
   typeof TrainingTable
 > {
   protected table = TrainingTable;
-  private keyCompetencyRepository;
 
-  constructor() {
+  constructor(
+    private keyCompetencyRepo = new KeyCompetencyRepository(),
+    private ModuleRepo = new ModuleRepository()
+  ) {
     super();
-    this.keyCompetencyRepository = new KeyCompetencyRepository();
   }
 
   async createCompetency(
     dto: CreateKeyCompetencyDTO
   ): Promise<KeyCompetencyTableType> {
-    return this.keyCompetencyRepository.create(dto);
+    return this.keyCompetencyRepo.create(dto);
   }
 
   async updateCompetency(
     id: string,
     dto: UpdateKeyCompetencyDTO
   ): Promise<KeyCompetencyTableType[] | null> {
-    return this.keyCompetencyRepository.update(id, dto);
+    return this.keyCompetencyRepo.update(id, dto);
   }
 
   async deleteCompetency(id: string): Promise<boolean> {
-    return this.keyCompetencyRepository.delete(id);
+    return this.keyCompetencyRepo.delete(id);
+  }
+
+  async deleManyCompetency(ids: (string | number)[]): Promise<number> {
+    return this.keyCompetencyRepo.deleteMultiple(ids);
   }
 
   async findPaginatedCompetency(
     query: PaginationQuery
   ): Promise<PaginatedResponse<KeyCompetencyTableType>> {
-    return this.keyCompetencyRepository.findPaginated(query);
+    return this.keyCompetencyRepo.findPaginated(query);
   }
 
   async findAllCompetency(
     filters?: Partial<KeyCompetencyTableType>
   ): Promise<KeyCompetencyTableType[]> {
-    return this.keyCompetencyRepository.findAll(filters);
+    return this.keyCompetencyRepo.findAll(filters);
+  }
+
+  async createModule(dto: CreateModuleTDO): Promise<ModuleTableType> {
+    return this.ModuleRepo.create(dto);
+  }
+
+  async updateModule(
+    id: string,
+    dto: UpdateModuleDTO
+  ): Promise<ModuleTableType[] | null> {
+    return this.updateModule(id, dto);
+  }
+
+  async deleteModule(id: string): Promise<boolean> {
+    return this.ModuleRepo.delete(id);
+  }
+
+  async deleManyModule(ids: (string | number)[]): Promise<number> {
+    return this.ModuleRepo.deleteMultiple(ids);
+  }
+
+  async findPaginatedModule(
+    query: PaginationQuery
+  ): Promise<PaginatedResponse<ModuleTableType>> {
+    return this.ModuleRepo.findPaginated(query);
+  }
+
+  async findAllModule(
+    filters?: Partial<ModuleTableType>
+  ): Promise<ModuleTableType[]> {
+    return this.ModuleRepo.findAll(filters);
   }
 }

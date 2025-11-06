@@ -1,5 +1,9 @@
 import { BaseService } from '@/core/base.service';
-import type { KeyCompetencyTableType, TrainingTableType } from '@/db';
+import type {
+  KeyCompetencyTableType,
+  ModuleTableType,
+  TrainingTableType,
+} from '@/db';
 import { CreateCourseDTO, UpdateCourseDTO } from '../DTO/courses.dto';
 import { CoursesRepository } from '../repository/courses.repository';
 import type { Context } from 'hono';
@@ -12,6 +16,7 @@ import type {
   PaginatedResponse,
   PaginationQuery,
 } from '@/lib/interfaces/pagination';
+import { CreateModuleTDO, UpdateModuleDTO } from '../DTO/modules.dto';
 
 @Service()
 export class CourseService extends BaseService<
@@ -62,6 +67,28 @@ export class CourseService extends BaseService<
     return this.repository.deleteCompetency(id);
   }
 
+  async deleteManyCompetency(ids: (string | number)[]): Promise<{
+    deletedCount: number;
+    requestedCount: number;
+    success: boolean;
+  }> {
+    if (ids.length === 0) {
+      return {
+        deletedCount: 0,
+        requestedCount: 0,
+        success: true,
+      };
+    }
+
+    const deletedCount = await this.repository.deleManyCompetency(ids);
+
+    return {
+      deletedCount,
+      requestedCount: ids.length,
+      success: deletedCount === ids.length,
+    };
+  }
+
   async findPaginatedCompetency(
     query: PaginationQuery
   ): Promise<PaginatedResponse<KeyCompetencyTableType>> {
@@ -72,5 +99,60 @@ export class CourseService extends BaseService<
     filters?: Partial<KeyCompetencyTableType>
   ): Promise<KeyCompetencyTableType[]> {
     return this.repository.findAllCompetency(filters);
+  }
+
+  @ValidateDTO(CreateModuleTDO)
+  async createModule(
+    dto: CreateModuleTDO,
+    _context: Context
+  ): Promise<ModuleTableType> {
+    return this.repository.createModule(dto);
+  }
+
+  @ValidateDTO(UpdateModuleDTO)
+  async updateModule(
+    id: string,
+    dto: UpdateModuleDTO,
+    _context: Context
+  ): Promise<ModuleTableType[] | null> {
+    return this.repository.updateModule(id, dto);
+  }
+
+  async deleteModule(id: string): Promise<boolean> {
+    return this.repository.deleteModule(id);
+  }
+
+  async deleteManyModule(ids: (string | number)[]): Promise<{
+    deletedCount: number;
+    requestedCount: number;
+    success: boolean;
+  }> {
+    if (ids.length === 0) {
+      return {
+        deletedCount: 0,
+        requestedCount: 0,
+        success: true,
+      };
+    }
+
+    const deletedCount = await this.repository.deleManyModule(ids);
+
+    return {
+      deletedCount,
+      requestedCount: ids.length,
+      success: deletedCount === ids.length,
+    };
+  }
+
+  async findPaginatedModule(
+    query: PaginationQuery
+  ): Promise<PaginatedResponse<ModuleTableType>> {
+    return this.repository.findPaginatedModule(query);
+  }
+
+  async findAllModule(
+    filters?: Partial<ModuleTableType>
+  ): Promise<ModuleTableType[]> {
+    return this.repository.findAllModule(filters);
   }
 }

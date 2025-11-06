@@ -10,7 +10,7 @@ const ScrollToTop = () => {
 	});
 	useEffect(() => {
 		globalThis.scrollTo(0, 0);
-	}, [pathname, hash]);
+	}, []);
 
 	return null;
 };

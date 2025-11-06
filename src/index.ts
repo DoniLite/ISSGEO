@@ -1,38 +1,38 @@
-import 'reflect-metadata';
-import 'dotenv/config';
-import { Hono } from 'hono';
-import { render } from './entry-server';
-import { serveStatic } from 'hono/bun';
+import "reflect-metadata";
+import "dotenv/config";
+import { Hono } from "hono";
+import { render } from "./entry-server";
+import { serveStatic } from "hono/bun";
 // import { compress } from 'hono/compress';
-import { logger } from 'hono/logger';
-import { HTTPException } from 'hono/http-exception';
-import api from './api/index.controller';
-import { authServerMiddleware } from './api/middlewares/auth.middleware';
+import { logger } from "hono/logger";
+import { HTTPException } from "hono/http-exception";
+import api from "./api/index.controller";
+import { authServerMiddleware } from "./api/middlewares/auth.middleware";
 
 const app = new Hono();
 
 app.onError((error, c) => {
-  if (error instanceof HTTPException) {
-    console.error(error.cause);
-    return error.getResponse();
-  }
+	if (error instanceof HTTPException) {
+		console.error(error.cause);
+		return error.getResponse();
+	}
 
-  console.log(error);
-  return c.redirect('/error', 301);
+	console.log(error);
+	return c.redirect("/error", 301);
 });
 
 app.notFound((c) => {
-  return c.json({ message: `the ${c.req.path} path doesn't exist` }, 404);
+	return c.json({ message: `the ${c.req.path} path doesn't exist` }, 404);
 });
 
 app.use(logger());
-app.use('/admin/*', authServerMiddleware);
-app.use('/static/*', serveStatic({ root: './' }));
+app.use("/admin/*", authServerMiddleware);
+app.use("/static/*", serveStatic({ root: "./" }));
 
-app.route('/api', api);
+app.route("/api", api);
 
-app.get('*', async (c) => {
-  return render({ request: c.req.raw });
+app.get("*", async (c) => {
+	return render({ request: c.req.raw });
 });
 
 export default app;

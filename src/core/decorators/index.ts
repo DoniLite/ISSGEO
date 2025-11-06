@@ -22,21 +22,21 @@ const DTO_METADATA = Symbol("dto");
 const DTO_CLASSES = new Map<string, any>();
 
 export function Repository<T>(tableName: string) {
-	return (cons: new (...args: unknown[]) => T) => {
+	return (cons: new (...args: any[]) => T) => {
 		Reflect.defineMetadata(REPOSITORY_METADATA, tableName, cons);
 		return cons;
 	};
 }
 
 export function Service<T>() {
-	return (cons: new (...args: unknown[]) => T) => {
+	return (cons: new (...args: any[]) => T) => {
 		Reflect.defineMetadata(SERVICE_METADATA, true, cons);
 		return cons;
 	};
 }
 
 export function DTO<T>() {
-	return (cons: new (...args: unknown[]) => T) => {
+	return (cons: new (...args: any[]) => T) => {
 		DTO_CLASSES.set(cons.name, cons);
 
 		Reflect.defineMetadata(DTO_METADATA, true, cons);

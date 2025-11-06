@@ -1,30 +1,49 @@
 import { Link } from "@tanstack/react-router";
 import i18n from "i18n";
 import { ArrowRight, Calendar, Clock, MapPin, Users } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { MOCK_SESSIONS, MOCK_TRAININGS } from "@/lib/mock";
 import Hero from "../services/Hero";
 import BaseHeroWrapper from "../shared/BasePageHeroWrapper";
 import Footer from "../shared/Footer";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import useSessionStore from "@/stores/formations/session.store";
+import type { TrainingTableType } from "@/db";
 
 export default function TrainingCalendar() {
 	const { t } = useTranslation();
+	const sessionStore = useSessionStore();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
+	useEffect(() => {
+		sessionStore.fetchData({ populateChildren: true });
+	}, []);
 
 	const sessionsWithDetails = useMemo(() => {
 		// Jointure des sessions avec les détails de la formation correspondante
-		return MOCK_SESSIONS.map((session) => ({
-			...session,
-			training: MOCK_TRAININGS.find((t) => t.id === session.moduleId),
-			startDateObj: new Date(session.startDate),
-		}))
-			.filter(
-				(session) => session.training && session.startDateObj >= new Date(),
-			) // Filtrer les sessions futures
-			.sort((a, b) => a.startDateObj.getTime() - b.startDateObj.getTime()); // Trier par date croissante
-	}, []);
+		return (
+			sessionStore.items as typeof sessionStore.items &
+				{ module: TrainingTableType | undefined }[]
+		)
+			.map(
+				(session) =>
+					({
+						...session,
+						startDate: new Date(session.startDate),
+					}) as {
+						startDate: Date;
+						location: string;
+						id?: string | undefined;
+						createdAt?: Date | null | undefined;
+						updatedAt?: Date | null | undefined;
+						deletedAt?: Date | null | undefined;
+						moduleId?: string | null | undefined;
+					} & { module: TrainingTableType | undefined },
+			)
+			.filter((session) => session.module && session.startDate >= new Date())
+			.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+	}, [sessionStore.items]);
 
 	return (
 		<>
@@ -49,7 +68,7 @@ export default function TrainingCalendar() {
 							>
 								<CardHeader>
 									<CardTitle className="text-2xl text-blue-800">
-										{session.training?.title}
+										{session.module?.title}
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
@@ -60,10 +79,11 @@ export default function TrainingCalendar() {
 												{t("pages.calendar.startDate")}
 											</span>
 											<span className="ml-2">
-												{session.startDateObj.toLocaleDateString(
-													i18n.language,
-													{ year: "numeric", month: "long", day: "numeric" },
-												)}
+												{session.startDate.toLocaleDateString(i18n.language, {
+													year: "numeric",
+													month: "long",
+													day: "numeric",
+												})}
 											</span>
 										</div>
 										<div className="flex items-center text-lg">
@@ -77,14 +97,14 @@ export default function TrainingCalendar() {
 											<Users className="w-5 h-5 mr-3 text-purple-600" />
 											<span className="font-semibold">Durée:</span>
 											<span className="ml-2">
-												{session.training?.duration}h
+												{session.module?.totalDuration}h
 											</span>
 										</div>
 									</div>
 									<Button asChild className="mt-3">
 										<Link
 											to={`/courses/$courseId`}
-											params={{ courseId: session.moduleId }}
+											params={{ courseId: session.moduleId as string }}
 										>
 											{t("pages.calendar.viewSession")}{" "}
 											<ArrowRight className="w-4 h-4 ml-2" />

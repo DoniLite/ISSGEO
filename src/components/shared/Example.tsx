@@ -4,7 +4,7 @@ type ChildHandle = {
 	focusInput: () => void;
 };
 
-const Child = forwardRef<ChildHandle>((props, ref) => {
+const Child = forwardRef<ChildHandle>((_props, ref) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useImperativeHandle(ref, () => ({

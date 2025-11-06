@@ -5,15 +5,15 @@ export const filterInternDate = <
 	U extends Record<string | number | symbol, unknown>,
 >(
 	row: Row<T>,
-	rowId: string,
+	_rowId: string,
 	updateValue: U,
 ) => {
 	if (updateValue.start instanceof Date && updateValue.end instanceof Date) {
 		const start = updateValue.start.getTime();
 		const end = updateValue.end.getTime();
 
-		const created = new Date(row.original?.createdAt ?? '').getTime();
-		const updated = new Date(row.original?.updatedAt ?? '').getTime();
+		const created = new Date(row.original?.createdAt ?? "").getTime();
+		const updated = new Date(row.original?.updatedAt ?? "").getTime();
 
 		return (
 			(updated >= start && updated <= end) ||

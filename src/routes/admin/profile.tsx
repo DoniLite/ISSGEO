@@ -1,7 +1,7 @@
-import IndexPage from '@/components/dashboard/pages/Index';
+import IndexPage from "@/components/dashboard/pages/Index";
 // import { apiClient } from '@/hooks/api';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/admin/profile')({
-  component: IndexPage,
+export const Route = createFileRoute("/admin/profile")({
+	component: IndexPage,
 });
