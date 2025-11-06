@@ -19,7 +19,7 @@
 		"generate": "bunx @tanstack/router-cli generate",
 		"purge:db": "docker compose down -v",
 		"wake:docker": "docker compose up -d",
-		"wake:db": "docker compose up db -d",
+		"wake:db": "docker compose up issgeo_db -d",
 		"down:db": "docker compose down",
 		"push:db": "bunx drizzle-kit push",
 		"migrate:db": "bunx drizzle-kit migrate",
@@ -81,7 +81,7 @@
 		"drizzle-kit": "^0.31.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.5",
+		"@biomejs/biome": "2.3.4",
 		"@commitlint/cli": "^20.1.0",
 		"@commitlint/config-conventional": "^20.0.0",
 		"@tanstack/router-cli": "^1.131.27",
