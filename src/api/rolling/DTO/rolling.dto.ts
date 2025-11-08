@@ -1,6 +1,6 @@
-import { DTO } from "@/core/decorators";
-import { BaseCreateDTO, BaseUpdateDTO } from "@/core/dto";
-import { IsOptional, IsString } from "class-validator";
+import { DTO } from '@/core/decorators';
+import { BaseCreateDTO, BaseUpdateDTO } from '@/core/dto';
+import { IsOptional, IsString } from 'class-validator';
 
 @DTO()
 export class CreateRollingDTO extends BaseCreateDTO {
@@ -27,7 +27,7 @@ export class CreateRollingDTO extends BaseCreateDTO {
 	experience?: string;
 
 	@IsString()
-	sessionId!: string;
+	courseId!: string;
 }
 
 @DTO()
@@ -55,8 +55,4 @@ export class UpdateRollingDTO extends BaseUpdateDTO {
 	@IsOptional()
 	@IsString()
 	experience?: string;
-
-	@IsOptional()
-	@IsString()
-	sessionId?: string;
 }

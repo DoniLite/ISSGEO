@@ -1,5 +1,10 @@
 import { BaseRepository } from "@/core/base.repository";
-import { TrainingSessionTable, TrainingTable, type TrainingSessionTableType, type TrainingTableType } from "@/db";
+import {
+	TrainingSessionTable,
+	TrainingTable,
+	type TrainingSessionTableType,
+	type TrainingTableType,
+} from "@/db";
 import type { CreateSessionDTO, UpdateSessionDTO } from "../DTO/session.dto";
 import { Repository } from "@/core/decorators";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
@@ -22,7 +27,9 @@ export class SessionRepository extends BaseRepository<
 		(TrainingSessionTableType & { module: TrainingTableType | undefined })[]
 	> {
 		// Fetch modules for the given session IDs
-		const moduleIds = items.map((item) => item.moduleId).filter(Boolean) as string[];
+		const moduleIds = items
+			.map((item) => item.moduleId)
+			.filter(Boolean) as string[];
 		const modules = await this.db
 			.select()
 			.from(TrainingTable)

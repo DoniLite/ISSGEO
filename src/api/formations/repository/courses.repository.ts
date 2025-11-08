@@ -76,7 +76,7 @@ export class CoursesRepository extends BaseRepository<
     id: string,
     dto: UpdateModuleDTO
   ): Promise<ModuleTableType[] | null> {
-    return this.updateModule(id, dto);
+    return this.ModuleRepo.update(id, dto);
   }
 
   async deleteModule(id: string): Promise<boolean> {

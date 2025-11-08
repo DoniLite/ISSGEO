@@ -10,24 +10,12 @@ export class CreateCourseDTO extends BaseCreateDTO {
 	@IsString()
 	description!: string;
 
-	@IsNumber()
-	duration!: number;
-
-	@IsNumber()
-	priceMin!: number;
-
-	@IsNumber()
-	priceMax!: number;
-
 	@IsArray()
 	learningOutcomes!: string[];
 
 	@IsOptional()
 	@IsString()
 	targetAudience?: string;
-
-	@IsArray()
-	modules!: string[];
 
 	@IsOptional()
 	@IsString()
@@ -45,28 +33,12 @@ export class UpdateCourseDTO extends BaseUpdateDTO {
 	description?: string;
 
 	@IsOptional()
-	@IsNumber()
-	duration?: number;
-
-	@IsOptional()
-	@IsNumber()
-	priceMin?: number;
-
-	@IsOptional()
-	@IsNumber()
-	priceMax?: number;
-
-	@IsOptional()
 	@IsArray()
 	learningOutcomes?: string[];
 
 	@IsOptional()
 	@IsString()
 	targetAudience?: string;
-
-	@IsOptional()
-	@IsArray()
-	modules?: string[];
 
 	@IsOptional()
 	@IsNumber()
