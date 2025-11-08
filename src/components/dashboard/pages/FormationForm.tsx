@@ -17,19 +17,13 @@ import useCoursesStore from "@/stores/formations/courses.store";
 import useThematicStoreStore from "@/stores/formations/thematic.store";
 import useKeyCompetencyStore from "@/stores/formations/keyCompetency.store";
 import useModuleStore from "@/stores/formations/module.store";
-import type {
-	KeyCompetencyTableType,
-	TrainingTableType,
-	ModuleTableType,
-} from "@/db";
+import type { TrainingTableType, ModuleTableType } from "@/db";
 import type {
 	CreateModuleTDO,
 	UpdateModuleDTO,
 } from "@/api/formations/DTO/modules.dto";
-import type { CreateCourseDTO } from "@/api/formations/DTO/courses.dto";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { EditionMode } from "@/lib/table/hooks/forms/useEntityEditor";
-import type { PaginationQuery } from "@/lib/interfaces/pagination";
 
 // Schema de validation
 const trainingSchema = z.object({
@@ -37,9 +31,9 @@ const trainingSchema = z.object({
 	description: z
 		.string()
 		.min(10, "La description doit contenir au moins 10 caractères"),
-	targetAudience: z.string().optional(),
-	thematicId: z.string().optional(),
-	learningOutcomes: z.array(z.string()).optional(),
+	targetAudience: z.string(),
+	thematicId: z.string(),
+	learningOutcomes: z.array(z.string()),
 });
 
 const competencySchema = z.object({
@@ -220,7 +214,7 @@ export default function TrainingCreationForm() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
 		thematicStore.fetchData();
-		if (courseId) {
+		if (typeof courseId === "string" && courseId !== "undefined") {
 			courseStore.findOne(courseId).then((d) => {
 				if (d) {
 					reset({
@@ -228,16 +222,15 @@ export default function TrainingCreationForm() {
 						description: d.description,
 						targetAudience: d.targetAudience as string,
 						learningOutcomes: d.learningOutcomes as string[],
+						thematicId: d.thematicId as string,
 					});
 					setModule(d);
 					setEditionState(EditionMode.UPDATE);
 				}
 			});
-			keyCompetencyStore.fetchData({ moduleId: courseId } as PaginationQuery);
+			keyCompetencyStore.fetchAll({ moduleId: courseId }, { force: true });
 			// fetch modules for this course and keep locally
-			moduleStore.fetchAll({ courseId }).then((res) => {
-				setModulesList(res || []);
-			});
+			moduleStore.fetchAll({ courseId }, { force: true });
 		}
 	}, []);
 
@@ -249,23 +242,26 @@ export default function TrainingCreationForm() {
 	const [newThematicIcon, setNewThematicIcon] = useState("");
 	const [newModule, setModule] = useState<TrainingTableType>();
 	const moduleStore = useModuleStore();
-	const [modulesList, setModulesList] = useState<ModuleTableType[]>([]);
 	const [currentModuleForm, setCurrentModuleForm] = useState<{
 		title: string;
 		price: number;
 		duration: number;
 		id?: string;
 	} | null>(null);
-	const [selectedCompetency, setSelectedCompetency] = useState<
-		KeyCompetencyTableType[]
-	>([]);
+
 	const [editionState, setEditionState] = useState<EditionMode>(
 		EditionMode.CREATE,
 	);
-	const printedCompetency = useMemo(
-		() => keyCompetencyStore.items,
-		[keyCompetencyStore.items],
+
+	const printedModules = useMemo(
+		() => moduleStore.allItems,
+		[moduleStore.allItems],
 	);
+	const printedCompetency = useMemo(
+		() => keyCompetencyStore.allItems,
+		[keyCompetencyStore.allItems],
+	);
+
 	const thematicEntries = useMemo(
 		() =>
 			thematicStore.items.map((e) => ({
@@ -285,7 +281,7 @@ export default function TrainingCreationForm() {
 		resolver: zodResolver(trainingSchema),
 		defaultValues: {
 			learningOutcomes: [],
-		},
+		}
 	});
 
 	const addThematic = async () => {
@@ -302,13 +298,10 @@ export default function TrainingCreationForm() {
 
 	const addCompetency = async (competency: CompetencyFormData) => {
 		if (newModule?.id) {
-			const res = await keyCompetencyStore.create({
+			await keyCompetencyStore.create({
 				...competency,
 				moduleId: newModule?.id,
 			});
-			if (res) {
-				setSelectedCompetency((prev) => [res, ...prev]);
-			}
 			setCurrentCompetency(null);
 		}
 	};
@@ -344,27 +337,23 @@ export default function TrainingCreationForm() {
 		// If id present -> update
 		if (currentModuleForm.id) {
 			await moduleStore.update(currentModuleForm.id, updatePayload);
-			// update local list
-			setModulesList((prev) =>
-				prev.map((it) =>
-					it.id === currentModuleForm.id ? { ...it, ...updatePayload } : it,
-				),
-			);
 		} else {
 			// create
-			const created = await moduleStore.create(createPayload);
-			if (created) {
-				setModulesList((prev) => [created, ...prev]);
-			}
+			await moduleStore.create(createPayload);
 		}
 
 		setCurrentModuleForm(null);
 	};
 
-	const removeModuleLocal = (id?: string) => {
+	const removeModuleLocal = async (id?: string) => {
 		if (!id) return;
-		// Do NOT call API to delete (per requirement). Just remove locally.
-		setModulesList((prev) => prev.filter((m) => m.id !== id));
+		await moduleStore.deleteOne(id);
+	};
+
+	const removeCompetency = async (id?: string) => {
+		if (!id) return;
+
+		await keyCompetencyStore.deleteOne(id);
 	};
 
 	return (
@@ -387,12 +376,10 @@ export default function TrainingCreationForm() {
 							const formData = watch();
 							if (stepNumber === 4) {
 								if (editionState === EditionMode.CREATE) {
-									console.log("form data ===>", formData);
 									courseStore
-										.create(formData as CreateCourseDTO)
+										.create(formData)
 										.then((course) => setModule(course));
 								} else if (newModule?.id) {
-									console.log("form data ===>", formData);
 									courseStore.update(newModule?.id, formData);
 								}
 							}
@@ -447,7 +434,7 @@ export default function TrainingCreationForm() {
 							</div>
 						</Step>
 
-						{/* Step 2: Price and thematic */}
+						{/* Step 2: Thematic */}
 						<Step>
 							<div className="space-y-4">
 								<h3 className="text-lg font-semibold">
@@ -576,7 +563,7 @@ export default function TrainingCreationForm() {
 								</h3>
 
 								<div className="space-y-4">
-									{printedCompetency.map((comp, index) => (
+									{printedCompetency.map((comp) => (
 										<Card key={comp.title} className="p-4">
 											<div className="flex items-start justify-between">
 												<div className="flex items-start gap-3">
@@ -608,11 +595,7 @@ export default function TrainingCreationForm() {
 													type="button"
 													variant="ghost"
 													size="icon-sm"
-													onClick={() =>
-														setSelectedCompetency(
-															selectedCompetency.filter((_, i) => i !== index),
-														)
-													}
+													onClick={() => removeCompetency(comp.id)}
 												>
 													<Trash2 className="w-4 h-4" />
 												</Button>
@@ -744,7 +727,6 @@ export default function TrainingCreationForm() {
 														currentCompetency.title &&
 														currentCompetency.description
 													) {
-														console.log("called");
 														addCompetency(currentCompetency);
 													}
 												}}
@@ -773,7 +755,7 @@ export default function TrainingCreationForm() {
 								</h3>
 
 								<div className="space-y-4">
-									{modulesList.map((mod) => (
+									{printedModules.map((mod) => (
 										<Card key={mod.id} className="p-4">
 											<div className="flex items-start justify-between">
 												<div>

@@ -2,7 +2,6 @@
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
 import type { CreateJobDTO, UpdateJobDTO } from "@/api/job";
 import EntityEditDialog from "@/components/shared/AppDialog";
-import type { EntryType } from "@/components/shared/entity/SortedCombobox";
 import EntitySelect from "@/components/shared/entity/SortedCombobox";
 import { Button } from "@/components/ui/button";
 import type { JobOfferTableType } from "@/db";
@@ -217,7 +216,7 @@ const TableFilters = <T extends Record<string, unknown>>({
 					id: type,
 					label: t(`admin.job.form.contracts.${type}`),
 				})),
-			] as EntryType[],
+			],
 		[],
 	);
 
