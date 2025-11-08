@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <> */
-import type { ZodType } from "zod";
+import type { ZodType } from 'zod';
 import {
 	useForm,
 	type Path,
@@ -7,8 +7,11 @@ import {
 	type FieldValues,
 	type Resolver,
 	type SubmitHandler,
-} from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+	type EventType,
+	type FormState,
+	type InternalFieldName,
+} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	Form,
 	FormField,
@@ -16,29 +19,30 @@ import {
 	FormLabel,
 	FormControl,
 	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
 	Select,
 	SelectTrigger,
 	SelectValue,
 	SelectContent,
 	SelectItem,
-} from "@/components/ui/select";
-import { useTranslation } from "react-i18next";
-import { EditionMode } from "@/lib/table/hooks/forms/useEntityEditor";
-import type { EntryType } from "./SortedCombobox";
-import EntitySelect from "./SortedCombobox";
+} from '@/components/ui/select';
+import { useTranslation } from 'react-i18next';
+import { EditionMode } from '@/lib/table/hooks/forms/useEntityEditor';
+import type { EntryType } from './SortedCombobox';
+import EntitySelect from './SortedCombobox';
 
 export interface GenericFormField<T extends FieldValues> {
 	name: keyof T;
 	label: string;
-	type: (typeof inputTypes)[number] | "textarea" | "select" | "combobox";
+	type: (typeof inputTypes)[number] | 'textarea' | 'select' | 'combobox';
 	options?: string[]; // pour select
 	entries?: EntryType[];
 	placeholder?: string;
 	required?: boolean;
+	multiple?: boolean;
 }
 
 interface GenericFormProps<T extends FieldValues, CreateDTO, UpdateDTO> {
@@ -51,31 +55,38 @@ interface GenericFormProps<T extends FieldValues, CreateDTO, UpdateDTO> {
 	onSubmit: (data: CreateDTO | UpdateDTO) => void;
 	onCancel?: () => void;
 	onSearch?: (q: string) => void;
+	subscriber?: (
+		data: Partial<FormState<T>> & {
+			values: T;
+			name?: InternalFieldName;
+			type?: EventType;
+		},
+	) => void;
 }
 
 const inputTypes = [
-	"number",
-	"search",
-	"date",
-	"email",
-	"url",
-	"time",
-	"text",
-	"file",
-	"button",
-	"image",
-	"hidden",
-	"color",
-	"submit",
-	"reset",
-	"checkbox",
-	"radio",
-	"tel",
-	"datetime-local",
-	"month",
-	"password",
-	"range",
-	"week",
+	'number',
+	'search',
+	'date',
+	'email',
+	'url',
+	'time',
+	'text',
+	'file',
+	'button',
+	'image',
+	'hidden',
+	'color',
+	'submit',
+	'reset',
+	'checkbox',
+	'radio',
+	'tel',
+	'datetime-local',
+	'month',
+	'password',
+	'range',
+	'week',
 ] as const;
 
 export default function GenericForm<
@@ -90,6 +101,7 @@ export default function GenericForm<
 	onSubmit,
 	onCancel,
 	onSearch,
+	subscriber,
 	editionMode,
 }: GenericFormProps<T, CreateDTO, UpdateDTO>) {
 	const { t } = useTranslation();
@@ -102,6 +114,13 @@ export default function GenericForm<
 		defaultValues: entity as DefaultValues<SchemaType> | undefined,
 	});
 
+	form.subscribe({
+		formState: { values: true },
+		callback(data) {
+			subscriber?.(data);
+		},
+	});
+
 	return (
 		<Form {...form}>
 			<form
@@ -111,7 +130,7 @@ export default function GenericForm<
 				{fields
 					.filter((f) => {
 						if (editionMode === EditionMode.UPDATE) {
-							return f.type !== "password";
+							return f.type !== 'password';
 						}
 						return true;
 					})
@@ -127,7 +146,7 @@ export default function GenericForm<
 										<FormControl>
 											{(() => {
 												switch (field.type) {
-													case "textarea":
+													case 'textarea':
 														return (
 															<textarea
 																{...rhfField}
@@ -136,7 +155,7 @@ export default function GenericForm<
 																className="w-full border rounded p-2"
 															/>
 														);
-													case "select":
+													case 'select':
 														return (
 															<Select
 																name={String(field.name)}
@@ -145,7 +164,7 @@ export default function GenericForm<
 															>
 																<SelectTrigger>
 																	<SelectValue
-																		placeholder={field.placeholder || "Select"}
+																		placeholder={field.placeholder || 'Select'}
 																	/>
 																</SelectTrigger>
 																<SelectContent>
@@ -158,17 +177,18 @@ export default function GenericForm<
 															</Select>
 														);
 
-													case "combobox":
+													case 'combobox':
 														return (
 															<EntitySelect
 																entries={field.entries as EntryType[]}
-																placeholder={t(
-																	"admin.formations.form.step2.thematic_placeholder",
-																)}
+																placeholder={
+																	field.placeholder ?? t('common.select_field')
+																}
 																value={rhfField.value}
 																onSelected={rhfField.onChange}
 																onSearch={(query) => onSearch?.(query)}
 																clearable
+																multiple={field.multiple}
 															/>
 														);
 
@@ -200,11 +220,11 @@ export default function GenericForm<
 							onClick={onCancel}
 							disabled={loading}
 						>
-							{t("common.cancel")}
+							{t('common.cancel')}
 						</Button>
 					)}
 					<Button type="submit" disabled={loading}>
-						{loading ? t("common.saving") : t("common.save")}
+						{loading ? t('common.saving') : t('common.save')}
 					</Button>
 				</div>
 			</form>
