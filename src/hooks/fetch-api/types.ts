@@ -1,30 +1,30 @@
-import type { CreateCheckoutDTO, UpdateCheckoutDTO } from "@/api/checkout";
-import type { CreateContactDTO } from "@/api/contact";
+import type { CreateCheckoutDTO, UpdateCheckoutDTO } from '@/api/checkout';
+import type { CreateContactDTO } from '@/api/contact';
 import type {
 	CreateCourseDTO,
 	UpdateCourseDTO,
-} from "@/api/formations/DTO/courses.dto";
+} from '@/api/formations/DTO/courses.dto';
 import type {
 	CreateKeyCompetencyDTO,
 	UpdateKeyCompetencyDTO,
-} from "@/api/formations/DTO/keyCompetency.dto";
+} from '@/api/formations/DTO/keyCompetency.dto';
 import type {
 	CreateModuleTDO,
 	UpdateModuleDTO,
-} from "@/api/formations/DTO/modules.dto";
+} from '@/api/formations/DTO/modules.dto';
 import type {
 	CreateSessionDTO,
 	UpdateSessionDTO,
-} from "@/api/formations/DTO/session.dto";
+} from '@/api/formations/DTO/session.dto';
 import type {
 	CreateThematicDTO,
 	UpdateThematicDTO,
-} from "@/api/formations/DTO/thematic.dto";
-import type { CreateJobDTO, UpdateJobDTO } from "@/api/job";
-import type { CreateRollingDTO, UpdateRollingDTO } from "@/api/rolling";
-import type { CreateTestimonialDTO } from "@/api/testimonials";
-import type { CreateUserDto, LoginDTO, UpdateUserDto } from "@/api/user";
-import type { EntityStatistics } from "@/core/base.repository";
+} from '@/api/formations/DTO/thematic.dto';
+import type { CreateJobDTO, UpdateJobDTO } from '@/api/job';
+import type { CreateRollingDTO, UpdateRollingDTO } from '@/api/rolling';
+import type { CreateTestimonialDTO } from '@/api/testimonials';
+import type { CreateUserDto, LoginDTO, UpdateUserDto } from '@/api/user';
+import type { EntityStatistics } from '@/core/base.repository';
 import type {
 	ContactTableType as Contact,
 	UserTableType as User,
@@ -37,11 +37,11 @@ import type {
 	ModuleTableType as Module,
 	RollingTableType as Rolling,
 	CheckoutTableType as Checkout,
-} from "@/db";
+} from '@/db';
 import type {
 	PaginatedResponse,
 	PaginationQuery,
-} from "@/lib/interfaces/pagination";
+} from '@/lib/interfaces/pagination';
 
 export interface ApiResponse<T = unknown> {
 	data: T;
@@ -56,7 +56,7 @@ export class ApiError extends Error {
 		public code?: string,
 	) {
 		super(message);
-		this.name = "ApiError";
+		this.name = 'ApiError';
 	}
 }
 
@@ -73,13 +73,14 @@ export interface RouteDefinition {
 	body?: unknown;
 }
 
-export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export interface RequestConfig {
 	method?: HttpMethod;
 	headers?: Record<string, string>;
 	body?: unknown;
 	params?: Record<string, unknown>;
+	forceQueries?: boolean
 }
 
 export interface UseApiState<T> {
@@ -106,7 +107,7 @@ type DeleteMultipleBody = { ids: string[] };
 
 export interface ApiRoutes {
 	session: {
-		"/session": {
+		'/session': {
 			GET: {
 				response: PaginatedResponse<Session & { module: Course | undefined }>;
 				params: PaginationQuery;
@@ -120,18 +121,18 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/session/:id": {
+		'/session/:id': {
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateSessionDTO;
-				params: { id: Session["id"] };
+				params: { id: Session['id'] };
 			};
 			DELETE: {
-				params: { id: Session["id"] };
+				params: { id: Session['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"session/all": {
+		'session/all': {
 			GET: {
 				response: (Session & { module: Course | undefined })[];
 				params: Record<string, unknown>;
@@ -139,7 +140,7 @@ export interface ApiRoutes {
 		};
 	};
 	thematic: {
-		"/thematic": {
+		'/thematic': {
 			GET: {
 				response: PaginatedResponse<Thematic>;
 				params: PaginationQuery;
@@ -153,24 +154,24 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/thematic/:id": {
+		'/thematic/:id': {
 			GET: {
 				response: Thematic;
 				params: {
-					id: Thematic["id"];
+					id: Thematic['id'];
 				};
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateThematicDTO;
-				params: { id: Thematic["id"] };
+				params: { id: Thematic['id'] };
 			};
 			DELETE: {
-				params: { id: Thematic["id"] };
+				params: { id: Thematic['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"/thematic/all": {
+		'/thematic/all': {
 			GET: {
 				response: Thematic[];
 				params: Record<string, unknown>;
@@ -178,7 +179,7 @@ export interface ApiRoutes {
 		};
 	};
 	courses: {
-		"/courses": {
+		'/courses': {
 			GET: {
 				response: PaginatedResponse<Course>;
 				params: PaginationQuery;
@@ -192,29 +193,29 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/courses/stats": {
+		'/courses/stats': {
 			GET: {
 				response: EntityStatistics;
 			};
 		};
-		"/courses/:id": {
+		'/courses/:id': {
 			GET: {
 				response: Course;
 				params: {
-					id: Course["id"];
+					id: Course['id'];
 				};
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateCourseDTO;
-				params: { id: Course["id"] };
+				params: { id: Course['id'] };
 			};
 			DELETE: {
-				params: { id: Course["id"] };
+				params: { id: Course['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"/courses/key-competency": {
+		'/courses/key-competency': {
 			GET: {
 				response: PaginatedResponse<KeyCompetency>;
 				params: PaginationQuery;
@@ -228,25 +229,25 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/courses/key-competency/:id": {
+		'/courses/key-competency/:id': {
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateKeyCompetencyDTO;
-				params: { id: KeyCompetency["id"] };
+				params: { id: KeyCompetency['id'] };
 			};
 			DELETE: {
-				params: { id: KeyCompetency["id"] };
+				params: { id: KeyCompetency['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"/courses/key-competency/all": {
+		'/courses/key-competency/all': {
 			GET: {
 				response: KeyCompetency[];
-				params: Record<string, unknown>;
+				params: PaginationQuery;
 			};
 		};
 
-		"/courses/module": {
+		'/courses/module': {
 			GET: {
 				response: PaginatedResponse<Module>;
 				params: PaginationQuery;
@@ -260,26 +261,26 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/courses/module/:id": {
+		'/courses/module/:id': {
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateModuleDTO;
-				params: { id: Module["id"] };
+				params: { id: Module['id'] };
 			};
 			DELETE: {
-				params: { id: Module["id"] };
+				params: { id: Module['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"/courses/module/all": {
+		'/courses/module/all': {
 			GET: {
 				response: Module[];
-				params: Record<string, unknown>;
+				params: PaginationQuery;
 			};
 		};
 	};
 	users: {
-		"/users": {
+		'/users': {
 			GET: {
 				response: PaginatedResponse<User>;
 				params: PaginationQuery;
@@ -293,43 +294,43 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/users/stats": {
+		'/users/stats': {
 			GET: {
 				response: EntityStatistics;
 			};
 		};
-		"/users/login": {
+		'/users/login': {
 			POST: {
 				body: LoginDTO;
-				response: Pick<User, "id" | "name" | "email" | "image">;
+				response: Pick<User, 'id' | 'name' | 'email' | 'image'>;
 			};
 		};
-		"/users/logout": {
+		'/users/logout': {
 			GET: {
 				response: { authenticated: false };
 			};
 		};
-		"/users/:id": {
+		'/users/:id': {
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateUserDto;
-				params: { id: User["id"] };
+				params: { id: User['id'] };
 			};
 			DELETE: {
-				params: { id: User["id"] };
+				params: { id: User['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
-		"/users/me": {
+		'/users/me': {
 			GET: {
 				response:
-					| Pick<User, "id" | "email" | "name" | "image">
+					| Pick<User, 'id' | 'email' | 'name' | 'image'>
 					| { authenticated: false; code?: number; message?: string };
 			};
 		};
 	};
 	contact: {
-		"/contact": {
+		'/contact': {
 			GET: {
 				response: PaginatedResponse<Contact>;
 				params: PaginationQuery;
@@ -343,20 +344,20 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/contact/stats": {
+		'/contact/stats': {
 			GET: {
 				response: EntityStatistics;
 			};
 		};
-		"/contact/:id": {
+		'/contact/:id': {
 			DELETE: {
-				params: { id: Contact["id"] };
+				params: { id: Contact['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
 	};
 	testimonials: {
-		"/testimonials": {
+		'/testimonials': {
 			GET: {
 				response: PaginatedResponse<Testimonials>;
 				params: PaginationQuery;
@@ -370,20 +371,20 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/testimonials/stats": {
+		'/testimonials/stats': {
 			GET: {
 				response: EntityStatistics;
 			};
 		};
-		"/testimonials/:id": {
+		'/testimonials/:id': {
 			DELETE: {
-				params: { id: Testimonials["id"] };
+				params: { id: Testimonials['id'] };
 				response: DefaultDeleteResponse;
 			};
 		};
 	};
 	job: {
-		"/job": {
+		'/job': {
 			GET: {
 				response: PaginatedResponse<Job>;
 				params: PaginationQuery;
@@ -397,20 +398,20 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/job/:id": {
+		'/job/:id': {
 			DELETE: {
-				params: { id: Job["id"] };
+				params: { id: Job['id'] };
 				response: DefaultDeleteResponse;
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateJobDTO;
-				params: { id: Job["id"] };
+				params: { id: Job['id'] };
 			};
 		};
 	};
 	rolling: {
-		"/rolling": {
+		'/rolling': {
 			GET: {
 				response: PaginatedResponse<Rolling>;
 				params: PaginationQuery;
@@ -418,26 +419,27 @@ export interface ApiRoutes {
 			POST: {
 				response: Rolling;
 				body: CreateRollingDTO;
+				params: { ids: string };
 			};
 			DELETE: {
 				body: DeleteMultipleBody;
 				response: number;
 			};
 		};
-		"/rolling/:id": {
+		'/rolling/:id': {
 			DELETE: {
-				params: { id: Rolling["id"] };
+				params: { id: Rolling['id'] };
 				response: DefaultDeleteResponse;
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateRollingDTO;
-				params: { id: Rolling["id"] };
+				params: { id: Rolling['id'] };
 			};
 		};
 	};
 	checkout: {
-		"/checkout": {
+		'/checkout': {
 			GET: {
 				response: PaginatedResponse<Checkout>;
 				params: PaginationQuery;
@@ -451,15 +453,15 @@ export interface ApiRoutes {
 				response: number;
 			};
 		};
-		"/checkout/:id": {
+		'/checkout/:id': {
 			DELETE: {
-				params: { id: Checkout["id"] };
+				params: { id: Checkout['id'] };
 				response: DefaultDeleteResponse;
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateCheckoutDTO;
-				params: { id: Checkout["id"] };
+				params: { id: Checkout['id'] };
 			};
 		};
 	};
