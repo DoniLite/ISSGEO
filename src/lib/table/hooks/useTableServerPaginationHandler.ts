@@ -12,6 +12,7 @@ export interface TableServerPaginationHandlerOptions<
 	initialPageSize?: number;
 	initialQuery?: Partial<Q>;
 	refetchFunction: (query: Q) => Promise<PaginatedResponse<T>>;
+	fetchAll?: (query: Q) => Promise<T[]>;
 }
 export interface FetchAllDataOptions {
 	force?: boolean;
@@ -29,6 +30,7 @@ export function useTableServerPaginationHandler<
 		initialPageSize = PAGINATION_DEFAULT_PAGE_SIZE,
 		initialQuery = {},
 		refetchFunction,
+		fetchAll,
 	} = options;
 
 	// Internal refs managed by this composable
@@ -113,26 +115,32 @@ export function useTableServerPaginationHandler<
 			options: FetchAllDataOptions = { force: false },
 		): Promise<T[]> => {
 			const { filters, ...restQuery } = newQuery;
-			if (!allItemsRef.current.length || options.force) {
-				const response = await refetchFunction({
+			if (options.force && fetchAll) {
+				const response = await fetchAll({
 					...(restQuery as Q),
 					...(filters as Record<string, unknown>),
-					pageSize: -1,
 				} as Q);
-				_setAllItems(response.items);
-				return response.items;
+				_setAllItems(response);
+				return response;
 			}
 			return allItemsRef.current;
 		},
-		[refetchFunction, _setAllItems],
+		[_setAllItems, fetchAll],
 	);
 
 	/**
 	 * Handles pagination state after creating or updating an item
 	 * Adds the item to the beginning of the list and maintains page size
 	 */
+
 	const handlePostCreate = useCallback((newItem: T) => {
 		setItems((prev) => {
+			const next = [newItem, ...prev];
+			const { pageSize } = paginationRef.current;
+			return next.length > pageSize ? next.slice(0, pageSize) : next;
+		});
+
+		setAllItems((prev) => {
 			const next = [newItem, ...prev];
 			const { pageSize } = paginationRef.current;
 			return next.length > pageSize ? next.slice(0, pageSize) : next;
@@ -149,8 +157,21 @@ export function useTableServerPaginationHandler<
 	 * Handles pagination state after updating an existing item
 	 * Updates the item in place if it exists in the current page
 	 */
+
 	const handlePostUpdate = useCallback((updatedItem: T) => {
 		setItems((prev) => {
+			const index = prev.findIndex((item) => item.id === updatedItem.id);
+			if (index === -1) {
+				return prev;
+			}
+			const newItems = [...prev];
+			newItems[index] = {
+				...updatedItem,
+			} as T;
+			return newItems;
+		});
+
+		setAllItems((prev) => {
 			const index = prev.findIndex((item) => item.id === updatedItem.id);
 			if (index === -1) {
 				return prev;
@@ -167,9 +188,19 @@ export function useTableServerPaginationHandler<
 	 * Handles pagination state after updating an existing item
 	 * Updates the item partially in place if it exists in the current page
 	 */
+
 	const handlePostUpdatePartial = useCallback(
 		(id: T["id"], partialUpdatedItem: Partial<T>): Partial<T> => {
 			setItems((prev) => {
+				const index = prev.findIndex((item) => item.id === id);
+				if (index === -1) {
+					return prev;
+				}
+				const newItems = [...prev];
+				newItems[index] = { ...newItems[index], ...partialUpdatedItem } as T;
+				return newItems;
+			});
+			setAllItems((prev) => {
 				const index = prev.findIndex((item) => item.id === id);
 				if (index === -1) {
 					return prev;
@@ -188,6 +219,7 @@ export function useTableServerPaginationHandler<
 	 */
 	const removeItemsFromList = useCallback((itemIds: T["id"][]) => {
 		setItems((prev) => prev.filter((item) => !itemIds.includes(item.id)));
+		setAllItems((prev) => prev.filter((item) => !itemIds.includes(item.id)));
 	}, []);
 
 	/**
@@ -228,6 +260,7 @@ export function useTableServerPaginationHandler<
 	/**
 	 * Handles bulk delete operations
 	 */
+
 	const handleBulkDelete = useCallback(
 		async (deletedItemIds: T["id"][]) => {
 			// Remove items from the current list

@@ -2,7 +2,10 @@
 import type { BaseStore, PaginatedStore } from "../base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
 import { apiClient } from "@/hooks/fetch-api";
-import { useTableServerPaginationHandler } from "@/lib/table/hooks/useTableServerPaginationHandler";
+import {
+	useTableServerPaginationHandler,
+	type FetchAllDataOptions,
+} from "@/lib/table/hooks/useTableServerPaginationHandler";
 import type { KeyCompetencyTableType } from "@/db";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import { useCallback } from "react";
@@ -20,6 +23,7 @@ interface KeyCompetencyStore extends BaseStore {
 	update: (id: string, data: UpdateKeyCompetencyDTO) => Promise<void>;
 	fetchAll: (
 		query?: Record<string, unknown>,
+		options?: FetchAllDataOptions,
 	) => Promise<KeyCompetencyTableType[] | undefined>;
 }
 
@@ -40,11 +44,24 @@ export default function useKeyCompetencyStore(): KeyCompetencyStore &
 		return res.data;
 	}, []);
 
+	const fetchAll = useCallback(async (query?: PaginationQuery) => {
+		const { data } = await apiClient.call(
+			"courses",
+			"/courses/key-competency/all",
+			"GET",
+			{
+				params: query,
+			},
+		);
+		return data;
+	}, []);
+
 	const paginationHandler = useTableServerPaginationHandler<
 		KeyCompetencyTableType,
 		PaginationQuery
 	>({
 		refetchFunction,
+		fetchAll,
 	});
 
 	const fetchData = withAsyncOperation(
@@ -100,20 +117,6 @@ export default function useKeyCompetencyStore(): KeyCompetencyStore &
 		paginationHandler.handleBulkDelete(ids);
 	});
 
-	const fetchAll = withAsyncOperation(
-		async (query?: Record<string, unknown>) => {
-			const { data } = await apiClient.call(
-				"courses",
-				"/courses/key-competency/all",
-				"GET",
-				{
-					params: query,
-				},
-			);
-			return data;
-		},
-	);
-
 	const goToPage = withAsyncOperation(async (page: number) => {
 		await paginationHandler.goToPage(page);
 	});
@@ -151,7 +154,7 @@ export default function useKeyCompetencyStore(): KeyCompetencyStore &
 		goToPage,
 		updateFilters,
 		updatePageSize,
-		fetchAll,
+		fetchAll: paginationHandler.fetchAllData,
 		resetFilters: paginationHandler.resetFilters,
 	};
 }
