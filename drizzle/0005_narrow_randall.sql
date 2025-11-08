@@ -1,0 +1,2 @@
+ALTER TABLE "Rolling" ADD COLUMN "course_id" text;--> statement-breakpoint
+ALTER TABLE "Rolling" ADD CONSTRAINT "Rolling_course_id_Training_id_fk" FOREIGN KEY ("course_id") REFERENCES "public"."Training"("id") ON DELETE no action ON UPDATE no action;
