@@ -25,8 +25,8 @@
 		"migrate:db": "bunx drizzle-kit migrate",
 		"generate:migrations": "bunx drizzle-kit generate",
 		"seed:db": "bun ./src/seeders/index.ts",
-		"init:env": "bun ./scripts/init.ts",
-		"init:all": "bun init:env && bun wake:db && bun push:db && bun seed:db",
+		"init:env": "cp ./.env.example ./.env",
+		"init:all": "bun init:env && bun wake:db && bun migrate:db && bun seed:db",
 		"find:keys": "bun run ./scripts/findKeys.ts"
 	},
 	"dependencies": {
