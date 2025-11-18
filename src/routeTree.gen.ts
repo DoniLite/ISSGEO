@@ -8,476 +8,498 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as FaqRouteImport } from "./routes/faq";
-import { Route as ErrorRouteImport } from "./routes/error";
-import { Route as CompetencesRouteImport } from "./routes/competences";
-import { Route as CalendarRouteImport } from "./routes/calendar";
-import { Route as AboutRouteImport } from "./routes/about";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as CoursesIndexRouteImport } from "./routes/courses/index";
-import { Route as AdminIndexRouteImport } from "./routes/admin/index";
-import { Route as TeamJoinRouteImport } from "./routes/team/join";
-import { Route as ServicesServiceIdRouteImport } from "./routes/services/$serviceId";
-import { Route as CoursesCourseIdRouteImport } from "./routes/courses/$courseId";
-import { Route as AdminUsersRouteImport } from "./routes/admin/users";
-import { Route as AdminTestimonialsRouteImport } from "./routes/admin/testimonials";
-import { Route as AdminProfileRouteImport } from "./routes/admin/profile";
-import { Route as AdminLoginRouteImport } from "./routes/admin/login";
-import { Route as AdminJobRouteImport } from "./routes/admin/job";
-import { Route as AdminContactRouteImport } from "./routes/admin/contact";
-import { Route as AdminCalendarRouteImport } from "./routes/admin/calendar";
-import { Route as AdminCoursesIndexRouteImport } from "./routes/admin/courses/index";
-import { Route as AdminCoursesFormRouteImport } from "./routes/admin/courses/form";
-import { Route as AdminCoursesIdRouteImport } from "./routes/admin/courses/$id";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ErrorRouteImport } from './routes/error'
+import { Route as CompetencesRouteImport } from './routes/competences'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoursesIndexRouteImport } from './routes/courses/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as TeamJoinRouteImport } from './routes/team/join'
+import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
+import { Route as CoursesCourseIdRouteImport } from './routes/courses/$courseId'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin/testimonials'
+import { Route as AdminProfileRouteImport } from './routes/admin/profile'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminJobRouteImport } from './routes/admin/job'
+import { Route as AdminContactRouteImport } from './routes/admin/contact'
+import { Route as AdminCalendarRouteImport } from './routes/admin/calendar'
+import { Route as AdminCoursesIndexRouteImport } from './routes/admin/courses/index'
+import { Route as AdminCoursesFormRouteImport } from './routes/admin/courses/form'
+import { Route as AdminCoursesIdRouteImport } from './routes/admin/courses/$id'
+import { Route as AdminCoursesRollingCourseIdRouteImport } from './routes/admin/courses/rolling/$courseId'
 
 const FaqRoute = FaqRouteImport.update({
-	id: "/faq",
-	path: "/faq",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ErrorRoute = ErrorRouteImport.update({
-	id: "/error",
-	path: "/error",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompetencesRoute = CompetencesRouteImport.update({
-	id: "/competences",
-	path: "/competences",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/competences',
+  path: '/competences',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
-	id: "/calendar",
-	path: "/calendar",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
-	id: "/about",
-	path: "/about",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesIndexRoute = CoursesIndexRouteImport.update({
-	id: "/courses/",
-	path: "/courses/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/courses/',
+  path: '/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-	id: "/admin/",
-	path: "/admin/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamJoinRoute = TeamJoinRouteImport.update({
-	id: "/team/join",
-	path: "/team/join",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/team/join',
+  path: '/team/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-	id: "/services/$serviceId",
-	path: "/services/$serviceId",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/services/$serviceId',
+  path: '/services/$serviceId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesCourseIdRoute = CoursesCourseIdRouteImport.update({
-	id: "/courses/$courseId",
-	path: "/courses/$courseId",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/courses/$courseId',
+  path: '/courses/$courseId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
-	id: "/admin/users",
-	path: "/admin/users",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
-	id: "/admin/testimonials",
-	path: "/admin/testimonials",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/testimonials',
+  path: '/admin/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProfileRoute = AdminProfileRouteImport.update({
-	id: "/admin/profile",
-	path: "/admin/profile",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/profile',
+  path: '/admin/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
-	id: "/admin/login",
-	path: "/admin/login",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminJobRoute = AdminJobRouteImport.update({
-	id: "/admin/job",
-	path: "/admin/job",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/job',
+  path: '/admin/job',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminContactRoute = AdminContactRouteImport.update({
-	id: "/admin/contact",
-	path: "/admin/contact",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/contact',
+  path: '/admin/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminCalendarRoute = AdminCalendarRouteImport.update({
-	id: "/admin/calendar",
-	path: "/admin/calendar",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/calendar',
+  path: '/admin/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminCoursesIndexRoute = AdminCoursesIndexRouteImport.update({
-	id: "/admin/courses/",
-	path: "/admin/courses/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/courses/',
+  path: '/admin/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminCoursesFormRoute = AdminCoursesFormRouteImport.update({
-	id: "/admin/courses/form",
-	path: "/admin/courses/form",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/courses/form',
+  path: '/admin/courses/form',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminCoursesIdRoute = AdminCoursesIdRouteImport.update({
-	id: "/admin/courses/$id",
-	path: "/admin/courses/$id",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/courses/$id',
+  path: '/admin/courses/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCoursesRollingCourseIdRoute =
+  AdminCoursesRollingCourseIdRouteImport.update({
+    id: '/admin/courses/rolling/$courseId',
+    path: '/admin/courses/rolling/$courseId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/error": typeof ErrorRoute;
-	"/faq": typeof FaqRoute;
-	"/admin/calendar": typeof AdminCalendarRoute;
-	"/admin/contact": typeof AdminContactRoute;
-	"/admin/job": typeof AdminJobRoute;
-	"/admin/login": typeof AdminLoginRoute;
-	"/admin/profile": typeof AdminProfileRoute;
-	"/admin/testimonials": typeof AdminTestimonialsRoute;
-	"/admin/users": typeof AdminUsersRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/admin": typeof AdminIndexRoute;
-	"/courses": typeof CoursesIndexRoute;
-	"/admin/courses/$id": typeof AdminCoursesIdRoute;
-	"/admin/courses/form": typeof AdminCoursesFormRoute;
-	"/admin/courses": typeof AdminCoursesIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
+  '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/job': typeof AdminJobRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/admin': typeof AdminIndexRoute
+  '/courses': typeof CoursesIndexRoute
+  '/admin/courses/$id': typeof AdminCoursesIdRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses': typeof AdminCoursesIndexRoute
+  '/admin/courses/rolling/$courseId': typeof AdminCoursesRollingCourseIdRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/error": typeof ErrorRoute;
-	"/faq": typeof FaqRoute;
-	"/admin/calendar": typeof AdminCalendarRoute;
-	"/admin/contact": typeof AdminContactRoute;
-	"/admin/job": typeof AdminJobRoute;
-	"/admin/login": typeof AdminLoginRoute;
-	"/admin/profile": typeof AdminProfileRoute;
-	"/admin/testimonials": typeof AdminTestimonialsRoute;
-	"/admin/users": typeof AdminUsersRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/admin": typeof AdminIndexRoute;
-	"/courses": typeof CoursesIndexRoute;
-	"/admin/courses/$id": typeof AdminCoursesIdRoute;
-	"/admin/courses/form": typeof AdminCoursesFormRoute;
-	"/admin/courses": typeof AdminCoursesIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
+  '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/job': typeof AdminJobRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/admin': typeof AdminIndexRoute
+  '/courses': typeof CoursesIndexRoute
+  '/admin/courses/$id': typeof AdminCoursesIdRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses': typeof AdminCoursesIndexRoute
+  '/admin/courses/rolling/$courseId': typeof AdminCoursesRollingCourseIdRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/about": typeof AboutRoute;
-	"/calendar": typeof CalendarRoute;
-	"/competences": typeof CompetencesRoute;
-	"/error": typeof ErrorRoute;
-	"/faq": typeof FaqRoute;
-	"/admin/calendar": typeof AdminCalendarRoute;
-	"/admin/contact": typeof AdminContactRoute;
-	"/admin/job": typeof AdminJobRoute;
-	"/admin/login": typeof AdminLoginRoute;
-	"/admin/profile": typeof AdminProfileRoute;
-	"/admin/testimonials": typeof AdminTestimonialsRoute;
-	"/admin/users": typeof AdminUsersRoute;
-	"/courses/$courseId": typeof CoursesCourseIdRoute;
-	"/services/$serviceId": typeof ServicesServiceIdRoute;
-	"/team/join": typeof TeamJoinRoute;
-	"/admin/": typeof AdminIndexRoute;
-	"/courses/": typeof CoursesIndexRoute;
-	"/admin/courses/$id": typeof AdminCoursesIdRoute;
-	"/admin/courses/form": typeof AdminCoursesFormRoute;
-	"/admin/courses/": typeof AdminCoursesIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/calendar': typeof CalendarRoute
+  '/competences': typeof CompetencesRoute
+  '/error': typeof ErrorRoute
+  '/faq': typeof FaqRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/job': typeof AdminJobRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/team/join': typeof TeamJoinRoute
+  '/admin/': typeof AdminIndexRoute
+  '/courses/': typeof CoursesIndexRoute
+  '/admin/courses/$id': typeof AdminCoursesIdRoute
+  '/admin/courses/form': typeof AdminCoursesFormRoute
+  '/admin/courses/': typeof AdminCoursesIndexRoute
+  '/admin/courses/rolling/$courseId': typeof AdminCoursesRollingCourseIdRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/error"
-		| "/faq"
-		| "/admin/calendar"
-		| "/admin/contact"
-		| "/admin/job"
-		| "/admin/login"
-		| "/admin/profile"
-		| "/admin/testimonials"
-		| "/admin/users"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/join"
-		| "/admin"
-		| "/courses"
-		| "/admin/courses/$id"
-		| "/admin/courses/form"
-		| "/admin/courses";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/error"
-		| "/faq"
-		| "/admin/calendar"
-		| "/admin/contact"
-		| "/admin/job"
-		| "/admin/login"
-		| "/admin/profile"
-		| "/admin/testimonials"
-		| "/admin/users"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/join"
-		| "/admin"
-		| "/courses"
-		| "/admin/courses/$id"
-		| "/admin/courses/form"
-		| "/admin/courses";
-	id:
-		| "__root__"
-		| "/"
-		| "/about"
-		| "/calendar"
-		| "/competences"
-		| "/error"
-		| "/faq"
-		| "/admin/calendar"
-		| "/admin/contact"
-		| "/admin/job"
-		| "/admin/login"
-		| "/admin/profile"
-		| "/admin/testimonials"
-		| "/admin/users"
-		| "/courses/$courseId"
-		| "/services/$serviceId"
-		| "/team/join"
-		| "/admin/"
-		| "/courses/"
-		| "/admin/courses/$id"
-		| "/admin/courses/form"
-		| "/admin/courses/";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/error'
+    | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
+    | '/admin/job'
+    | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/admin'
+    | '/courses'
+    | '/admin/courses/$id'
+    | '/admin/courses/form'
+    | '/admin/courses'
+    | '/admin/courses/rolling/$courseId'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/error'
+    | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
+    | '/admin/job'
+    | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/admin'
+    | '/courses'
+    | '/admin/courses/$id'
+    | '/admin/courses/form'
+    | '/admin/courses'
+    | '/admin/courses/rolling/$courseId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/competences'
+    | '/error'
+    | '/faq'
+    | '/admin/calendar'
+    | '/admin/contact'
+    | '/admin/job'
+    | '/admin/login'
+    | '/admin/profile'
+    | '/admin/testimonials'
+    | '/admin/users'
+    | '/courses/$courseId'
+    | '/services/$serviceId'
+    | '/team/join'
+    | '/admin/'
+    | '/courses/'
+    | '/admin/courses/$id'
+    | '/admin/courses/form'
+    | '/admin/courses/'
+    | '/admin/courses/rolling/$courseId'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	AboutRoute: typeof AboutRoute;
-	CalendarRoute: typeof CalendarRoute;
-	CompetencesRoute: typeof CompetencesRoute;
-	ErrorRoute: typeof ErrorRoute;
-	FaqRoute: typeof FaqRoute;
-	AdminCalendarRoute: typeof AdminCalendarRoute;
-	AdminContactRoute: typeof AdminContactRoute;
-	AdminJobRoute: typeof AdminJobRoute;
-	AdminLoginRoute: typeof AdminLoginRoute;
-	AdminProfileRoute: typeof AdminProfileRoute;
-	AdminTestimonialsRoute: typeof AdminTestimonialsRoute;
-	AdminUsersRoute: typeof AdminUsersRoute;
-	CoursesCourseIdRoute: typeof CoursesCourseIdRoute;
-	ServicesServiceIdRoute: typeof ServicesServiceIdRoute;
-	TeamJoinRoute: typeof TeamJoinRoute;
-	AdminIndexRoute: typeof AdminIndexRoute;
-	CoursesIndexRoute: typeof CoursesIndexRoute;
-	AdminCoursesIdRoute: typeof AdminCoursesIdRoute;
-	AdminCoursesFormRoute: typeof AdminCoursesFormRoute;
-	AdminCoursesIndexRoute: typeof AdminCoursesIndexRoute;
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CalendarRoute: typeof CalendarRoute
+  CompetencesRoute: typeof CompetencesRoute
+  ErrorRoute: typeof ErrorRoute
+  FaqRoute: typeof FaqRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminContactRoute: typeof AdminContactRoute
+  AdminJobRoute: typeof AdminJobRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminProfileRoute: typeof AdminProfileRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  CoursesCourseIdRoute: typeof CoursesCourseIdRoute
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
+  TeamJoinRoute: typeof TeamJoinRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  CoursesIndexRoute: typeof CoursesIndexRoute
+  AdminCoursesIdRoute: typeof AdminCoursesIdRoute
+  AdminCoursesFormRoute: typeof AdminCoursesFormRoute
+  AdminCoursesIndexRoute: typeof AdminCoursesIndexRoute
+  AdminCoursesRollingCourseIdRoute: typeof AdminCoursesRollingCourseIdRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/faq": {
-			id: "/faq";
-			path: "/faq";
-			fullPath: "/faq";
-			preLoaderRoute: typeof FaqRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/error": {
-			id: "/error";
-			path: "/error";
-			fullPath: "/error";
-			preLoaderRoute: typeof ErrorRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/competences": {
-			id: "/competences";
-			path: "/competences";
-			fullPath: "/competences";
-			preLoaderRoute: typeof CompetencesRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/calendar": {
-			id: "/calendar";
-			path: "/calendar";
-			fullPath: "/calendar";
-			preLoaderRoute: typeof CalendarRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/about": {
-			id: "/about";
-			path: "/about";
-			fullPath: "/about";
-			preLoaderRoute: typeof AboutRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/courses/": {
-			id: "/courses/";
-			path: "/courses";
-			fullPath: "/courses";
-			preLoaderRoute: typeof CoursesIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/": {
-			id: "/admin/";
-			path: "/admin";
-			fullPath: "/admin";
-			preLoaderRoute: typeof AdminIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/team/join": {
-			id: "/team/join";
-			path: "/team/join";
-			fullPath: "/team/join";
-			preLoaderRoute: typeof TeamJoinRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/services/$serviceId": {
-			id: "/services/$serviceId";
-			path: "/services/$serviceId";
-			fullPath: "/services/$serviceId";
-			preLoaderRoute: typeof ServicesServiceIdRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/courses/$courseId": {
-			id: "/courses/$courseId";
-			path: "/courses/$courseId";
-			fullPath: "/courses/$courseId";
-			preLoaderRoute: typeof CoursesCourseIdRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/users": {
-			id: "/admin/users";
-			path: "/admin/users";
-			fullPath: "/admin/users";
-			preLoaderRoute: typeof AdminUsersRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/testimonials": {
-			id: "/admin/testimonials";
-			path: "/admin/testimonials";
-			fullPath: "/admin/testimonials";
-			preLoaderRoute: typeof AdminTestimonialsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/profile": {
-			id: "/admin/profile";
-			path: "/admin/profile";
-			fullPath: "/admin/profile";
-			preLoaderRoute: typeof AdminProfileRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/login": {
-			id: "/admin/login";
-			path: "/admin/login";
-			fullPath: "/admin/login";
-			preLoaderRoute: typeof AdminLoginRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/job": {
-			id: "/admin/job";
-			path: "/admin/job";
-			fullPath: "/admin/job";
-			preLoaderRoute: typeof AdminJobRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/contact": {
-			id: "/admin/contact";
-			path: "/admin/contact";
-			fullPath: "/admin/contact";
-			preLoaderRoute: typeof AdminContactRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/calendar": {
-			id: "/admin/calendar";
-			path: "/admin/calendar";
-			fullPath: "/admin/calendar";
-			preLoaderRoute: typeof AdminCalendarRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/courses/": {
-			id: "/admin/courses/";
-			path: "/admin/courses";
-			fullPath: "/admin/courses";
-			preLoaderRoute: typeof AdminCoursesIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/courses/form": {
-			id: "/admin/courses/form";
-			path: "/admin/courses/form";
-			fullPath: "/admin/courses/form";
-			preLoaderRoute: typeof AdminCoursesFormRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/admin/courses/$id": {
-			id: "/admin/courses/$id";
-			path: "/admin/courses/$id";
-			fullPath: "/admin/courses/$id";
-			preLoaderRoute: typeof AdminCoursesIdRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/competences': {
+      id: '/competences'
+      path: '/competences'
+      fullPath: '/competences'
+      preLoaderRoute: typeof CompetencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/': {
+      id: '/courses/'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/join': {
+      id: '/team/join'
+      path: '/team/join'
+      fullPath: '/team/join'
+      preLoaderRoute: typeof TeamJoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$serviceId': {
+      id: '/services/$serviceId'
+      path: '/services/$serviceId'
+      fullPath: '/services/$serviceId'
+      preLoaderRoute: typeof ServicesServiceIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/$courseId': {
+      id: '/courses/$courseId'
+      path: '/courses/$courseId'
+      fullPath: '/courses/$courseId'
+      preLoaderRoute: typeof CoursesCourseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/admin/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/admin/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/job': {
+      id: '/admin/job'
+      path: '/admin/job'
+      fullPath: '/admin/job'
+      preLoaderRoute: typeof AdminJobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contact': {
+      id: '/admin/contact'
+      path: '/admin/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AdminContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/admin/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/': {
+      id: '/admin/courses/'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminCoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/form': {
+      id: '/admin/courses/form'
+      path: '/admin/courses/form'
+      fullPath: '/admin/courses/form'
+      preLoaderRoute: typeof AdminCoursesFormRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/$id': {
+      id: '/admin/courses/$id'
+      path: '/admin/courses/$id'
+      fullPath: '/admin/courses/$id'
+      preLoaderRoute: typeof AdminCoursesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses/rolling/$courseId': {
+      id: '/admin/courses/rolling/$courseId'
+      path: '/admin/courses/rolling/$courseId'
+      fullPath: '/admin/courses/rolling/$courseId'
+      preLoaderRoute: typeof AdminCoursesRollingCourseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	AboutRoute: AboutRoute,
-	CalendarRoute: CalendarRoute,
-	CompetencesRoute: CompetencesRoute,
-	ErrorRoute: ErrorRoute,
-	FaqRoute: FaqRoute,
-	AdminCalendarRoute: AdminCalendarRoute,
-	AdminContactRoute: AdminContactRoute,
-	AdminJobRoute: AdminJobRoute,
-	AdminLoginRoute: AdminLoginRoute,
-	AdminProfileRoute: AdminProfileRoute,
-	AdminTestimonialsRoute: AdminTestimonialsRoute,
-	AdminUsersRoute: AdminUsersRoute,
-	CoursesCourseIdRoute: CoursesCourseIdRoute,
-	ServicesServiceIdRoute: ServicesServiceIdRoute,
-	TeamJoinRoute: TeamJoinRoute,
-	AdminIndexRoute: AdminIndexRoute,
-	CoursesIndexRoute: CoursesIndexRoute,
-	AdminCoursesIdRoute: AdminCoursesIdRoute,
-	AdminCoursesFormRoute: AdminCoursesFormRoute,
-	AdminCoursesIndexRoute: AdminCoursesIndexRoute,
-};
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CalendarRoute: CalendarRoute,
+  CompetencesRoute: CompetencesRoute,
+  ErrorRoute: ErrorRoute,
+  FaqRoute: FaqRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
+  AdminContactRoute: AdminContactRoute,
+  AdminJobRoute: AdminJobRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminProfileRoute: AdminProfileRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  CoursesCourseIdRoute: CoursesCourseIdRoute,
+  ServicesServiceIdRoute: ServicesServiceIdRoute,
+  TeamJoinRoute: TeamJoinRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  CoursesIndexRoute: CoursesIndexRoute,
+  AdminCoursesIdRoute: AdminCoursesIdRoute,
+  AdminCoursesFormRoute: AdminCoursesFormRoute,
+  AdminCoursesIndexRoute: AdminCoursesIndexRoute,
+  AdminCoursesRollingCourseIdRoute: AdminCoursesRollingCourseIdRoute,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
