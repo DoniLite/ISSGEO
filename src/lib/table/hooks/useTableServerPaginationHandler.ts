@@ -112,7 +112,7 @@ export function useTableServerPaginationHandler<
 	const fetchAllData = useCallback(
 		async (
 			newQuery: Partial<Q> = {},
-			options: FetchAllDataOptions = { force: false },
+			options: FetchAllDataOptions = { force: true },
 		): Promise<T[]> => {
 			const { filters, ...restQuery } = newQuery;
 			if (options.force && fetchAll) {

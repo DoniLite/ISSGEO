@@ -1,35 +1,50 @@
 /** biome-ignore-all lint/correctness/useHookAtTopLevel: - */
-import type { BaseStore, PaginatedStore } from './base.store';
-import { useStoreAsyncOperations } from '@/lib/table/hooks/store/useStoreAsyncOperations';
-import { apiClient } from '@/hooks/fetch-api';
-import { useTableServerPaginationHandler } from '@/lib/table/hooks/useTableServerPaginationHandler';
-import type { RollingTableType } from '@/db';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
-import { useCallback } from 'react';
-import type { CreateRollingDTO } from '@/api/rolling';
+import type { BaseStore, PaginatedStore } from "./base.store";
+import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
+import { apiClient } from "@/hooks/fetch-api";
+import {
+	useTableServerPaginationHandler,
+	type FetchAllDataOptions,
+} from "@/lib/table/hooks/useTableServerPaginationHandler";
+import type { ModuleTableType, RollingTableType } from "@/db";
+import type { PaginationQuery } from "@/lib/interfaces/pagination";
+import { useCallback } from "react";
+import type { CreateRollingDTO } from "@/api/rolling";
 
 interface RollingStore extends BaseStore {
 	create: (data: CreateRollingDTO, moduleIds: string[]) => Promise<void>;
 	deleteOne: (id: string) => Promise<void>;
+	fetchAll: (
+		query?: Record<string, unknown>,
+		options?: FetchAllDataOptions,
+	) => Promise<(RollingTableType & { modules: ModuleTableType[] })[] | undefined>;
 }
 
 export default function useRollingStore(): RollingStore &
-	PaginatedStore<RollingTableType> {
+	PaginatedStore<RollingTableType & { modules: ModuleTableType[] }> {
 	const { loading, error, withAsyncOperation, resetState } =
 		useStoreAsyncOperations();
 
 	const refetchFunction = useCallback(async (query: PaginationQuery) => {
-		const res = await apiClient.call('rolling', '/rolling', 'GET', {
+		const res = await apiClient.call("rolling", "/rolling", "GET", {
 			params: query,
 		});
 		return res.data;
 	}, []);
 
+	const fetchAll = useCallback(async (query?: PaginationQuery) => {
+		const { data } = await apiClient.call("rolling", "/rolling/all", "GET", {
+			params: query,
+		});
+		return data;
+	}, []);
+
 	const paginationHandler = useTableServerPaginationHandler<
-		RollingTableType,
+		RollingTableType & { modules: ModuleTableType[] },
 		PaginationQuery
 	>({
 		refetchFunction,
+		fetchAll,
 	});
 
 	const fetchData = withAsyncOperation(
@@ -40,19 +55,19 @@ export default function useRollingStore(): RollingStore &
 
 	const create = withAsyncOperation(
 		async (data: CreateRollingDTO, moduleIds: string[]) => {
-			const ids = moduleIds.map((m) => m.trim()).join(',');
-			const res = await apiClient.call('rolling', '/rolling', 'POST', {
+			const ids = moduleIds.map((m) => m.trim()).join(",");
+			const res = await apiClient.call("rolling", "/rolling", "POST", {
 				body: data,
 				params: { ids },
 				forceQueries: true,
 			});
-			const newContact = res.data;
-			paginationHandler.handlePostCreate(newContact);
+			const newRolling = res.data;
+			paginationHandler.handlePostCreate({ ...newRolling, modules: [] });
 		},
 	);
 
 	const deleteOne = withAsyncOperation(async (id: string) => {
-		await apiClient.call('rolling', '/rolling/:id', 'DELETE', {
+		await apiClient.call("rolling", "/rolling/:id", "DELETE", {
 			params: { id },
 		});
 
@@ -81,10 +96,11 @@ export default function useRollingStore(): RollingStore &
 		allItems: paginationHandler.allItems,
 		query: paginationHandler.query,
 		pagination: paginationHandler.pagination,
-		defaultEntity: { name: '', contact: '' },
-		translationPath: 'admin.rolling',
+		defaultEntity: { name: "", contact: "", modules: [] },
+		translationPath: "admin.rolling",
 
 		fetchData,
+		fetchAll: paginationHandler.fetchAllData,
 		create,
 		deleteOne,
 		goToPage,

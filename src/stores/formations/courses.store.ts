@@ -3,7 +3,12 @@ import type { BaseStore, PaginatedStore } from "../base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
 import { apiClient } from "@/hooks/fetch-api";
 import { useTableServerPaginationHandler } from "@/lib/table/hooks/useTableServerPaginationHandler";
-import type { TrainingTableType } from "@/db";
+import type {
+	KeyCompetencyTableType,
+	ModuleTableType,
+	ThematicTableType,
+	TrainingTableType,
+} from "@/db";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import { useCallback } from "react";
 import type {
@@ -22,7 +27,13 @@ interface CoursesStore extends BaseStore {
 }
 
 export default function useCoursesStore(): CoursesStore &
-	PaginatedStore<TrainingTableType> {
+	PaginatedStore<
+		TrainingTableType & {
+			modules: ModuleTableType[];
+			competencies: KeyCompetencyTableType[];
+			thematic?: ThematicTableType
+		}
+	> {
 	const { loading, error, withAsyncOperation, resetState } =
 		useStoreAsyncOperations();
 
@@ -34,7 +45,11 @@ export default function useCoursesStore(): CoursesStore &
 	}, []);
 
 	const paginationHandler = useTableServerPaginationHandler<
-		TrainingTableType,
+		TrainingTableType & {
+			modules: ModuleTableType[];
+			competencies: KeyCompetencyTableType[];
+			thematic?: ThematicTableType
+		},
 		PaginationQuery
 	>({
 		refetchFunction,
@@ -51,7 +66,11 @@ export default function useCoursesStore(): CoursesStore &
 			body: data,
 		});
 		const newJob = res.data;
-		paginationHandler.handlePostCreate(newJob);
+		paginationHandler.handlePostCreate({
+			...newJob,
+			modules: [],
+			competencies: [],
+		});
 		return newJob;
 	});
 
@@ -124,6 +143,8 @@ export default function useCoursesStore(): CoursesStore &
 			description: "",
 			priceMin: 0,
 			priceMax: 0,
+			modules: [],
+			competencies: [],
 		},
 		translationPath: "admin.formations",
 
