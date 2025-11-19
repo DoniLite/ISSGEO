@@ -97,10 +97,7 @@ export function HeroForm() {
 				<span className="lg:text-lg font-bold relative left-3">
 					{t("pages.home.form.disposability.label")}
 				</span>
-				<Select
-					open={openSelect}
-					onOpenChange={(s) => setOpen(s)}
-				>
+				<Select open={openSelect} onOpenChange={(s) => setOpen(s)}>
 					<SelectTrigger className="w-full px-3 py-2">
 						<span>
 							{currentDate.toLocaleDateString(i18n.language, {
@@ -135,7 +132,7 @@ export function HeroForm() {
 								to: "/courses/$courseId",
 								params: { courseId: course as string },
 							});
-							return
+							return;
 						}
 						navigate({ to: "/calendar" });
 					}

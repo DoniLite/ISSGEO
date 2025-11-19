@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 import {
 	AlertTriangle,
 	BookOpen,
@@ -6,34 +6,34 @@ import {
 	Clock,
 	DollarSign,
 	Target,
-} from 'lucide-react';
+} from "lucide-react";
 import {
 	useEffect,
 	useMemo,
 	useState,
 	type Dispatch,
 	type SetStateAction,
-} from 'react';
-import { useTranslation } from 'react-i18next';
-import Footer from '@/components/shared/Footer';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BG_LINEAR_CLASS } from '@/lib/const';
-import useCoursesStore from '@/stores/formations/courses.store';
-import type { RollingTableType, TrainingTableType } from '@/db';
-import useModuleStore from '@/stores/formations/module.store';
-import z from 'zod';
-import type { GenericFormField } from '@/components/shared/entity/GenericForm';
-import type { CreateRollingDTO } from '@/api/rolling';
-import type { PaginationQuery } from '@/lib/interfaces/pagination';
-import { EditionMode } from '@/lib/table/hooks/forms/useEntityEditor';
-import GenericForm from '@/components/shared/entity/GenericForm';
-import Loader from '@/components/shared/Loader';
-import { Badge } from '@/components/ui/badge';
-import useRollingStore from '@/stores/rolling.store';
-import { toast } from 'sonner';
+} from "react";
+import { useTranslation } from "react-i18next";
+import Footer from "@/components/shared/Footer";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BG_LINEAR_CLASS } from "@/lib/const";
+import useCoursesStore from "@/stores/formations/courses.store";
+import type { RollingTableType, TrainingTableType } from "@/db";
+import useModuleStore from "@/stores/formations/module.store";
+import z from "zod";
+import type { GenericFormField } from "@/components/shared/entity/GenericForm";
+import type { CreateRollingDTO } from "@/api/rolling";
+import type { PaginationQuery } from "@/lib/interfaces/pagination";
+import { EditionMode } from "@/lib/table/hooks/forms/useEntityEditor";
+import GenericForm from "@/components/shared/entity/GenericForm";
+import Loader from "@/components/shared/Loader";
+import { Badge } from "@/components/ui/badge";
+import useRollingStore from "@/stores/rolling.store";
+import { toast } from "sonner";
 
-export const Route = createFileRoute('/courses/$courseId')({
+export const Route = createFileRoute("/courses/$courseId")({
 	component: TrainingDetail,
 });
 
@@ -87,7 +87,7 @@ function TrainingDetail() {
 					<AlertTriangle className="h-4 w-4" />
 					<AlertTitle>Erreur</AlertTitle>
 					<AlertDescription>
-						{t('common.no_results', { id: courseId })}
+						{t("common.no_results", { id: courseId })}
 					</AlertDescription>
 				</Alert>
 			</div>
@@ -112,7 +112,7 @@ function TrainingDetail() {
 								<CardHeader className="flex flex-row items-center space-y-0">
 									<CheckCircle className="w-5 h-5 mr-2" />
 									<CardTitle className="text-xl">
-										{t('pages.trainingDetail.outcomesTitle')}
+										{t("pages.trainingDetail.outcomesTitle")}
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
@@ -132,7 +132,7 @@ function TrainingDetail() {
 								<CardHeader className="flex flex-row items-center space-y-0">
 									<BookOpen className="w-5 h-5 mr-2" />
 									<CardTitle className="text-xl">
-										{t('pages.trainingDetail.modulesTitle')}
+										{t("pages.trainingDetail.modulesTitle")}
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
@@ -142,10 +142,10 @@ function TrainingDetail() {
 												<div className="flex flex-col">
 													<h2 className="font-bold">{mod.title}</h2>
 													<div className="flex items-center gap-3">
-														<Badge variant={'destructive'}>
+														<Badge variant={"destructive"}>
 															{mod.duration} Hours
 														</Badge>
-														<Badge variant={'secondary'}>
+														<Badge variant={"secondary"}>
 															{mod.price} FCFA
 														</Badge>
 													</div>
@@ -162,23 +162,23 @@ function TrainingDetail() {
 							<Card className="lg:sticky top-4">
 								<CardHeader>
 									<CardTitle className="text-center text-2xl">
-										{t('pages.trainingDetail.details')}
+										{t("pages.trainingDetail.details")}
 									</CardTitle>
 								</CardHeader>
 								<CardContent className="space-y-4">
 									<div className="flex justify-between items-center border-b pb-2">
 										<span className="flex items-center text-sm font-medium">
-											<Clock className="w-4 h-4 mr-2" />{' '}
-											{t('pages.trainingDetail.duration')}
+											<Clock className="w-4 h-4 mr-2" />{" "}
+											{t("pages.trainingDetail.duration")}
 										</span>
 										<span className="font-semibold">
-											{courseDuration} {t('common.hours')}
+											{courseDuration} {t("common.hours")}
 										</span>
 									</div>
 									<div className="flex justify-between items-center border-b pb-2">
 										<span className="flex items-center text-sm font-medium">
 											<DollarSign className="w-4 h-4 mr-2" />
-											{t('pages.trainingDetail.cost')}
+											{t("pages.trainingDetail.cost")}
 										</span>
 										<span className="font-semibold">{courseFees} FCFA</span>
 									</div>
@@ -192,7 +192,7 @@ function TrainingDetail() {
 									</div>
 
 									<h3 className="text-lg font-semibold pt-4">
-										{t('pages.trainingDetail.enrollCta')}
+										{t("pages.trainingDetail.enrollCta")}
 									</h3>
 									<RollingForm
 										courseId={courseId}
@@ -234,65 +234,65 @@ function RollingForm({ courseId, setSelectedModules }: RollingFormProps) {
 	const rollingFormSchema = z.object({
 		name: z
 			.string()
-			.min(2, { error: t('pages.trainingDetail.form.errors.name') }),
+			.min(2, { error: t("pages.trainingDetail.form.errors.name") }),
 		contact: z
 			.string()
-			.min(2, { error: t('pages.trainingDetail.form.errors.contact') }),
+			.min(2, { error: t("pages.trainingDetail.form.errors.contact") }),
 		country: z.string().optional(),
 		profession: z.string().optional(),
 		schoolLevel: z.string().optional(),
 		experience: z.string().optional(),
 		modules: z
 			.array(z.string())
-			.min(1, { error: t('pages.trainingDetail.form.errors.modules') }),
+			.min(1, { error: t("pages.trainingDetail.form.errors.modules") }),
 	});
 
 	const fields: GenericFormField<RollingTableType & { modules: string[] }>[] = [
 		{
-			name: 'modules',
-			label: t('pages.trainingDetail.form.modules.title'),
-			placeholder: t('pages.trainingDetail.form.modules.placeholder'),
-			type: 'combobox',
+			name: "modules",
+			label: t("pages.trainingDetail.form.modules.title"),
+			placeholder: t("pages.trainingDetail.form.modules.placeholder"),
+			type: "combobox",
 			entries: modules,
 			multiple: true,
 		},
 		{
-			name: 'name',
-			label: t('pages.trainingDetail.form.name.title'),
-			placeholder: t('pages.trainingDetail.form.name.placeholder'),
-			type: 'text',
+			name: "name",
+			label: t("pages.trainingDetail.form.name.title"),
+			placeholder: t("pages.trainingDetail.form.name.placeholder"),
+			type: "text",
 			required: true,
 		},
 		{
-			name: 'contact',
-			label: t('pages.trainingDetail.form.contact.title'),
-			placeholder: t('pages.trainingDetail.form.contact.placeholder'),
-			type: 'text',
+			name: "contact",
+			label: t("pages.trainingDetail.form.contact.title"),
+			placeholder: t("pages.trainingDetail.form.contact.placeholder"),
+			type: "text",
 			required: true,
 		},
 		{
-			name: 'country',
-			label: t('pages.trainingDetail.form.country.title'),
-			placeholder: t('pages.trainingDetail.form.country.placeholder'),
-			type: 'text',
+			name: "country",
+			label: t("pages.trainingDetail.form.country.title"),
+			placeholder: t("pages.trainingDetail.form.country.placeholder"),
+			type: "text",
 		},
 		{
-			name: 'profession',
-			label: t('pages.trainingDetail.form.profession.title'),
-			placeholder: t('pages.trainingDetail.form.profession.placeholder'),
-			type: 'text',
+			name: "profession",
+			label: t("pages.trainingDetail.form.profession.title"),
+			placeholder: t("pages.trainingDetail.form.profession.placeholder"),
+			type: "text",
 		},
 		{
-			name: 'schoolLevel',
-			label: t('pages.trainingDetail.form.schoolLevel.title'),
-			placeholder: t('pages.trainingDetail.form.schoolLevel.placeholder'),
-			type: 'text',
+			name: "schoolLevel",
+			label: t("pages.trainingDetail.form.schoolLevel.title"),
+			placeholder: t("pages.trainingDetail.form.schoolLevel.placeholder"),
+			type: "text",
 		},
 		{
-			name: 'experience',
-			label: t('pages.trainingDetail.form.experience.title'),
-			placeholder: t('pages.trainingDetail.form.experience.placeholder'),
-			type: 'text',
+			name: "experience",
+			label: t("pages.trainingDetail.form.experience.title"),
+			placeholder: t("pages.trainingDetail.form.experience.placeholder"),
+			type: "text",
 		},
 	];
 
@@ -310,13 +310,13 @@ function RollingForm({ courseId, setSelectedModules }: RollingFormProps) {
 		};
 		try {
 			await rollingStore.create(rollingPayload, data.modules);
-			toast.success(t('pages.trainingDetail.toast.success.title'), {
-				description: t('pages.trainingDetail.toast.success.description'),
+			toast.success(t("pages.trainingDetail.toast.success.title"), {
+				description: t("pages.trainingDetail.toast.success.description"),
 			});
 		} catch (e) {
 			console.error(e);
-			toast.error(t('pages.trainingDetail.toast.error.title'), {
-				description: t('pages.trainingDetail.toast.error.description'),
+			toast.error(t("pages.trainingDetail.toast.error.title"), {
+				description: t("pages.trainingDetail.toast.error.description"),
 			});
 		}
 	};
@@ -328,8 +328,8 @@ function RollingForm({ courseId, setSelectedModules }: RollingFormProps) {
 	const editionMode = EditionMode.CREATE;
 
 	const entityModel: RollingTableType & { modules: string[] } = {
-		name: '',
-		contact: '',
+		name: "",
+		contact: "",
 		modules: [],
 	};
 

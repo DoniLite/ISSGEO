@@ -17,7 +17,9 @@ interface RollingStore extends BaseStore {
 	fetchAll: (
 		query?: Record<string, unknown>,
 		options?: FetchAllDataOptions,
-	) => Promise<(RollingTableType & { modules: ModuleTableType[] })[] | undefined>;
+	) => Promise<
+		(RollingTableType & { modules: ModuleTableType[] })[] | undefined
+	>;
 }
 
 export default function useRollingStore(): RollingStore &

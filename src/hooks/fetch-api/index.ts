@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Need generic from complex type*/
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	ApiError,
 	type ApiResponse,
@@ -13,15 +13,15 @@ import {
 	type RouteEndpoint,
 	type RouteKey,
 	type UseApiReturn,
-} from './types';
+} from "./types";
 
 class ApiClient {
 	private defaultHeaders: Record<string, string>;
 
-	constructor(private baseURL: string = '/api') {
+	constructor(private baseURL: string = "/api") {
 		this.baseURL = baseURL;
 		this.defaultHeaders = {
-			'Content-Type': 'application/json',
+			"Content-Type": "application/json",
 		};
 	}
 
@@ -42,7 +42,7 @@ class ApiClient {
 		config: RequestConfig = {},
 	): Promise<ApiResponse<T>> {
 		const {
-			method = 'GET',
+			method = "GET",
 			headers = {},
 			body,
 			params,
@@ -51,7 +51,7 @@ class ApiClient {
 
 		const url = this.buildURL(
 			this.interpolatePath(path, params),
-			method === 'GET' || forceQueries ? params : undefined,
+			method === "GET" || forceQueries ? params : undefined,
 		);
 
 		const requestHeaders = {
@@ -62,13 +62,13 @@ class ApiClient {
 		const requestConfig: RequestInit = {
 			method,
 			headers: requestHeaders,
-			credentials: 'include',
-			redirect: 'manual',
+			credentials: "include",
+			redirect: "manual",
 		};
 
-		if (body && method !== 'GET') {
+		if (body && method !== "GET") {
 			requestConfig.body =
-				typeof body === 'string' ? body : JSON.stringify(body);
+				typeof body === "string" ? body : JSON.stringify(body);
 		}
 
 		try {
@@ -86,7 +86,7 @@ class ApiClient {
 			}
 
 			if (response.status >= 301 && response.status <= 307) {
-				const location = response.headers.get('Location');
+				const location = response.headers.get("Location");
 				if (location) {
 					window.location.href = location;
 				}
@@ -98,7 +98,7 @@ class ApiClient {
 				data,
 				status: response.status,
 				message:
-					typeof data === 'object' && data !== null && 'message' in data
+					typeof data === "object" && data !== null && "message" in data
 						? (data as { message?: string }).message
 						: undefined,
 			};
@@ -109,7 +109,7 @@ class ApiClient {
 			if (error instanceof Error) {
 				throw new ApiError(error.message, 0);
 			}
-			throw new ApiError('Unknown error occurred', 0);
+			throw new ApiError("Unknown error occurred", 0);
 		}
 	}
 
@@ -150,7 +150,7 @@ class ApiClient {
 			params?: ExtractParams<RouteEndpoint<R, P, M>>;
 			body?: ExtractBody<RouteEndpoint<R, P, M>>;
 			headers?: Record<string, string>;
-			forceQueries?: RequestConfig['forceQueries']
+			forceQueries?: RequestConfig["forceQueries"];
 		},
 	): Promise<ApiResponse<ExtractResponse<RouteEndpoint<R, P, M>>>> {
 		return this.request(path as string, {

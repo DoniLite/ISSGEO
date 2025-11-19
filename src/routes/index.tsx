@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ogImageUrl } from "@/seo";
 import Contact from "@/components/home/Contact";
 import Hero from "@/components/home/Hero";
 import Missions from "@/components/home/Missions";
@@ -8,6 +9,15 @@ import Testimonials from "@/components/home/Testimonials";
 import Footer from "@/components/shared/Footer";
 
 export const Route = createFileRoute("/")({
+	head: () => ({
+		title: "ISSGEO — Home",
+		meta: [
+			{ name: "description", content: "ISSGEO Institute — training, recruitment and professional placement." },
+			{ property: "og:title", content: "ISSGEO — Home" },
+			{ property: "og:description", content: "ISSGEO Institute — training, recruitment and professional placement." },
+			{ property: "og:image", content: ogImageUrl("ISSGEO — Home", "ISSGEO Institute — training, recruitment and professional placement.") },
+		],
+	}),
 	component: () => (
 		<>
 			<div className="relative w-full h-screen">

@@ -1,13 +1,13 @@
-import { relations } from 'drizzle-orm';
+import { relations } from "drizzle-orm";
 import {
 	KeyCompetencyTable,
 	ModuleTable,
 	TrainingTable,
-} from './training.schema';
-import { ThematicTable } from './thematic.schema';
-import { TrainingSessionTable } from './session.schema';
-import { RollingTable, RollingToModuleTable } from './rolling.schema';
-import { CheckoutTable } from './checkout.schema';
+} from "./training.schema";
+import { ThematicTable } from "./thematic.schema";
+import { TrainingSessionTable } from "./session.schema";
+import { RollingTable, RollingToModuleTable } from "./rolling.schema";
+import { CheckoutTable } from "./checkout.schema";
 
 export const TrainingTableRelations = relations(
 	TrainingTable,
@@ -19,7 +19,7 @@ export const TrainingTableRelations = relations(
 		sessions: many(TrainingSessionTable),
 		competences: many(KeyCompetencyTable),
 		modules: many(ModuleTable),
-		rollings: many(RollingTable)
+		rollings: many(RollingTable),
 	}),
 );
 

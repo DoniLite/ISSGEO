@@ -206,17 +206,16 @@ const TableFilters = <T extends Record<string, unknown>>({
 	const { t } = useTranslation();
 
 	const contractTypeOptions = useMemo(
-		() =>
-			[
-				{
-					id: "all",
-					label: t("common.all"),
-				},
-				...["CDD", "CDI", "Freelance", "Stage"].map((type) => ({
-					id: type,
-					label: t(`admin.job.form.contracts.${type}`),
-				})),
-			],
+		() => [
+			{
+				id: "all",
+				label: t("common.all"),
+			},
+			...["CDD", "CDI", "Freelance", "Stage"].map((type) => ({
+				id: type,
+				label: t(`admin.job.form.contracts.${type}`),
+			})),
+		],
 		[],
 	);
 

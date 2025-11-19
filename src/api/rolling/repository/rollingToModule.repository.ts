@@ -1,9 +1,6 @@
 import { BaseRepository } from "@/core/base.repository";
 import { Repository } from "@/core/decorators";
-import {
-	RollingToModuleTable,
-	type RollingToModuleTableType,
-} from "@/db";
+import { RollingToModuleTable, type RollingToModuleTableType } from "@/db";
 import type {
 	CreateRollingToModuleDTO,
 	UpdateRollingToModuleDTO,

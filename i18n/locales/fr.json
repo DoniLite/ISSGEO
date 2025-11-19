@@ -9,7 +9,7 @@
 		"no_results": "Aucun résultat trouvé",
 		"selectedItems": "{{count}} élément(s) sélectionné(s)",
 		"confirm": "Confirmer",
-		"startDate":"Date de début",
+		"startDate": "Date de début",
 		"select_field": "Selectionner un élément",
 		"cancel": "Annuler",
 		"hours": "Heures",
@@ -136,6 +136,25 @@
 		"monthly": "Mensuel",
 		"weekly": "Semestriel",
 		"yearly": "Anuel"
+	},
+	"footer": {
+		"brand": "ISSGEO Institute",
+		"tagline": "Construire la technologie de demain. Recherche, innovation et excellente expérience utilisateur.",
+		"quickLinks": "Liens rapides",
+		"links": {
+			"about": "À propos",
+			"blog": "Blog",
+			"contact": "Contact",
+			"faq": "FAQ"
+		},
+		"followUs": "Suivez-nous",
+		"social": {
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn"
+		},
+		"copyright": "© {{year}} ISSGEO. Tous droits réservés."
 	},
 	"them": {
 		"all": "Tous"

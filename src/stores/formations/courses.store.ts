@@ -31,7 +31,7 @@ export default function useCoursesStore(): CoursesStore &
 		TrainingTableType & {
 			modules: ModuleTableType[];
 			competencies: KeyCompetencyTableType[];
-			thematic?: ThematicTableType
+			thematic?: ThematicTableType;
 		}
 	> {
 	const { loading, error, withAsyncOperation, resetState } =
@@ -48,7 +48,7 @@ export default function useCoursesStore(): CoursesStore &
 		TrainingTableType & {
 			modules: ModuleTableType[];
 			competencies: KeyCompetencyTableType[];
-			thematic?: ThematicTableType
+			thematic?: ThematicTableType;
 		},
 		PaginationQuery
 	>({

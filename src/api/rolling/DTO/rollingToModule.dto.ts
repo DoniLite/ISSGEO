@@ -13,11 +13,11 @@ export class CreateRollingToModuleDTO extends BaseCreateDTO {
 
 @DTO()
 export class UpdateRollingToModuleDTO extends BaseUpdateDTO {
-    @IsOptional()
+	@IsOptional()
 	@IsString()
 	moduleId!: string;
 
-    @IsOptional()
+	@IsOptional()
 	@IsString()
 	rollingId!: string;
 }

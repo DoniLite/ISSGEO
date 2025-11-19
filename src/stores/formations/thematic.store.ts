@@ -85,9 +85,14 @@ export default function useThematicStoreStore(): ThematicStore &
 
 	const fetchAll = withAsyncOperation(
 		async (query?: Record<string, unknown>) => {
-			const { data } = await apiClient.call("thematic", "/thematic/all", "GET", {
-				params: query,
-			});
+			const { data } = await apiClient.call(
+				"thematic",
+				"/thematic/all",
+				"GET",
+				{
+					params: query,
+				},
+			);
 			return data;
 		},
 	);
@@ -98,7 +103,7 @@ export default function useThematicStoreStore(): ThematicStore &
 		});
 
 		return data;
-	})
+	});
 
 	const goToPage = withAsyncOperation(async (page: number) => {
 		await paginationHandler.goToPage(page);

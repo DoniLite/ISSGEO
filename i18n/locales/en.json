@@ -73,7 +73,7 @@
 		"fallbackText": "Entity",
 		"hours": "Hours",
 		"title": "Title",
-		"startDate":"Start Date",
+		"startDate": "Start Date",
 		"description": "Description",
 		"submit": "Submit",
 		"all": "All",
@@ -131,11 +131,30 @@
 		"price": "Price",
 		"Stage": "Internship",
 		"CDD": "Fixed-term contract",
-		"CDI":"Permanent contract",
+		"CDI": "Permanent contract",
 		"Freelance": "Freelancer",
 		"monthly": "Monthly",
 		"weekly": "Weekly",
 		"yearly": "Yearly"
+	},
+	"footer": {
+		"brand": "ISSGEO Institute",
+		"tagline": "Building tech for the future. Research, innovation and great user experience.",
+		"quickLinks": "Quick Links",
+		"links": {
+			"about": "About Us",
+			"blog": "Blog",
+			"contact": "Contact",
+			"faq": "FAQ"
+		},
+		"followUs": "Follow Us",
+		"social": {
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn"
+		},
+		"copyright": "© {{year}} ISSGEO. All rights reserved."
 	},
 	"them": {
 		"all": "All"

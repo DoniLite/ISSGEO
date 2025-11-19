@@ -12,7 +12,13 @@ export abstract class BaseService<
 	CreateDTO extends object,
 	UpdateDTO extends object,
 	// biome-ignore lint/suspicious/noExplicitAny: <>
-	Repository extends BaseRepository<T, CreateDTO, UpdateDTO, any, any> = BaseRepository<T, CreateDTO, UpdateDTO>,
+	Repository extends BaseRepository<
+		T,
+		CreateDTO,
+		UpdateDTO,
+		any,
+		any
+	> = BaseRepository<T, CreateDTO, UpdateDTO>,
 	R extends T = T,
 > {
 	constructor(protected repository: Repository) {}

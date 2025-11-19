@@ -23,4 +23,4 @@ export type UserTableType = typeof UserTable.$inferInsert;
 export type ModuleTableType = typeof ModuleTable.$inferInsert;
 export type RollingTableType = typeof RollingTable.$inferInsert;
 export type CheckoutTableType = typeof CheckoutTable.$inferInsert;
-export type RollingToModuleTableType = typeof RollingToModuleTable.$inferInsert
+export type RollingToModuleTableType = typeof RollingToModuleTable.$inferInsert;

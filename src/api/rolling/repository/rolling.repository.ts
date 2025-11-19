@@ -66,7 +66,7 @@ export class RollingRepository extends BaseRepository<
 		items: RollingTableType[],
 		_paginationQuery?: PaginationQuery,
 	): Promise<(RollingTableType & { modules?: ModuleTableType[] })[]> {
-		console.log('running populate')
+		console.log("running populate");
 		return Promise.all(
 			items.map(async (item) => {
 				const rollingToModules = await this.RollingToModuleRepo.findBy(
