@@ -32,8 +32,3 @@ export class SessionController extends BaseController<
 		});
 	}
 }
-
-const sessionController = new SessionController();
-const app = sessionController.getApp();
-
-export default app;

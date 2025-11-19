@@ -31,8 +31,3 @@ export class CheckoutController extends BaseController<
 		});
 	}
 }
-
-const checkoutController = new CheckoutController();
-const app = checkoutController.getApp();
-
-export default app;

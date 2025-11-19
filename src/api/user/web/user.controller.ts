@@ -89,7 +89,3 @@ export class UserController extends BaseController<
 	}
 }
 
-const userController = new UserController();
-const app = userController.getApp();
-
-export default app;

@@ -9,6 +9,7 @@ import type { CreateRollingDTO, UpdateRollingDTO } from "../DTO/rolling.dto";
 import { RollingToModuleRepository } from "./rollingToModule.repository";
 import { ModuleRepository } from "@/api/formations/repository/modules.repository";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
+import { CoursesRepository } from "@/api/formations";
 
 @Repository("rolling")
 export class RollingRepository extends BaseRepository<
@@ -23,6 +24,7 @@ export class RollingRepository extends BaseRepository<
 	constructor(
 		private RollingToModuleRepo = new RollingToModuleRepository(),
 		private ModuleRepo = new ModuleRepository(),
+		private CourseRepo = new CoursesRepository(),
 	) {
 		super();
 	}
@@ -37,13 +39,22 @@ export class RollingRepository extends BaseRepository<
 		for (const id of moduleIds) {
 			await this.RollingToModuleRepo.create({
 				moduleId: id,
-				rollingId: newRolling.id,
+				rollingId: newRolling.id as string,
 			});
 			const targetModule = await this.ModuleRepo.findById(id);
 			if (targetModule) {
 				modules.push(targetModule);
 			}
 		}
+
+		const targetRollingForCourse = await this.findBy(
+			"courseId",
+			newRolling.courseId,
+		);
+
+		await this.CourseRepo.update(newRolling.courseId as string, {
+			participants: targetRollingForCourse.length,
+		});
 
 		return {
 			...newRolling,
@@ -52,27 +63,17 @@ export class RollingRepository extends BaseRepository<
 	}
 
 	protected override async populateChildrenForItems(
-		items: {
-			id: string;
-			name: string;
-			contact: string;
-			country: string | null;
-			profession: string | null;
-			schoolLevel: string | null;
-			experience: string | null;
-			createdAt: Date | null;
-			updatedAt: Date | null;
-			deletedAt: Date | null;
-			sessionId: string | null;
-		}[],
+		items: RollingTableType[],
 		_paginationQuery?: PaginationQuery,
 	): Promise<(RollingTableType & { modules?: ModuleTableType[] })[]> {
+		console.log('running populate')
 		return Promise.all(
 			items.map(async (item) => {
 				const rollingToModules = await this.RollingToModuleRepo.findBy(
 					"rollingId",
 					item.id,
 				);
+				console.log("rolling to module", rollingToModules);
 				const modules: ModuleTableType[] = [];
 				for (const rollingToModule of rollingToModules) {
 					const module = await this.ModuleRepo.findById(
@@ -82,6 +83,7 @@ export class RollingRepository extends BaseRepository<
 						modules.push(module);
 					}
 				}
+				console.log("modules", modules);
 				return {
 					...item,
 					modules,

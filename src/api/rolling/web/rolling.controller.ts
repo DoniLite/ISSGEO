@@ -31,8 +31,3 @@ export class RollingController extends BaseController<
 		});
 	}
 }
-
-const rollingController = new RollingController();
-const app = rollingController.getApp();
-
-export default app;

@@ -51,4 +51,16 @@ export class UpdateCourseDTO extends BaseUpdateDTO {
 	@IsOptional()
 	@IsString()
 	thematicId?: string;
+
+	@IsOptional()
+	@IsNumber()
+	totalDuration?: number;
+
+	@IsOptional()
+	@IsNumber()
+	priceMin?: number;
+
+	@IsOptional()
+	@IsNumber()
+	priceMax?: number;
 }

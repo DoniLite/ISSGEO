@@ -1,13 +1,13 @@
 import { webFactory } from "@/factory/web.factory";
-import courseApp from "./formations/web/course.controller";
-import userApp from "./user/web/user.controller";
-import sessionApp from "./formations/web/session.controller";
-import thematicApp from "./formations/web/thematic.controller";
-import contactApp from "./contact/web/contact.controller";
-import testimonialsApp from "./testimonials/web/testimonials.controller";
-import jobApp from "./job/web/job.controller";
-import rollingApp from "./rolling/web/rolling.controller";
-import checkoutApp from "./checkout/web/checkout.controller";
+import courseApp from "./formations/app/course.app";
+import userApp from "./user/app/user.app";
+import sessionApp from "./formations/app/session.app";
+import thematicApp from "./formations/app/thematic.app";
+import contactApp from "./contact/app/contact.app";
+import testimonialsApp from "./testimonials/app/testimonials.app";
+import jobApp from "./job/app/job.app";
+import rollingApp from "./rolling/app/rolling.app";
+import checkoutApp from "./checkout/app/checkout.app";
 
 const api = webFactory.createApp();
 

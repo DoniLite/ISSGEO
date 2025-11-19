@@ -33,8 +33,3 @@ export class TestimonialsController extends BaseController<
 		});
 	}
 }
-
-const testimonialsController = new TestimonialsController();
-const app = testimonialsController.getApp();
-
-export default app;

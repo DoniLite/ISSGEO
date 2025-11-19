@@ -204,17 +204,35 @@ export abstract class BaseRepository<
 		return items as unknown as R[];
 	}
 
-	async findAll(filters?: Partial<T>): Promise<T[]> {
+	async findAll(
+		filters?: Partial<T> & { populateChildren?: boolean },
+	): Promise<T[]> {
 		const query = this.db.select().from(this.table as PgTable);
 
 		if (filters) {
-			const conditions = Object.entries(filters)
+			const { populateChildren, ...rest } = filters;
+
+			const conditions = Object.entries(rest)
 				.filter(([_, value]) => value !== undefined)
 				.map(([key, value]) => eq((this.table as any)[key], value));
 
 			if (conditions.length > 0) {
-				const filteredQuery = query.where(and(...conditions));
-				return filteredQuery as Promise<T[]>;
+				const filteredQuery = await query.where(and(...conditions));
+				if (populateChildren) {
+					return this.populateChildrenForItems(
+						filteredQuery as T[],
+						rest as PaginationQuery,
+					);
+				}
+				return filteredQuery as T[];
+			}
+
+			if (populateChildren) {
+				const rows = await query.execute();
+				return this.populateChildrenForItems(
+					rows as T[],
+					rest as PaginationQuery,
+				);
 			}
 		}
 

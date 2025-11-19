@@ -32,7 +32,3 @@ export class JobController extends BaseController<
 		});
 	}
 }
-
-const jobController = new JobController();
-
-export default jobController.getApp();

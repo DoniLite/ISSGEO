@@ -30,8 +30,3 @@ export class ContactsController extends BaseController<
 		});
 	}
 }
-
-const contactController = new ContactsController();
-const app = contactController.getApp();
-
-export default app;

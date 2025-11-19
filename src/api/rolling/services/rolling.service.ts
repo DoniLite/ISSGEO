@@ -19,9 +19,10 @@ export class RollingService extends BaseService<
 	@ValidateDTO(CreateRollingDTO)
 	override async create(
 		dto: CreateRollingDTO,
-		_context: Context,
+		context: Context,
 	): Promise<RollingTableType> {
-		return this.repository.create(dto);
+		const moduleIds = context.req.query("ids")?.split(",") ?? [];
+		return this.repository.createWithModuleIds(dto, moduleIds);
 	}
 
 	@ValidateDTO(UpdateRollingDTO)

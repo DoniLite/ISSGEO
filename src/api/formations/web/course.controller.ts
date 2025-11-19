@@ -239,7 +239,3 @@ export class CourseController extends BaseController<
 		});
 	}
 }
-
-const courseController = new CourseController();
-const app = courseController.getApp();
-export default app;
