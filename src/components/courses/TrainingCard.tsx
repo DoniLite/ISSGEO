@@ -12,36 +12,22 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type {
+	KeyCompetencyTableType,
 	ModuleTableType,
 	ThematicTableType,
 	TrainingTableType,
 } from "@/db";
-import { useEffect, useState } from "react";
-import useThematicStoreStore from "@/stores/formations/thematic.store";
-import useModuleStore from "@/stores/formations/module.store";
 
 interface TrainingCardProps {
-	training: TrainingTableType;
+	training: TrainingTableType & {
+		modules: ModuleTableType[];
+		competencies: KeyCompetencyTableType[];
+		thematic?: ThematicTableType;
+	};
 }
 
 export default function TrainingCard({ training }: TrainingCardProps) {
 	const { t } = useTranslation();
-	const [thematic, setThematic] = useState<ThematicTableType | undefined>(
-		undefined,
-	);
-	const [modules, setModules] = useState<ModuleTableType[]>([]);
-	const thematicStore = useThematicStoreStore();
-	const moduleStore = useModuleStore();
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
-	useEffect(() => {
-		thematicStore.findOne(training.thematicId as string).then((res) => {
-			setThematic(res);
-		});
-		moduleStore.fetchAll({ courseId: training.id as string }).then((res) => {
-			setModules(res || []);
-		});
-	}, []);
 
 	return (
 		<Card className="flex flex-col h-full hover:shadow-lg transition-shadow">
@@ -51,13 +37,11 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 						<span className="text-wrap">{t(training.title)}</span>
 					</CardTitle>
 					<Badge variant="secondary">
-						<span className="text-wrap">
-							{thematic ? thematic.name : t("them.unknown")}
-						</span>
+						<span className="text-wrap">{training.thematic?.name}</span>
 					</Badge>
 				</div>
 				<CardDescription className="min-h-[3rem] pt-2">
-					{t(training.description)}
+					{training.description}
 				</CardDescription>
 			</CardHeader>
 
@@ -66,36 +50,55 @@ export default function TrainingCard({ training }: TrainingCardProps) {
 					<div className="flex items-center text-muted-foreground">
 						<Clock className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
-							{t("pages.formations.duration")} {training.totalDuration}h
+							{t("pages.formations.duration")} : {training.totalDuration}h
 						</span>
 					</div>
 					<div className="flex items-center text-muted-foreground">
 						<DollarSign className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
-							{t("pages.formations.priceRange")} {training.priceMin}-
+							{t("pages.formations.priceRange")} : {training.priceMin}-
 							{training.priceMax}$
 						</span>
 					</div>
 					<div className="flex items-center text-muted-foreground">
 						<Users className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
-							{t("pages.formations.participants")} {training.participants}+
+							{t("pages.formations.participants")} : {training.participants}+
 						</span>
 					</div>
 					<div className="flex items-center text-muted-foreground">
 						<Zap className="w-4 h-4 mr-2 text-primary dark:text-secondary" />
 						<span>
-							{t("pages.formations.enrolled")} {training.enrolled}
+							{t("pages.formations.enrolled")} : {training.enrolled}
 						</span>
 					</div>
 				</div>
 				<div className="mt-4">
-					<h4 className="text-sm font-semibold mb-1">Compétences Clés:</h4>
+					<h4 className="text-sm font-semibold mb-1">
+						{t("pages.formations.keyCompetencies")} :
+					</h4>
 					<div className="flex flex-wrap gap-1">
-						{modules.slice(0, 3).map((key) => (
+						{training.competencies.map((key) => (
 							<Badge key={key.id} variant="outline" className="text-xs">
 								{key.title}
 							</Badge>
+						))}
+					</div>
+				</div>
+
+				<div className="mt-4">
+					<h4 className="text-sm font-semibold mb-1">
+						{t("pages.formations.modules")} :
+					</h4>
+					<div className="flex flex-col gap-1">
+						{training.modules.map((mod) => (
+							<div key={mod.id} className="w-full py-3">
+								<h2 className="font-bold">{mod.title}</h2>
+								<div className="w-full flex gap-4 mt-2">
+									<Badge variant={"destructive"}>{mod.duration}H</Badge>
+									<Badge variant={"secondary"}>{mod.price}FCFA</Badge>
+								</div>
+							</div>
 						))}
 					</div>
 				</div>

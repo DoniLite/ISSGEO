@@ -9,7 +9,12 @@ import { Card, CardContent } from "../ui/card";
 import TrainingCard from "./TrainingCard";
 import useCoursesStore from "@/stores/formations/courses.store";
 import useThematicStoreStore from "@/stores/formations/thematic.store";
-import type { ThematicTableType, TrainingTableType } from "@/db";
+import type {
+	KeyCompetencyTableType,
+	ModuleTableType,
+	ThematicTableType,
+	TrainingTableType,
+} from "@/db";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 
@@ -28,15 +33,13 @@ export default function FormationsCatalogue() {
 		thematicStore.fetchAll().then((thematic) => {
 			setAllThematic(thematic || []);
 		});
-		courseStore.fetchData();
+		courseStore.fetchData({ populateChildren: true });
 	}, []);
 
-	const filteredTrainings = useMemo(() => courseStore.items, [
-		courseStore.items,
-	]);
-
-	/* Small presentational components split out to reduce recomputation and
-	   keep rendering granular. They receive only the props they need. */
+	const filteredTrainings = useMemo(
+		() => courseStore.items,
+		[courseStore.items],
+	);
 
 	function SearchBar({
 		value,
@@ -105,11 +108,20 @@ export default function FormationsCatalogue() {
 		);
 	}
 
-	function TrainingGrid({ trainings }: { trainings: TrainingTableType[] }) {
+	function TrainingGrid({
+		trainings,
+	}: {
+		trainings: (TrainingTableType & {
+			modules: ModuleTableType[];
+			competencies: KeyCompetencyTableType[];
+		})[];
+	}) {
 		if (!trainings || trainings.length === 0) {
 			return (
 				<div className="text-center py-10">
-					<p className="text-xl text-muted-foreground">{t("pages.formations.noResults")}</p>
+					<p className="text-xl text-muted-foreground">
+						{t("pages.formations.noResults")}
+					</p>
 				</div>
 			);
 		}
@@ -134,7 +146,7 @@ export default function FormationsCatalogue() {
 
 			<div className="container mx-auto my-12 lg:p-4 p-3">
 				<div className="grid 2xl:grid-cols-[25%_70%] lg:grid-cols-[30%_70%] grid-cols-1 2xl:gap-8 gap-4">
-					{/* Colonne de Filtres */}
+					{/* Filters columns */}
 					<FiltersSidebar
 						thematics={allThematic}
 						active={activeFilter}
@@ -148,7 +160,7 @@ export default function FormationsCatalogue() {
 						}}
 					/>
 
-					{/* Colonne de Résultats */}
+					{/* Result Columns */}
 					<main className="w-full">
 						<SearchBar
 							value={searchTerm}

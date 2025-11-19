@@ -82,7 +82,7 @@ export default function FormationContent() {
 				className="mt-12 text-lg px-8 py-6 w-full lg:w-[50%] mx-auto"
 				asChild
 			>
-				<Link to="/">
+				<Link to="/courses">
 					<BookOpen className="mr-2 h-5 w-5" />
 					{t("services.formation.page.cta")}
 				</Link>

@@ -106,7 +106,7 @@ export default function TrainingCalendar() {
 											to={`/courses/$courseId`}
 											params={{ courseId: session.moduleId as string }}
 										>
-											{t("pages.calendar.viewSession")}{" "}
+											{t("pages.calendar.viewSession")}
 											<ArrowRight className="w-4 h-4 ml-2" />
 										</Link>
 									</Button>
@@ -116,7 +116,7 @@ export default function TrainingCalendar() {
 					) : (
 						<div className="text-center py-10">
 							<p className="text-xl text-muted-foreground">
-								Aucune session à venir n'est planifiée pour le moment.
+								{t("pages.calendar.noSessionComing")}
 							</p>
 						</div>
 					)}

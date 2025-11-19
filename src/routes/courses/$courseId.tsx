@@ -311,12 +311,12 @@ function RollingForm({ courseId, setSelectedModules }: RollingFormProps) {
 		try {
 			await rollingStore.create(rollingPayload, data.modules);
 			toast.success(t('pages.trainingDetail.toast.success.title'), {
-				description: t('pages.trainingDetail.toast.success.message'),
+				description: t('pages.trainingDetail.toast.success.description'),
 			});
 		} catch (e) {
 			console.error(e);
 			toast.error(t('pages.trainingDetail.toast.error.title'), {
-				description: t('pages.trainingDetail.toast.error.message'),
+				description: t('pages.trainingDetail.toast.error.description'),
 			});
 		}
 	};

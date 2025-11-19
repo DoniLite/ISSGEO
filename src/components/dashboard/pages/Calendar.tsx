@@ -1,8 +1,6 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
 import EntityEditDialog from "@/components/shared/AppDialog";
-import type { EntryType } from "@/components/shared/entity/SortedCombobox";
-import EntitySelect from "@/components/shared/entity/SortedCombobox";
 import { Button } from "@/components/ui/button";
 import type { TrainingSessionTableType } from "@/db";
 import FlexTable, { type Emits } from "@/lib/table/FlexTable";
@@ -21,7 +19,7 @@ import type {
 	Table,
 } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 // import JobForm from '../components/JobForm';
 import DeleteAlertDialog from "@/components/shared/ConfirDeleteDialog";
@@ -42,7 +40,6 @@ export default function CalendarPage() {
 	const courseStore = useCoursesStore();
 	const { items, fetchData } = store;
 	const { t } = useTranslation();
-	const [contractFilter, setContractFilter] = useState("all");
 
 	const computedCourses = useMemo(() => courseStore.items, [courseStore.items]);
 
@@ -160,16 +157,6 @@ export default function CalendarPage() {
 						table={props.table}
 					/>
 				)}
-				tableFilters={(props) => (
-					<TableFilters
-						{...props}
-						value={contractFilter}
-						handleChange={(v) => {
-							handleFiltersUpdate([{ id: "role", value: v }]);
-							setContractFilter(v);
-						}}
-					/>
-				)}
 			/>
 			<EntityEditDialog
 				title={modalTitle}
@@ -196,43 +183,6 @@ export default function CalendarPage() {
 		</Layout>
 	);
 }
-
-const TableFilters = <T extends Record<string, unknown>>({
-	handleChange,
-	value,
-}: {
-	table: Table<T>;
-	value: string;
-	handleChange: (v: string) => void;
-}) => {
-	const { t } = useTranslation();
-
-	const contractTypeOptions = useMemo(
-		() =>
-			[
-				{
-					id: "all",
-					label: t("common.all"),
-				},
-				...["user", "maintainer"].map((type) => ({
-					id: type,
-					label: t(`admin.users.form.roles.${type}`),
-				})),
-			] as EntryType[],
-		[],
-	);
-
-	return (
-		<div className="w-full min-w-[var(--reka-dropdown-menu-trigger-width)] lg:max-w-[15rem]">
-			<EntitySelect
-				value={value}
-				entries={contractTypeOptions}
-				placeholder="common.all"
-				onSelected={handleChange}
-			/>
-		</div>
-	);
-};
 
 const TableAssets = <T extends Record<string, unknown>>({
 	openCreateDialog,

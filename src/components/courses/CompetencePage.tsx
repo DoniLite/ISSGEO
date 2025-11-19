@@ -7,9 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import useKeyCompetencyStore from "@/stores/formations/keyCompetency.store";
 import { useEffect, useMemo } from "react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
+import { useTranslation } from "react-i18next";
 
 export default function CompetencesPage() {
 	const competencyStore = useKeyCompetencyStore();
+	const { t } = useTranslation();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
@@ -51,12 +53,13 @@ export default function CompetencesPage() {
 
 								<div className="pt-2 border-t">
 									<h4 className="font-semibold mt-2 flex items-center text-lg text-primary/80 dark:text-secondary/80">
-										<Briefcase className="w-4 h-4 mr-2" /> Secteurs Clés :
+										<Briefcase className="w-4 h-4 mr-2" />
+										{t("pages.modules.keySectors")} :
 									</h4>
 									<div className="flex flex-wrap gap-2 mt-2">
 										{comp.sectors?.map((sector) => (
 											<Badge key={sector}>
-												<Tag className="w-3 h-3 mr-1" />{" "}
+												<Tag className="w-3 h-3 mr-1" />
 												<span className="text-wrap">{sector}</span>
 											</Badge>
 										))}
@@ -65,7 +68,7 @@ export default function CompetencesPage() {
 
 								<div className="pt-2 border-t">
 									<h4 className="font-semibold mt-2 flex items-center text-lg text-primary/80 dark:text-secondary/80">
-										Avantages :
+										{t("pages.modules.advantages")} :
 									</h4>
 									<ul className="list-disc list-inside text-muted-foreground pl-4">
 										{comp.advantages?.map((a) => (

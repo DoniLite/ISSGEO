@@ -22,7 +22,7 @@ export default function PlacementContent() {
 
 	return (
 		<div className="text-center">
-			<h2 className="text-3xl font-bold mb-4 text-primary">
+			<h2 className="text-3xl font-bold mb-4 text-primary dark:text-secondary">
 				{t("services.placement.page.sectionTitle")}
 			</h2>
 			<p className="max-w-3xl mx-auto text-muted-foreground mb-12">
@@ -33,9 +33,9 @@ export default function PlacementContent() {
 				{benefits.map((benefit) => (
 					<Card
 						key={benefit.title}
-						className="p-6 text-left border-2 border-dashed border-indigo-200"
+						className="p-6 text-left border-2 border-dashed"
 					>
-						<benefit.icon className="w-8 h-8 text-indigo-600 mb-4" />
+						<benefit.icon className="w-8 h-8 mb-4 dark:text-secondary" />
 						<h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
 						<p className="text-sm text-muted-foreground">{benefit.desc}</p>
 					</Card>
@@ -49,7 +49,7 @@ export default function PlacementContent() {
 			</div>
 
 			<Button className="mt-12 text-lg px-8 py-6" asChild>
-				<Link to="/">
+				<Link to="/" hash="contact">
 					<Handshake className="mr-2 h-5 w-5" />
 					{t("services.placement.page.cta")}
 				</Link>

@@ -62,7 +62,7 @@ export default function JoinUsPage() {
 			</BaseHeroWrapper>
 
 			<div className="container mx-auto my-16 p-4">
-				{/* Section Pourquoi Nous Rejoindre */}
+				{/* Why join us section*/}
 				<section className="mb-16">
 					<h2 className="text-3xl font-extrabold text-center text-primary dark:text-secondary mb-10">
 						{t("careers.whyJoin.title")}
@@ -79,7 +79,7 @@ export default function JoinUsPage() {
 					</div>
 				</section>
 
-				{/* Section Offres d'Emploi */}
+				{/* Careers section */}
 				<section className="mb-16">
 					<h2 className="text-3xl font-extrabold text-center text-primary dark:text-secondary mb-10">
 						{t("careers.positions.sectionTitle")}
@@ -122,7 +122,7 @@ export default function JoinUsPage() {
 					)}
 				</section>
 
-				{/* Section Candidature Spontanée */}
+				{/* Candidature section */}
 				<section className="bg-primary/20 p-8 rounded-xl max-w-4xl mx-auto text-center border-l-4 border-secondary">
 					<Mail className="w-10 h-10 text-secondary mx-auto mb-4" />
 					<h3 className="text-2xl font-bold text-secondary mb-3">

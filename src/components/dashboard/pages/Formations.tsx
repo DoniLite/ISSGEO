@@ -98,8 +98,8 @@ export default function CoursesPage() {
 						variant={"ghost"}
 						onClick={() => {
 							navigate({
-								to: "/admin/courses/$id",
-								params: { id: entity },
+								to: "/admin/courses/rolling/$courseId",
+								params: { courseId: entity },
 							});
 						}}
 					>
