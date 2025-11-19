@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 /** biome-ignore-all lint/suspicious/noExplicitAny: types complex to be defined explicitly*/
 import plugin from "bun-plugin-tailwind";
-import { existsSync } from "fs";
-import { rm } from "fs/promises";
-import path from "path";
+import { existsSync } from "node:fs";
+import { rm } from "node:fs/promises";
+import path from "node:path";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
 	console.log(`
@@ -140,17 +140,17 @@ console.log(
 );
 
 const result = await Bun.build({
-  entrypoints,
-  outdir,
-  plugins: [plugin],
-  target: 'browser',
-  sourcemap: 'linked',
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(
-      process.env.NODE_ENV ?? 'development'
-    ),
-  },
-  ...cliConfig,
+	entrypoints,
+	outdir,
+	plugins: [plugin],
+	target: "browser",
+	sourcemap: "linked",
+	define: {
+		"process.env.NODE_ENV": JSON.stringify(
+			process.env.NODE_ENV ?? "development",
+		),
+	},
+	...cliConfig,
 });
 
 const end = performance.now();

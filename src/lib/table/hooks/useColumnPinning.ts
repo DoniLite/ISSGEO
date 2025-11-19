@@ -57,7 +57,7 @@ export function useColumnPinning<TData>({
 
 		// Apply the pin direction to the column
 		column.pin(pinDirection);
-		}, [isMobile, pinnedColumnId, pinOnDesktop, pinOnMobile, table]);
+	}, [isMobile, pinnedColumnId, pinOnDesktop, pinOnMobile, table]);
 
 	return {
 		getPinnedItemClassDefinition,

@@ -1,51 +1,51 @@
-import { DTO } from '@/core/decorators';
-import { BaseCreateDTO, BaseUpdateDTO } from '@/core/dto';
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import { DTO } from "@/core/decorators";
+import { BaseCreateDTO, BaseUpdateDTO } from "@/core/dto";
+import { IsArray, IsOptional, IsString } from "class-validator";
 
 @DTO()
 export class CreateKeyCompetencyDTO extends BaseCreateDTO {
-  @IsString()
-  title!: string;
+	@IsString()
+	title!: string;
 
-  @IsString()
-  description!: string;
+	@IsString()
+	description!: string;
 
-  @IsString()
-  icon!: string;
+	@IsString()
+	icon!: string;
 
-  @IsArray()
-  sectors!: string[];
+	@IsArray()
+	sectors!: string[];
 
-  @IsArray()
-  advantages!: string[];
+	@IsArray()
+	advantages!: string[];
 
-  @IsString()
-  moduleId!: string;
+	@IsString()
+	moduleId!: string;
 }
 
 @DTO()
 export class UpdateKeyCompetencyDTO extends BaseUpdateDTO {
-  @IsOptional()
-  @IsString()
-  title?: string;
+	@IsOptional()
+	@IsString()
+	title?: string;
 
-  @IsOptional()
-  @IsString()
-  description?: string;
+	@IsOptional()
+	@IsString()
+	description?: string;
 
-  @IsOptional()
-  @IsString()
-  icon?: string;
+	@IsOptional()
+	@IsString()
+	icon?: string;
 
-  @IsOptional()
-  @IsArray()
-  sectors?: string[];
+	@IsOptional()
+	@IsArray()
+	sectors?: string[];
 
-  @IsOptional()
-  @IsArray()
-  advantages?: string[];
+	@IsOptional()
+	@IsArray()
+	advantages?: string[];
 
-  @IsOptional()
-  @IsString()
-  moduleId?: string;
+	@IsOptional()
+	@IsString()
+	moduleId?: string;
 }

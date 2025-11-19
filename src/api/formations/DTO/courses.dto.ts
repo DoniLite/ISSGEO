@@ -1,82 +1,66 @@
-import { DTO } from '@/core/decorators';
-import { BaseCreateDTO, BaseUpdateDTO } from '@/core/dto';
-import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
+import { DTO } from "@/core/decorators";
+import { BaseCreateDTO, BaseUpdateDTO } from "@/core/dto";
+import { IsArray, IsNumber, IsOptional, IsString } from "class-validator";
 
 @DTO()
 export class CreateCourseDTO extends BaseCreateDTO {
-  @IsString()
-  title!: string;
+	@IsString()
+	title!: string;
 
-  @IsString()
-  description!: string;
+	@IsString()
+	description!: string;
 
-  @IsNumber()
-  duration!: number;
+	@IsArray()
+	learningOutcomes!: string[];
 
-  @IsNumber()
-  priceMin!: number;
+	@IsOptional()
+	@IsString()
+	targetAudience?: string;
 
-  @IsNumber()
-  priceMax!: number;
-
-  @IsArray()
-  learningOutcomes!: string[];
-
-  @IsOptional()
-  @IsString()
-  targetAudience?: string;
-
-  @IsArray()
-  modules!: string[];
-
-  @IsOptional()
-  @IsString()
-  thematicId?: string;
+	@IsOptional()
+	@IsString()
+	thematicId?: string;
 }
 
 @DTO()
 export class UpdateCourseDTO extends BaseUpdateDTO {
-  @IsOptional()
-  @IsString()
-  title?: string;
+	@IsOptional()
+	@IsString()
+	title?: string;
 
-  @IsOptional()
-  @IsString()
-  description?: string;
+	@IsOptional()
+	@IsString()
+	description?: string;
 
-  @IsOptional()
-  @IsNumber()
-  duration?: number;
+	@IsOptional()
+	@IsArray()
+	learningOutcomes?: string[];
 
-  @IsOptional()
-  @IsNumber()
-  priceMin?: number;
+	@IsOptional()
+	@IsString()
+	targetAudience?: string;
 
-  @IsOptional()
-  @IsNumber()
-  priceMax?: number;
+	@IsOptional()
+	@IsNumber()
+	participants?: number;
 
-  @IsOptional()
-  @IsArray()
-  learningOutcomes?: string[];
+	@IsOptional()
+	@IsNumber()
+	enrolled?: number;
 
-  @IsOptional()
-  @IsString()
-  targetAudience?: string;
+	@IsOptional()
+	@IsString()
+	thematicId?: string;
 
-  @IsOptional()
-  @IsArray()
-  modules?: string[];
+	@IsOptional()
+	@IsNumber()
+	totalDuration?: number;
 
-  @IsOptional()
-  @IsNumber()
-  participants?: number;
+	@IsOptional()
+	@IsNumber()
+	priceMin?: number;
 
-  @IsOptional()
-  @IsNumber()
-  enrolled?: number;
-
-  @IsOptional()
-  @IsString()
-  thematicId?: string;
+	@IsOptional()
+	@IsNumber()
+	priceMax?: number;
 }

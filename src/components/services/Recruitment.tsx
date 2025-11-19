@@ -27,7 +27,7 @@ export default function RecruitmentContent() {
 
 	return (
 		<div className="text-center">
-			<h2 className="text-3xl font-bold mb-4 text-primary">
+			<h2 className="text-3xl font-bold mb-4 text-primary dark:text-secondary">
 				{t("services.recruitment.page.sectionTitle")}
 			</h2>
 			<p className="max-w-3xl mx-auto text-muted-foreground mb-12">
@@ -38,7 +38,7 @@ export default function RecruitmentContent() {
 				{steps.map((step, index) => (
 					<Card
 						key={step.title}
-						className="p-6 text-left bg-gray-50 border-l-4 border-primary"
+						className="p-6 text-left border-l-4 border-primary"
 					>
 						<div className="flex items-center gap-4 mb-4">
 							<div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-bold text-primary">
@@ -51,7 +51,7 @@ export default function RecruitmentContent() {
 				))}
 			</div>
 			<Button variant="secondary" className="mt-12 text-lg px-8 py-6" asChild>
-				<Link to="/">
+				<Link to="/" hash="contact">
 					<UserCheck className="mr-2 h-5 w-5" />
 					{t("services.recruitment.page.cta")}
 				</Link>

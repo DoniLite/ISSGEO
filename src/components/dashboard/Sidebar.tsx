@@ -17,29 +17,29 @@ import UserDash from "./DashBoardUser";
 export function AppSidebar() {
 	const { t } = useTranslation();
 	return (
-    <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Admin</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menuLinks.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item.url}>
-                      <item.icon />
-                      <span>{t(`sidebar.${item.title}`)}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter>
-        <UserDash />
-      </SidebarFooter>
-    </Sidebar>
-  );
+		<Sidebar>
+			<SidebarContent>
+				<SidebarGroup>
+					<SidebarGroupLabel>Admin</SidebarGroupLabel>
+					<SidebarGroupContent>
+						<SidebarMenu>
+							{menuLinks.map((item) => (
+								<SidebarMenuItem key={item.title}>
+									<SidebarMenuButton asChild>
+										<Link to={item.url}>
+											<item.icon />
+											<span>{t(`sidebar.${item.title}`)}</span>
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
+				</SidebarGroup>
+			</SidebarContent>
+			<SidebarFooter>
+				<UserDash />
+			</SidebarFooter>
+		</Sidebar>
+	);
 }
