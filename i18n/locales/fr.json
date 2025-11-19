@@ -9,7 +9,10 @@
 		"no_results": "Aucun résultat trouvé",
 		"selectedItems": "{{count}} élément(s) sélectionné(s)",
 		"confirm": "Confirmer",
+		"startDate":"Date de début",
+		"select_field": "Selectionner un élément",
 		"cancel": "Annuler",
+		"hours": "Heures",
 		"deleting": "Suppression…",
 		"toast": {
 			"generalAlreadySubmitted": "Le formulaire général a déjà été soumis.",
@@ -256,6 +259,100 @@
 				},
 				"submit": "Réserver une place maintenant"
 			}
+		},
+		"trainingDetail": {
+			"outcomesTitle": "Ce que vous allez apprendre",
+			"modulesTitle": "Modules du cours",
+			"details": "Détails du cours",
+			"duration": "Durée totale",
+			"cost": "Frais de formation",
+			"enrollCta": "S'inscrire à cette formation",
+			"form": {
+				"errors": {
+					"name": "Veuillez fournir une information valide.",
+					"contact": "Veuillez fournir un email ou un numéro valide.",
+					"modules": "Veuillez sélectionner au moins un module."
+				},
+				"modules": {
+					"title": "Modules",
+					"placeholder": "Choisissez un ou plusieurs modules"
+				},
+				"name": {
+					"title": "Nom complet",
+					"placeholder": "Ex: John Doe"
+				},
+				"contact": {
+					"title": "Contact",
+					"placeholder": "Email ou numéro de téléphone"
+				},
+				"profession": {
+					"title": "Profession",
+					"placeholder": "Ex: Développeur"
+				},
+				"country": {
+					"title": "Pays",
+					"placeholder": "Ex: Burkina Faso"
+				},
+				"schoolLevel": {
+					"title": "Niveau d'études",
+					"placeholder": "Ex: Licence"
+				},
+				"experience": {
+					"title": "Expérience",
+					"placeholder": "Ex: 3 ans dans l'IoT"
+				}
+			},
+			"toast": {
+				"success": {
+					"title": "Informations envoyées !",
+					"description": "Merci. Nous examinerons vos données et vous contacterons bientôt."
+				},
+				"error": {
+					"title": "Échec de l'envoi",
+					"description": "Vos informations n'ont pas pu être envoyées. Veuillez réessayer plus tard."
+				}
+			}
+		},
+		"formations": {
+			"title": "Programmes de formation",
+			"desc": "Découvrez nos programmes de formation disponibles.",
+			"searchPlaceholder": "Rechercher une formation",
+			"filterTitle": "Filtrer par thématique",
+			"noResults": "Aucune formation trouvée.",
+			"modules": "Modules",
+			"duration": "Durée",
+			"priceRange": "Fourchette de prix",
+			"participants": "Participants",
+			"enrolled": "Inscrits",
+			"keyCompetencies": "Compétences clés",
+			"viewDetails": "Voir les détails"
+		},
+		"calendar": {
+			"title": "Sessions de formation",
+			"desc": "Découvrez les prochaines sessions de formation.",
+			"nextSessions": "Prochaines sessions",
+			"startDate": "Date de début",
+			"location": "Lieu",
+			"viewSession": "Voir la session",
+			"noSessionComing": "Aucune session à venir."
+		},
+		"modules": {
+			"title": "Compétences essentielles",
+			"desc": "Découvrez les compétences clés abordées dans cette formation.",
+			"keySectors": "Secteurs clés",
+			"advantages": "Avantages"
+		},
+		"rolling": {
+			"profession": "Profession",
+			"schoolLevel": "Niveau d'études",
+			"experience": "Expérience",
+			"module": "Modules",
+			"duration": "Durée",
+			"priceMin": "Prix minimum",
+			"priceMax": "Prix maximum",
+			"participants": "Participants",
+			"filter": "Filtrer par modules",
+			"noModule": "Aucun module ne correspond à votre filtre."
 		}
 	},
 	"nav": {
@@ -542,6 +639,10 @@
 				"update": {
 					"title": "Mettre à jour l’utilisateur",
 					"description": "Modifiez le(s) champ(s) souhaité(s) puis soumettez"
+				},
+				"roles": {
+					"user": "Utilisateur",
+					"maintainer": "Mainteneur"
 				}
 			},
 			"toast": {
@@ -688,6 +789,17 @@
 					"competency_advantages_placeholder": "Ajouter un avantage",
 					"key_competency_placeholder": "Selectionner des compétences clées",
 					"add_button": "Ajouter",
+					"cancel_button": "Annuler"
+				},
+				"step5": {
+					"title": "Modules",
+					"module_meta": "Dure {{duration}}H pour {{price}}FCFA",
+					"edit": "Editer",
+					"add_module": "Ajouter module",
+					"module_title_label": "Titre",
+					"module_price_label": "Prix",
+					"module_duration_label": "Durée",
+					"save_button": "Sauvegarder",
 					"cancel_button": "Annuler"
 				},
 				"icons": {

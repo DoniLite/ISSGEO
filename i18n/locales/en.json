@@ -10,6 +10,7 @@
 		"selectedItems": "{{count}} selected item(s)",
 		"confirm": "Confirm",
 		"cancel": "Cancel",
+		"select_field": "Select Field",
 		"deleting": "Deleting...",
 		"toast": {
 			"generalAlreadySubmitted": "General form already submitted.",
@@ -70,7 +71,9 @@
 		"edit": "Edit",
 		"delete": "Delete",
 		"fallbackText": "Entity",
+		"hours": "Hours",
 		"title": "Title",
+		"startDate":"Start Date",
 		"description": "Description",
 		"submit": "Submit",
 		"all": "All",
@@ -256,6 +259,100 @@
 				},
 				"submit": "Reserve a Place Now"
 			}
+		},
+		"trainingDetail": {
+			"outcomesTitle": "What you will learn",
+			"modulesTitle": "Course modules",
+			"details": "Course details",
+			"duration": "Total duration",
+			"cost": "Course fee",
+			"enrollCta": "Enroll in this course",
+			"form": {
+				"errors": {
+					"name": "Please enter valid information for this field.",
+					"contact": "Please provide a valid email or phone number.",
+					"modules": "Please select at least one module."
+				},
+				"modules": {
+					"title": "Modules",
+					"placeholder": "Choose one or more modules"
+				},
+				"name": {
+					"title": "Full name",
+					"placeholder": "Ex: John Doe"
+				},
+				"contact": {
+					"title": "Contact",
+					"placeholder": "Email or phone number"
+				},
+				"profession": {
+					"title": "Profession",
+					"placeholder": "Ex: Developer"
+				},
+				"country": {
+					"title": "Country",
+					"placeholder": "Ex: Burkina Faso"
+				},
+				"schoolLevel": {
+					"title": "Education level",
+					"placeholder": "Ex: Bachelor's degree"
+				},
+				"experience": {
+					"title": "Experience",
+					"placeholder": "Ex: 3 years in IoT"
+				}
+			},
+			"toast": {
+				"success": {
+					"title": "Your information has been submitted!",
+					"description": "Thank you. We will review your details and get back to you soon."
+				},
+				"error": {
+					"title": "Submission failed",
+					"description": "We could not submit your information. Please try again later."
+				}
+			}
+		},
+		"formations": {
+			"title": "Training programs",
+			"desc": "Explore our available training programs.",
+			"searchPlaceholder": "Search for a course",
+			"filterTitle": "Filter by topic",
+			"noResults": "No training programs found.",
+			"modules": "Modules",
+			"duration": "Duration",
+			"priceRange": "Price range",
+			"participants": "Participants",
+			"enrolled": "Enrolled",
+			"keyCompetencies": "Main competencies",
+			"viewDetails": "View details"
+		},
+		"calendar": {
+			"title": "Training sessions",
+			"desc": "Discover upcoming training sessions.",
+			"nextSessions": "Upcoming sessions",
+			"startDate": "Start date",
+			"location": "Location",
+			"viewSession": "View session",
+			"noSessionComing": "No upcoming sessions available."
+		},
+		"modules": {
+			"title": "Core competencies",
+			"desc": "Discover the key competencies covered in this course.",
+			"keySectors": "Key sectors",
+			"advantages": "Benefits"
+		},
+		"rolling": {
+			"profession": "Profession",
+			"schoolLevel": "Education level",
+			"experience": "Experience",
+			"module": "Modules",
+			"duration": "Duration",
+			"priceMin": "Minimum price",
+			"priceMax": "Maximum price",
+			"participants": "Participants",
+			"filter": "Filter by modules",
+			"noModule": "No modules match your filter."
 		}
 	},
 	"nav": {
@@ -542,6 +639,10 @@
 				"update": {
 					"title": "Update the user",
 					"description": "Update the field you want to change and submit it"
+				},
+				"roles": {
+					"user": "User",
+					"maintainer": "Maintainer"
 				}
 			},
 			"toast": {
@@ -688,6 +789,17 @@
 					"competency_advantages_placeholder": "Add an advantage",
 					"key_competency_placeholder": "Select key competencies",
 					"add_button": "Add",
+					"cancel_button": "Cancel"
+				},
+				"step5": {
+					"title": "Modules",
+					"module_meta": "Will last {{duration}}H for {{price}}FCFA",
+					"edit": "Edit",
+					"add_module": "Add module",
+					"module_title_label": "Title",
+					"module_price_label": "Price",
+					"module_duration_label": "Duration",
+					"save_button": "Save",
 					"cancel_button": "Cancel"
 				},
 				"icons": {
