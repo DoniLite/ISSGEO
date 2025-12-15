@@ -21,6 +21,7 @@ export const TrainingTable = pgTable("Training", {
 	thematicId: T.text("thematic").references(() => ThematicTable.id),
 	learningOutcomes: T.text("learning_outcomes").array(),
 	targetAudience: T.text("target_audience"),
+	masterId: T.text('master_id').references(() => MasterTable.id)
 });
 
 export const KeyCompetencyTable = pgTable("Key_competency", {
@@ -40,3 +41,11 @@ export const ModuleTable = pgTable("Module", {
 	duration: T.integer("duration").notNull(),
 	courseId: T.text("course_id").references(() => TrainingTable.id),
 });
+
+export const MasterTable = pgTable('Master', {
+	...BaseRow,
+	name: T.text('name').notNull(),
+	description: T.text('description'),
+	image: T.text('image'),
+	socials: T.json('socials')
+})

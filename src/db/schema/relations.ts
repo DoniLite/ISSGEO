@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
 	KeyCompetencyTable,
+	MasterTable,
 	ModuleTable,
 	TrainingTable,
 } from "./training.schema";
@@ -16,12 +17,20 @@ export const TrainingTableRelations = relations(
 			fields: [TrainingTable.thematicId],
 			references: [ThematicTable.id],
 		}),
+		master: one(MasterTable, {
+			fields: [TrainingTable.masterId],
+			references: [MasterTable.id],
+		}),
 		sessions: many(TrainingSessionTable),
 		competences: many(KeyCompetencyTable),
 		modules: many(ModuleTable),
 		rollings: many(RollingTable),
 	}),
 );
+
+export const MasterTableRelations = relations(MasterTable, ({ many }) => ({
+	courses: many(TrainingTable),
+}));
 
 export const ModuleTableRelations = relations(ModuleTable, ({ one, many }) => ({
 	training: one(TrainingTable, {
