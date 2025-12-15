@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useUniqueElementIds: <> */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReviewModal from "../review/ReviewModal";
@@ -60,7 +59,8 @@ export default function Testimonials() {
 	);
 }
 
-interface TestimonialsCardProps extends Base<TestimonialsTableType> {}
+// biome-ignore lint/suspicious/noEmptyInterface: <>
+interface  TestimonialsCardProps extends Base<TestimonialsTableType> {}
 
 function TestimonialsCard({
 	name,

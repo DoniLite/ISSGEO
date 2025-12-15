@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useUniqueElementIds: <> */
 import { Link } from "@tanstack/react-router";
 import {
 	Facebook,
