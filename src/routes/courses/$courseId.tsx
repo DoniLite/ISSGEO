@@ -20,7 +20,11 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BG_LINEAR_CLASS } from "@/lib/const";
 import useCoursesStore from "@/stores/formations/courses.store";
-import type { RollingTableType, TrainingTableType } from "@/db";
+import type {
+	RollingTableType,
+	TrainingTableType,
+	MasterTableType,
+} from "@/db";
 import useModuleStore from "@/stores/formations/module.store";
 import z from "zod";
 import type { GenericFormField } from "@/components/shared/entity/GenericForm";
@@ -32,6 +36,7 @@ import Loader from "@/components/shared/Loader";
 import { Badge } from "@/components/ui/badge";
 import useRollingStore from "@/stores/rolling.store";
 import { toast } from "sonner";
+import MasterCard from "@/components/dashboard/MasterCard";
 
 export const Route = createFileRoute("/courses/$courseId")({
 	component: TrainingDetail,
@@ -43,7 +48,9 @@ function TrainingDetail() {
 	const courseStore = useCoursesStore();
 	const moduleStore = useModuleStore();
 
-	const [training, setTraining] = useState<TrainingTableType>();
+	const [training, setTraining] = useState<
+		TrainingTableType & { master?: MasterTableType }
+	>();
 	const [selectedModules, setSelectedModules] = useState<string[]>([]);
 
 	const courseDuration = useMemo(() => {
@@ -200,6 +207,29 @@ function TrainingDetail() {
 									/>
 								</CardContent>
 							</Card>
+
+							{training.master && (
+								<div className="mt-8">
+									<h2 className="text-xl font-bold mb-4 text-primary">
+										{t("pages.trainingDetail.master")}
+									</h2>
+									<Card className="overflow-hidden">
+										<MasterCard
+											name={training.master.name}
+											description={training.master.description || ""}
+											image={training.master.image || ""}
+											socials={
+												(training.master.socials as {
+													facebook?: string;
+													twitter?: string;
+													instagram?: string;
+													linkedin?: string;
+												}) || {}
+											}
+										/>
+									</Card>
+								</div>
+							)}
 						</aside>
 					</div>
 				</div>
