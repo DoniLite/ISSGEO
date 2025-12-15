@@ -2,6 +2,18 @@ import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schemas from "@/db";
+import type { Logger as DrizzleLogger } from "drizzle-orm/logger";
+import { Logger } from "./logger";
+
+class CustomDrizzleLogger implements DrizzleLogger {
+	logQuery(query: string, params: unknown[]): void {
+		Logger.getInstance("debug").debug("SQL Query", {
+			query,
+			params: JSON.stringify(params),
+		});
+	}
+}
+
 export class DatabaseConnection {
 	private static instance: DatabaseConnection;
 	private db;
@@ -14,6 +26,7 @@ export class DatabaseConnection {
 			schema: {
 				...schemas,
 			},
+			logger: new CustomDrizzleLogger(),
 		});
 	}
 
