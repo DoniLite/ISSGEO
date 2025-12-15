@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
-/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
 import EntityEditDialog from "@/components/shared/AppDialog";
 import type { EntryType } from "@/components/shared/entity/SortedCombobox";
 import EntitySelect from "@/components/shared/entity/SortedCombobox";
@@ -40,6 +38,7 @@ export default function UsersPage() {
 	const { t } = useTranslation();
 	const [contractFilter, setContractFilter] = useState("all");
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
 		fetchData();
 	}, []);
@@ -134,7 +133,7 @@ export default function UsersPage() {
 	});
 
 	const fields: GenericFormField<UserTableType>[] = [
-		{ name: "name", label: t("common.email"), type: "text", required: true },
+		{ name: "name", label: t("common.name"), type: "text", required: true },
 		{
 			name: "email",
 			label: t("common.email"),
@@ -227,11 +226,11 @@ const TableFilters = <T extends Record<string, unknown>>({
 					label: t(`admin.users.form.roles.${type}`),
 				})),
 			] as EntryType[],
-		[],
+		[t],
 	);
 
 	return (
-		<div className="w-full min-w-[var(--reka-dropdown-menu-trigger-width)] lg:max-w-[15rem]">
+		<div className="w-full min-w-(--reka-dropdown-menu-trigger-width) lg:max-w-60">
 			<EntitySelect
 				value={value}
 				entries={contractTypeOptions}
