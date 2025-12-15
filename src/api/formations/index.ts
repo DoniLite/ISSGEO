@@ -12,3 +12,8 @@ export * from "./repository/thematic.repository";
 export * from "./services/thematic.service";
 export * from "./web/thematic.controller";
 export * from "./DTO/thematic.dto";
+
+export * from "./repository/master.repository";
+export * from "./services/master.service";
+export * from "./web/master.controller";
+export * from "./DTO/master.dto";

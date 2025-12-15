@@ -20,6 +20,10 @@ export class CreateCourseDTO extends BaseCreateDTO {
 	@IsOptional()
 	@IsString()
 	thematicId?: string;
+
+	@IsOptional()
+	@IsString()
+	masterId?: string;
 }
 
 @DTO()
@@ -63,4 +67,8 @@ export class UpdateCourseDTO extends BaseUpdateDTO {
 	@IsOptional()
 	@IsNumber()
 	priceMax?: number;
+
+	@IsOptional()
+	@IsString()
+	masterId?: string;
 }
