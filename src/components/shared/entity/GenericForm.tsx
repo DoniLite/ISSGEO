@@ -165,7 +165,9 @@ export default function GenericForm<
 															>
 																<SelectTrigger>
 																	<SelectValue
-																		placeholder={field.placeholder || "Select"}
+																		placeholder={
+																			field.placeholder || t("common.select")
+																		}
 																	/>
 																</SelectTrigger>
 																<SelectContent>

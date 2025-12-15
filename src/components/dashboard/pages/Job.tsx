@@ -224,7 +224,7 @@ const TableFilters = <T extends Record<string, unknown>>({
 			<EntitySelect
 				value={value}
 				entries={contractTypeOptions}
-				placeholder="common.all"
+				placeholder={t("common.all")}
 				onSelected={handleChange}
 			/>
 		</div>

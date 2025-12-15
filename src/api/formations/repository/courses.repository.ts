@@ -70,6 +70,7 @@ export class CoursesRepository extends BaseRepository<
 				);
 				const master =
 					(await this.MasterRepo.findOneBy("id", item.masterId)) || undefined;
+				console.log(master);
 				return {
 					...item,
 					modules,
@@ -79,6 +80,21 @@ export class CoursesRepository extends BaseRepository<
 				};
 			}),
 		);
+	}
+
+	override async findById(
+		id: string,
+	): Promise<TrainingTableType & {
+		master?: MasterTableType;
+	}> {
+		const item = await super.findById(id);
+		const master = await this.MasterRepo.findById(item?.masterId ?? "");
+		return {
+			...item,
+			master: master ?? undefined,
+		} as TrainingTableType & {
+			master?: MasterTableType;
+		};
 	}
 
 	async createCompetency(

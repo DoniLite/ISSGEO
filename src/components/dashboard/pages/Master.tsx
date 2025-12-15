@@ -112,7 +112,8 @@ export default function MasterPage() {
 				instagram: z.string().optional().nullable(),
 				linkedin: z.string().optional().nullable(),
 			})
-			.optional().nullable(),
+			.optional()
+			.nullable(),
 	});
 
 	const fields: GenericFormField<MasterTableType>[] = [
@@ -132,25 +133,25 @@ export default function MasterPage() {
 		{
 			// biome-ignore lint/suspicious/noExplicitAny: <>
 			name: "socials.facebook" as any,
-			label: "Facebook",
+			label: t("admin.master.form.socials.facebook"),
 			type: "text",
 		},
 		{
 			// biome-ignore lint/suspicious/noExplicitAny: <>
 			name: "socials.twitter" as any,
-			label: "Twitter",
+			label: t("admin.master.form.socials.twitter"),
 			type: "text",
 		},
 		{
 			// biome-ignore lint/suspicious/noExplicitAny: <>
 			name: "socials.instagram" as any,
-			label: "Instagram",
+			label: t("admin.master.form.socials.instagram"),
 			type: "text",
 		},
 		{
 			// biome-ignore lint/suspicious/noExplicitAny: <>
 			name: "socials.linkedin" as any,
-			label: "Linkedin",
+			label: t("admin.master.form.socials.linkedin"),
 			type: "text",
 		},
 	];

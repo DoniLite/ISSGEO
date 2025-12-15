@@ -98,7 +98,7 @@ export default function useMasterStore(): MasterStore &
 		query: paginationHandler.query,
 		pagination: paginationHandler.pagination,
 		defaultEntity: { name: "", image: "", socials: {} },
-		translationPath: "admin.users",
+		translationPath: "admin.master",
 
 		fetchData,
 		create,

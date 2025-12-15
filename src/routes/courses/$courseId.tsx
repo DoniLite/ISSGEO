@@ -162,6 +162,29 @@ function TrainingDetail() {
 									</ol>
 								</CardContent>
 							</Card>
+
+							{training.master && (
+								<div className="mt-8">
+									<h2 className="text-xl font-bold mb-4 text-primary">
+										{t("pages.trainingDetail.master")}
+									</h2>
+									<Card className="overflow-hidden">
+										<MasterCard
+											name={training.master.name}
+											description={training.master.description || ""}
+											image={training.master.image || ""}
+											socials={
+												(training.master.socials as {
+													facebook?: string;
+													twitter?: string;
+													instagram?: string;
+													linkedin?: string;
+												}) || {}
+											}
+										/>
+									</Card>
+								</div>
+							)}
 						</main>
 
 						{/* Registering form */}
@@ -207,29 +230,6 @@ function TrainingDetail() {
 									/>
 								</CardContent>
 							</Card>
-
-							{training.master && (
-								<div className="mt-8">
-									<h2 className="text-xl font-bold mb-4 text-primary">
-										{t("pages.trainingDetail.master")}
-									</h2>
-									<Card className="overflow-hidden">
-										<MasterCard
-											name={training.master.name}
-											description={training.master.description || ""}
-											image={training.master.image || ""}
-											socials={
-												(training.master.socials as {
-													facebook?: string;
-													twitter?: string;
-													instagram?: string;
-													linkedin?: string;
-												}) || {}
-											}
-										/>
-									</Card>
-								</div>
-							)}
 						</aside>
 					</div>
 				</div>
