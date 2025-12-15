@@ -135,7 +135,10 @@
 		"Freelance": "Indépendant",
 		"monthly": "Mensuel",
 		"weekly": "Semestriel",
-		"yearly": "Anuel"
+		"yearly": "Anuel",
+		"upload_image": "Charger une image",
+		"change_image": "Changer l'mage",
+		"remove_image": "Supprimer l'mage"
 	},
 	"footer": {
 		"brand": "ISSGEO Institute",
@@ -281,6 +284,7 @@
 		},
 		"trainingDetail": {
 			"outcomesTitle": "Ce que vous allez apprendre",
+			"master": "Formateur",
 			"modulesTitle": "Modules du cours",
 			"details": "Détails du cours",
 			"duration": "Durée totale",
@@ -442,7 +446,8 @@
 		"contact": "Contact",
 		"job": "Emploi",
 		"users": "Utilisateurs",
-		"testimonials": "Témoignages"
+		"testimonials": "Témoignages",
+		"master": "Formateur"
 	},
 	"missions": {
 		"sectionTitle": "Nos missions : façonner l’avenir du territoire",
@@ -518,11 +523,9 @@
 			"appreciation": {
 				"label": "Donnez-nous votre appréciation",
 				"fields": {
-					"0": "Très mauvais",
-					"1": "Mauvais",
-					"2": "Moyen",
-					"3": "Bon",
-					"4": "Très bon"
+					"0": "Moyen",
+					"1": "Bon",
+					"2": "Très bon"
 				}
 			},
 			"cancel": "Annuler",
@@ -647,6 +650,50 @@
 		}
 	},
 	"admin": {
+		"master": {
+			"id": "Master",
+			"form": {
+				"create": {
+					"title": "Créer un nouveau Master",
+					"description": "Remplissez les informations pour créer un nouveau Master"
+				},
+				"update": {
+					"title": "Mettre à jour le Master",
+					"description": "Mettre à jour les informations du Master"
+				},
+				"name": "Veuillez entrer une information valide pour ce champ.",
+				"description": "Veuillez entrer une information valide pour ce champ.",
+				"image": "Veuillez entrer une information valide pour ce champ.",
+				"socials": {
+					"facebook": "Facebook",
+					"twitter": "Twitter",
+					"instagram": "Instagram",
+					"linkedin": "LinkedIn"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Master créé avec succès",
+						"description": "Le Master a été créé avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Master mis à jour avec succès",
+						"description": "Le Master a été mis à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Master supprimé avec succès",
+						"description": "Le Master a été supprimé avec succès",
+						"titleMultiple": "Masters supprimés avec succès",
+						"descriptionMultiple": "Les Masters sélectionnés ont été supprimés avec succès"
+					}
+				}
+			}
+		},
 		"users": {
 			"id": "Utilisateurs",
 			"description": "Parcourez les derniers statistiques de vos utilisateurs récents",
@@ -870,17 +917,181 @@
 		},
 		"testimonials": {
 			"id": "Témoignages",
-			"description": "Parcourez les derniers statistiques de vos témoignages récents"
+			"description": "Parcourez les derniers statistiques de vos témoignages récents",
+			"form": {
+				"create": {
+					"title": "Créer un nouveau Témoignage",
+					"description": "Remplissez les informations pour créer un nouveau Témoignage"
+				},
+				"update": {
+					"title": "Mettre à jour le Témoignage",
+					"description": "Mettre à jour les informations du Témoignage"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Témoignage créé avec succès",
+						"description": "Le Témoignage a été créé avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Témoignage mis à jour avec succès",
+						"description": "Le Témoignage a été mis à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Témoignage supprimé avec succès",
+						"description": "Le Témoignage a été supprimé avec succès",
+						"titleMultiple": "Témoignages supprimés avec succès",
+						"descriptionMultiple": "Les Témoignages sélectionnés ont été supprimés avec succès"
+					}
+				}
+			}
 		},
 		"contact": {
 			"id": "Contact",
-			"description": "Parcourez les derniers statistiques de vos contacts récents"
+			"description": "Parcourez les derniers statistiques de vos contacts récents",
+			"form": {
+				"create": {
+					"title": "Créer un nouveau Contact",
+					"description": "Remplissez les informations pour créer un nouveau Contact"
+				},
+				"update": {
+					"title": "Mettre à jour le Contact",
+					"description": "Mettre à jour les informations du Contact"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Contact créé avec succès",
+						"description": "Le Contact a été créé avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Contact mis à jour avec succès",
+						"description": "Le Contact a été mis à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Contact supprimé avec succès",
+						"description": "Le Contact a été supprimé avec succès",
+						"titleMultiple": "Contacts supprimés avec succès",
+						"descriptionMultiple": "Les Contacts sélectionnés ont été supprimés avec succès"
+					}
+				}
+			}
+		},
+		"rolling": {
+			"id": "Candidature",
+			"description": "Rejoignez l'équipe",
+			"form": {
+				"create": {
+					"title": "Créer une nouvelle Candidature",
+					"description": "Remplissez les informations pour créer une nouvelle Candidature"
+				},
+				"update": {
+					"title": "Mettre à jour la Candidature",
+					"description": "Mettre à jour les informations de la Candidature"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Candidature créée avec succès",
+						"description": "La Candidature a été créée avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Candidature mise à jour avec succès",
+						"description": "La Candidature a été mise à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Candidature supprimée avec succès",
+						"description": "La Candidature a été supprimée avec succès",
+						"titleMultiple": "Candidatures supprimées avec succès",
+						"descriptionMultiple": "Les Candidatures sélectionnées ont été supprimées avec succès"
+					}
+				}
+			}
 		},
 		"key_competency": {
-			"id": "Compétences clées"
+			"id": "Compétences clées",
+			"form": {
+				"create": {
+					"title": "Créer une nouvelle Compétence clé",
+					"description": "Remplissez les informations pour créer une nouvelle Compétence clé"
+				},
+				"update": {
+					"title": "Mettre à jour la Compétence clé",
+					"description": "Mettre à jour les informations de la Compétence clé"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Compétence clé créée avec succès",
+						"description": "La Compétence clé a été créée avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Compétence clé mise à jour avec succès",
+						"description": "La Compétence clé a été mise à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Compétence clé supprimée avec succès",
+						"description": "La Compétence clé a été supprimée avec succès",
+						"titleMultiple": "Compétences clés supprimées avec succès",
+						"descriptionMultiple": "Les Compétences clés sélectionnées ont été supprimées avec succès"
+					}
+				}
+			}
 		},
 		"thematic": {
-			"id": "Thématique"
+			"id": "Thématique",
+			"form": {
+				"create": {
+					"title": "Créer une nouvelle Thématique",
+					"description": "Remplissez les informations pour créer une nouvelle Thématique"
+				},
+				"update": {
+					"title": "Mettre à jour la Thématique",
+					"description": "Mettre à jour les informations de la Thématique"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Thématique créée avec succès",
+						"description": "La Thématique a été créée avec succès"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Thématique mise à jour avec succès",
+						"description": "La Thématique a été mise à jour avec succès"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Thématique supprimée avec succès",
+						"description": "La Thématique a été supprimée avec succès",
+						"titleMultiple": "Thématiques supprimées avec succès",
+						"descriptionMultiple": "Les Thématiques sélectionnées ont été supprimées avec succès"
+					}
+				}
+			}
 		}
 	}
 }

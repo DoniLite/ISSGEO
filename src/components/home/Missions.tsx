@@ -35,7 +35,7 @@ export default function MissionSection() {
 	];
 
 	return (
-		<div id={useId()} className="container mx-auto my-16 p-4">
+		<div id='missions' className="container mx-auto my-16 p-4">
 			<Badge className="my-4">{t("navBadge.missions")}</Badge>
 			<h2 className="text-3xl lg:text-4xl font-extrabold text-center mb-12">
 				{t("missions.sectionTitle")}

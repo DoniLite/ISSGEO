@@ -7,7 +7,7 @@ import { Badge } from "../ui/badge";
 export default function Team() {
 	const { t } = useTranslation();
 	return (
-		<div className="w-full bg-primary py-12 text-primary-foreground my-8 lg:my-[8rem]">
+		<div className="w-full bg-primary py-12 text-primary-foreground my-8 lg:my-32">
 			<div className="container mx-auto p-2 lg:p-4">
 				<Badge className="my-2 bg-secondary text-secondary-foreground">
 					{t("navBadge.team")}
@@ -22,7 +22,7 @@ export default function Team() {
 						</p>
 						<Link
 							to="/"
-							className="mt-4 text-sm bg-primary-foreground py-3 px-4 hover:bg-primary-foreground/90 font-bold w-full lg:w-[60%] rounded-[4px] flex justify-center text-primary"
+							className="mt-4 text-sm bg-primary-foreground py-3 px-4 hover:bg-primary-foreground/90 font-bold w-full lg:w-[60%] rounded-lg flex justify-center text-primary"
 						>
 							{t("team.groupTitle")}
 						</Link>
@@ -59,7 +59,7 @@ function TeamMemberCard({ name, title, socials, image }: TeamMemberCardProps) {
 			<img
 				src={image}
 				alt="Team"
-				className="w-[7rem] h-[7rem] rounded-full shadow object-cover"
+				className="w-28 h-28 rounded-full shadow object-cover"
 			/>
 			<h2 className="text-lg font-bold">{name}</h2>
 			<span className="text-sm font-semibold text-muted-foreground">

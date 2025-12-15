@@ -24,6 +24,7 @@ import type {
 	PaginationQuery,
 	SortOrder,
 } from "@/lib/interfaces/pagination";
+import { logger } from "./logger";
 
 export interface StatisticsPeriod {
 	count: number;
@@ -54,8 +55,12 @@ export abstract class BaseRepository<
 {
 	protected db = DatabaseConnection.getInstance().getDatabase();
 	protected abstract table: Tb;
+	protected logger = logger;
 
 	async create(dto: CreateDTO): Promise<T> {
+		this.logger.debug("Creating entity in DB", {
+			table: (this.table as any)[Symbol.for("drizzle:Name")] || "unknown",
+		});
 		const [result] = await this.db.insert(this.table).values(dto).returning();
 		return result as unknown as T;
 	}
@@ -259,6 +264,10 @@ export abstract class BaseRepository<
 	}
 
 	async update(id: string | number, dto: UpdateDTO): Promise<T[] | null> {
+		this.logger.debug(`Updating entity ${id} in DB`, {
+			// table: (this.table as any)[Symbol.for("drizzle:Name")] || "unknown",
+			id,
+		});
 		const result = await this.db
 			.update(this.table)
 			.set(dto)

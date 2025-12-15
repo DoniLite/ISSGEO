@@ -6,6 +6,7 @@ import type {
 	PaginatedResponse,
 	PaginationQuery,
 } from "@/lib/interfaces/pagination";
+import { logger, type LogContext } from "./logger";
 
 export abstract class BaseService<
 	T extends BaseEntity,
@@ -21,6 +22,8 @@ export abstract class BaseService<
 	> = BaseRepository<T, CreateDTO, UpdateDTO>,
 	R extends T = T,
 > {
+	protected logger = logger;
+
 	constructor(protected repository: Repository) {}
 	/**
 	 * Creates a new entity.
@@ -29,6 +32,10 @@ export abstract class BaseService<
 	 */
 	@ValidateDTO()
 	async create(dto: CreateDTO, _context: Context): Promise<T> {
+		this.logger.debug(`Creating entity in ${this.constructor.name}`, {
+			className: this.constructor.name,
+			method: "create",
+		});
 		return this.repository.create(dto);
 	}
 
@@ -50,16 +57,36 @@ export abstract class BaseService<
 		dto: UpdateDTO,
 		_context: Context,
 	): Promise<T[] | null> {
+		this.logger.debug(`Updating entity ${id} in ${this.constructor.name}`, {
+			className: this.constructor.name,
+			method: "update",
+			id,
+		});
 		const exists = await this.repository.exists(id);
 		if (!exists) {
+			this.logger.warn(`Entity ${id} not found for update`, {
+				className: this.constructor.name,
+				method: "update",
+				id,
+			});
 			throw new Error(`Entity with id ${id} not found`);
 		}
 		return this.repository.update(id, dto);
 	}
 
 	async delete(id: string | number): Promise<boolean> {
+		this.logger.debug(`Deleting entity ${id} in ${this.constructor.name}`, {
+			className: this.constructor.name,
+			method: "delete",
+			id,
+		});
 		const exists = await this.repository.exists(id);
 		if (!exists) {
+			this.logger.warn(`Entity ${id} not found for deletion`, {
+				className: this.constructor.name,
+				method: "delete",
+				id,
+			});
 			throw new Error(`Entity with id ${id} not found`);
 		}
 		return this.repository.delete(id);

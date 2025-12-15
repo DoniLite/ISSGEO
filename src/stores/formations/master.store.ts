@@ -2,39 +2,32 @@ import type { BaseStore, PaginatedStore } from "../base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
 import { apiClient } from "@/lib/fetch-api";
 import { useTableServerPaginationHandler } from "@/lib/table/hooks/useTableServerPaginationHandler";
-import type { ThematicTableType } from "@/db";
+import type { MasterTableType } from "@/db";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import { useCallback } from "react";
-import type {
-	CreateThematicDTO,
-	UpdateThematicDTO,
-} from "@/api/formations/DTO/thematic.dto";
+import type { CreateMasterDTO, UpdateMasterDTO } from "@/api/formations";
 
-interface ThematicStore extends BaseStore {
-	create: (data: CreateThematicDTO) => Promise<void>;
+interface MasterStore extends BaseStore {
+	create: (data: CreateMasterDTO) => Promise<void>;
 	deleteOne: (id: string) => Promise<void>;
 	deleteMultiple: (ids: string[]) => Promise<void>;
-	update: (id: string, data: UpdateThematicDTO) => Promise<void>;
-	findOne: (id: string) => Promise<ThematicTableType | undefined>;
-	fetchAll: (
-		query?: Record<string, unknown>,
-	) => Promise<ThematicTableType[] | undefined>;
+	update: (id: string, data: UpdateMasterDTO) => Promise<void>;
 }
 
-export default function useThematicStoreStore(): ThematicStore &
-	PaginatedStore<ThematicTableType> {
+export default function useMasterStore(): MasterStore &
+	PaginatedStore<MasterTableType> {
 	const { loading, error, withAsyncOperation, resetState } =
 		useStoreAsyncOperations();
 
 	const refetchFunction = useCallback(async (query: PaginationQuery) => {
-		const res = await apiClient.call("thematic", "/thematic", "GET", {
+		const res = await apiClient.call("master", "/master", "GET", {
 			params: query,
 		});
 		return res.data;
 	}, []);
 
 	const paginationHandler = useTableServerPaginationHandler<
-		ThematicTableType,
+		MasterTableType,
 		PaginationQuery
 	>({
 		refetchFunction,
@@ -46,8 +39,8 @@ export default function useThematicStoreStore(): ThematicStore &
 		},
 	);
 
-	const create = withAsyncOperation(async (data: CreateThematicDTO) => {
-		const res = await apiClient.call("thematic", "/thematic", "POST", {
+	const create = withAsyncOperation(async (data: CreateMasterDTO) => {
+		const res = await apiClient.call("master", "/master", "POST", {
 			body: data,
 		});
 		const newJob = res.data;
@@ -55,8 +48,8 @@ export default function useThematicStoreStore(): ThematicStore &
 	});
 
 	const update = withAsyncOperation(
-		async (id: string, data: UpdateThematicDTO) => {
-			const res = await apiClient.call("thematic", "/thematic/:id", "PATCH", {
+		async (id: string, data: UpdateMasterDTO) => {
+			const res = await apiClient.call("master", "/master/:id", "PATCH", {
 				body: data,
 				params: { id },
 			});
@@ -67,7 +60,7 @@ export default function useThematicStoreStore(): ThematicStore &
 	);
 
 	const deleteOne = withAsyncOperation(async (id: string) => {
-		await apiClient.call("thematic", "/thematic/:id", "DELETE", {
+		await apiClient.call("master", "/master/:id", "DELETE", {
 			params: { id },
 		});
 
@@ -75,33 +68,11 @@ export default function useThematicStoreStore(): ThematicStore &
 	});
 
 	const deleteMultiple = withAsyncOperation(async (ids: string[]) => {
-		await apiClient.call("thematic", "/thematic", "DELETE", {
+		await apiClient.call("master", "/master", "DELETE", {
 			body: { ids },
 		});
 
 		paginationHandler.handleBulkDelete(ids);
-	});
-
-	const fetchAll = withAsyncOperation(
-		async (query?: Record<string, unknown>) => {
-			const { data } = await apiClient.call(
-				"thematic",
-				"/thematic/all",
-				"GET",
-				{
-					params: query,
-				},
-			);
-			return data;
-		},
-	);
-
-	const findOne = withAsyncOperation(async (id: string) => {
-		const { data } = await apiClient.call("thematic", "/thematic/:id", "GET", {
-			params: { id },
-		});
-
-		return data;
 	});
 
 	const goToPage = withAsyncOperation(async (page: number) => {
@@ -126,19 +97,17 @@ export default function useThematicStoreStore(): ThematicStore &
 		allItems: paginationHandler.allItems,
 		query: paginationHandler.query,
 		pagination: paginationHandler.pagination,
-		defaultEntity: { name: "", icon: "" },
-		translationPath: "admin.thematic",
+		defaultEntity: { name: "", image: "", socials: {} },
+		translationPath: "admin.master",
 
 		fetchData,
 		create,
 		deleteOne,
 		deleteMultiple,
-		findOne,
 		update,
 		goToPage,
 		updateFilters,
 		updatePageSize,
-		fetchAll,
 		resetFilters: paginationHandler.resetFilters,
 	};
 }

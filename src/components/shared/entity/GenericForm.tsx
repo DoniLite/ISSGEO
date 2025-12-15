@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import { EditionMode } from "@/lib/table/hooks/forms/useEntityEditor";
 import type { EntryType } from "./SortedCombobox";
 import EntitySelect from "./SortedCombobox";
+import AvatarInput from "./AvatarInput";
 
 export interface GenericFormField<T extends FieldValues> {
 	name: keyof T;
@@ -164,7 +165,9 @@ export default function GenericForm<
 															>
 																<SelectTrigger>
 																	<SelectValue
-																		placeholder={field.placeholder || "Select"}
+																		placeholder={
+																			field.placeholder || t("common.select")
+																		}
 																	/>
 																</SelectTrigger>
 																<SelectContent>
@@ -189,6 +192,17 @@ export default function GenericForm<
 																onSearch={(query) => onSearch?.(query)}
 																clearable
 																multiple={field.multiple}
+															/>
+														);
+
+													case "image":
+														return (
+															<AvatarInput
+																value={rhfField.value}
+																onChange={rhfField.onChange}
+																name={entity?.name}
+																disabled={loading}
+																// placeholder={field.placeholder}
 															/>
 														);
 

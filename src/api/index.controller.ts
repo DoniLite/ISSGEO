@@ -9,6 +9,7 @@ import jobApp from "./job/app/job.app";
 import rollingApp from "./rolling/app/rolling.app";
 import checkoutApp from "./checkout/app/checkout.app";
 import ogApp from "./og/app/og.app";
+import masterApp from './formations/app/master.app'
 
 const api = webFactory.createApp();
 
@@ -22,5 +23,6 @@ api.route("/job", jobApp);
 api.route("/rolling", rollingApp);
 api.route("/checkout", checkoutApp);
 api.route("/og", ogApp);
+api.route('/master', masterApp)
 
 export default api;

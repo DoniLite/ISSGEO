@@ -2,7 +2,7 @@ import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOp
 import type { BaseStore } from "./base.store";
 import { useState } from "react";
 import type { UserTableType } from "@/db";
-import { apiClient } from "@/hooks/fetch-api";
+import { apiClient } from "@/lib/fetch-api";
 import { useNavigate } from "@tanstack/react-router";
 import type { LoginDTO } from "@/api/user";
 

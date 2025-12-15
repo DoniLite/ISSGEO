@@ -1,7 +1,6 @@
-/** biome-ignore-all lint/correctness/useHookAtTopLevel: - */
 import type { BaseStore, PaginatedStore } from "./base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
-import { apiClient } from "@/hooks/fetch-api";
+import { apiClient } from "@/lib/fetch-api";
 import {
 	useTableServerPaginationHandler,
 	type FetchAllDataOptions,

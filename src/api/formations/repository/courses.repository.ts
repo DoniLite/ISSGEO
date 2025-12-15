@@ -20,6 +20,8 @@ import type {
 import { ModuleRepository } from "./modules.repository";
 import type { CreateModuleTDO, UpdateModuleDTO } from "../DTO/modules.dto";
 import { ThematicRepository } from "./thematic.repository";
+import type { MasterTableType } from "@/db";
+import { MasterRepository } from "./master.repository";
 
 @Repository("courses")
 export class CoursesRepository extends BaseRepository<
@@ -31,6 +33,7 @@ export class CoursesRepository extends BaseRepository<
 		modules: ModuleTableType[];
 		competencies: KeyCompetencyTableType[];
 		thematic?: ThematicTableType;
+		master?: MasterTableType;
 	}
 > {
 	protected table = TrainingTable;
@@ -39,6 +42,7 @@ export class CoursesRepository extends BaseRepository<
 		private keyCompetencyRepo = new KeyCompetencyRepository(),
 		private ModuleRepo = new ModuleRepository(),
 		private ThematicRepo = new ThematicRepository(),
+		private MasterRepo = new MasterRepository(),
 	) {
 		super();
 	}
@@ -50,6 +54,7 @@ export class CoursesRepository extends BaseRepository<
 		(TrainingTableType & {
 			modules: ModuleTableType[];
 			competencies: KeyCompetencyTableType[];
+			master?: MasterTableType;
 		})[]
 	> {
 		return Promise.all(
@@ -63,14 +68,33 @@ export class CoursesRepository extends BaseRepository<
 					"id",
 					item.thematicId,
 				);
+				const master =
+					(await this.MasterRepo.findOneBy("id", item.masterId)) || undefined;
+				console.log(master);
 				return {
 					...item,
 					modules,
 					competencies,
-					thematic,
+					thematic: thematic || undefined,
+					master,
 				};
 			}),
 		);
+	}
+
+	override async findById(
+		id: string,
+	): Promise<TrainingTableType & {
+		master?: MasterTableType;
+	}> {
+		const item = await super.findById(id);
+		const master = await this.MasterRepo.findById(item?.masterId ?? "");
+		return {
+			...item,
+			master: master ?? undefined,
+		} as TrainingTableType & {
+			master?: MasterTableType;
+		};
 	}
 
 	async createCompetency(

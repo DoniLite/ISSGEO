@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useUniqueElementIds: <> */
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectTrigger } from "@/components/ui/select";
@@ -15,7 +14,7 @@ export default function Hero() {
 	return (
 		<div className="absolute inset-0 top-[25%] lg:top-0 flex items-center justify-center p-4">
 			<div className="flex gap-4 lg:gap-6 flex-col lg:flex-row">
-				<div className="flex flex-col relative lg:-left-[12rem] lg:gap-4 xl:gap-8">
+				<div className="flex flex-col relative lg:-left-48 lg:gap-4 xl:gap-8">
 					<h1 className="lg:text-4xl font-bold max-w-xl">
 						{t("pages.home.title")}
 					</h1>

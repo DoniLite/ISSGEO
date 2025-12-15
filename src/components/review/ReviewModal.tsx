@@ -48,18 +48,25 @@ export default function ReviewModal({
 				`${t("testimonials.toast.error.title")}\n${t("testimonials.toast.error.message")}`,
 			);
 		}
+		finally {
+			setTestimonial({
+				name: "",
+				message: "",
+				starNumber: 3,
+			});
+		}
 		setOpen(false);
 	}
 
 	const appreciationOptions = [
-		{
-			field: "Very Bad",
-			starNumber: 1,
-		},
-		{
-			field: "Bad",
-			starNumber: 2,
-		},
+		// {
+		// 	field: "Very Bad",
+		// 	starNumber: 1,
+		// },
+		// {
+		// 	field: "Bad",
+		// 	starNumber: 2,
+		// },
 		{
 			field: "Medium",
 			starNumber: 3,

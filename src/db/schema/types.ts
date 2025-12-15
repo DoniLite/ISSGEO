@@ -7,6 +7,7 @@ import type { TestimonialsTable } from "./testimonials.schema";
 import type { ThematicTable } from "./thematic.schema";
 import type {
 	KeyCompetencyTable,
+	MasterTable,
 	ModuleTable,
 	TrainingTable,
 } from "./training.schema";
@@ -24,3 +25,4 @@ export type ModuleTableType = typeof ModuleTable.$inferInsert;
 export type RollingTableType = typeof RollingTable.$inferInsert;
 export type CheckoutTableType = typeof CheckoutTable.$inferInsert;
 export type RollingToModuleTableType = typeof RollingToModuleTable.$inferInsert;
+export type MasterTableType = typeof MasterTable.$inferInsert;

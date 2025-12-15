@@ -7,6 +7,7 @@ import { ThematicService } from "@/api/formations/services/thematic.service";
 import { JobService } from "@/api/job/service/job.service";
 import { TestimonialsService } from "@/api/testimonials/service/testimonials.service";
 import { UserService } from "@/api/user/services/user.service";
+import { MasterService } from "@/api/formations/services/master.service";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: This class don't need to be initiated
 export class ServiceFactory {
@@ -24,6 +25,10 @@ export class ServiceFactory {
 
 	static getCourseService(): CourseService {
 		return ServiceFactory.getService(CourseService);
+	}
+
+	static getMasterService(): MasterService {
+		return ServiceFactory.getService(MasterService)
 	}
 
 	static getUserService(): UserService {

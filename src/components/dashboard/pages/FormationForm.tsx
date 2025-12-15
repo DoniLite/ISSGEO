@@ -17,6 +17,7 @@ import useCoursesStore from "@/stores/formations/courses.store";
 import useThematicStoreStore from "@/stores/formations/thematic.store";
 import useKeyCompetencyStore from "@/stores/formations/keyCompetency.store";
 import useModuleStore from "@/stores/formations/module.store";
+import useMasterStore from "@/stores/formations/master.store";
 import type { TrainingTableType, ModuleTableType } from "@/db";
 import type {
 	CreateModuleTDO,
@@ -36,6 +37,7 @@ const trainingSchema = z.object({
 	targetAudience: z.string(),
 	thematicId: z.string(),
 	learningOutcomes: z.array(z.string()),
+	masterId: z.string().optional(),
 });
 
 const competencySchema = z.object({
@@ -207,6 +209,7 @@ export default function TrainingCreationForm() {
 	const courseStore = useCoursesStore();
 	const thematicStore = useThematicStoreStore();
 	const keyCompetencyStore = useKeyCompetencyStore();
+	const masterStore = useMasterStore();
 	const navigate = useNavigate();
 	const { courseId } = useSearch({
 		strict: true,
@@ -216,6 +219,7 @@ export default function TrainingCreationForm() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
 		thematicStore.fetchData();
+		masterStore.fetchData();
 		if (typeof courseId === "string" && courseId !== "undefined") {
 			courseStore.findOne(courseId).then((d) => {
 				if (d) {
@@ -225,6 +229,7 @@ export default function TrainingCreationForm() {
 						targetAudience: d.targetAudience as string,
 						learningOutcomes: d.learningOutcomes as string[],
 						thematicId: d.thematicId as string,
+						masterId: d.masterId as string,
 					});
 					setModule(d);
 					setEditionState(EditionMode.UPDATE);
@@ -271,6 +276,15 @@ export default function TrainingCreationForm() {
 				id: e.id as string,
 			})),
 		[thematicStore.items],
+	);
+
+	const masterEntries = useMemo(
+		() =>
+			masterStore.items.map((e) => ({
+				label: e.name,
+				id: e.id as string,
+			})),
+		[masterStore.items],
 	);
 
 	const {
@@ -504,6 +518,28 @@ export default function TrainingCreationForm() {
 									<Plus className="w-4 h-4 mr-2" />
 									{t("admin.formations.form.step2.new_thematic")}
 								</Button>
+							</div>
+
+							<div className="space-y-2">
+								<Label>{t("admin.formations.form.step2.master_label")}</Label>
+								<Controller
+									name="masterId"
+									control={control}
+									render={({ field }) => (
+										<EntitySelect
+											entries={masterEntries}
+											placeholder={t(
+												"admin.formations.form.step2.master_placeholder",
+											)}
+											value={field.value}
+											onSelected={field.onChange}
+											onSearch={(query) =>
+												masterStore.fetchData({ search: query })
+											}
+											clearable
+										/>
+									)}
+								/>
 							</div>
 
 							{showNewThematic && (

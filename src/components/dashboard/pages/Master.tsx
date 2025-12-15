@@ -1,12 +1,9 @@
 import EntityEditDialog from "@/components/shared/AppDialog";
-import type { EntryType } from "@/components/shared/entity/SortedCombobox";
-import EntitySelect from "@/components/shared/entity/SortedCombobox";
 import { Button } from "@/components/ui/button";
-import type { UserTableType } from "@/db";
+import type { MasterTableType } from "@/db";
 import FlexTable, { type Emits } from "@/lib/table/FlexTable";
 import {
 	createActionsColumn,
-	createBadgeColumn,
 	createDateColumn,
 	createSelectColumn,
 	createTextColumn,
@@ -20,7 +17,7 @@ import type {
 	Table,
 } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 // import JobForm from '../components/JobForm';
 import DeleteAlertDialog from "@/components/shared/ConfirDeleteDialog";
@@ -29,14 +26,13 @@ import z from "zod";
 import GenericForm, {
 	type GenericFormField,
 } from "@/components/shared/entity/GenericForm";
-import useUsersStore from "@/stores/users.store";
-import type { CreateUserDto, UpdateUserDto } from "@/api/user";
+import useMasterStore from "@/stores/formations/master.store";
+import type { CreateMasterDTO, UpdateMasterDTO } from "@/api/formations";
 
-export default function UsersPage() {
-	const store = useUsersStore();
+export default function MasterPage() {
+	const store = useMasterStore();
 	const { items, fetchData } = store;
 	const { t } = useTranslation();
-	const [contractFilter, setContractFilter] = useState("all");
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
@@ -66,36 +62,14 @@ export default function UsersPage() {
 		onSave,
 		confirmDelete,
 		onDeleteTrigger,
-	} = useEntityEditor<CreateUserDto, UpdateUserDto, UserTableType>(store);
+	} = useEntityEditor<CreateMasterDTO, UpdateMasterDTO, MasterTableType>(store);
 
-	const columns: ColumnDef<UserTableType>[] = [
+	const columns: ColumnDef<MasterTableType>[] = [
 		createSelectColumn(t),
 		createTextColumn(t, {
 			accessorKey: "name",
 			headerKey: "common.name",
 			className: "lg:max-w-xs line-clamp-2 max-w-[12rem]",
-		}),
-		createTextColumn(t, {
-			accessorKey: "email",
-			headerKey: "common.email",
-			className: "ml-4",
-		}),
-		createBadgeColumn(t, {
-			accessorKey: "role",
-			headerKey: "common.role",
-			className(entity) {
-				const base = "ml-1";
-				if (entity.role === "admin") {
-					return `${base} bg-orange-400`;
-				}
-				if (entity.role === "maintainer") {
-					return `${base} bg-green-400`;
-				}
-				if (entity.role === "user") {
-					return `${base} bg-pink-400`;
-				}
-				return `${base}`;
-			},
 		}),
 		createDateColumn(t, {
 			accessorKey: "createdAt",
@@ -119,38 +93,66 @@ export default function UsersPage() {
 		}
 	};
 
-	const userFormSchema = z.object({
+	const masterFormSchema = z.object({
 		name: z.string().min(2, {
-			error: t("admin.users.form.title"),
+			error: t("admin.master.form.name"),
 		}),
-		email: z.email().min(2, {
-			error: t("admin.users.form.location"),
+		description: z.string().min(2, {
+			error: t("admin.master.form.description"),
 		}),
-		password: z.string().min(6, {
-			error: t("admin.users.form.location"),
-		}),
-		role: z.enum(["user", "maintainer"]).nullable(),
+		image: z
+			.string({
+				error: t("admin.master.form.image"),
+			})
+			.nullable(),
+		socials: z
+			.object({
+				facebook: z.string().optional().nullable(),
+				twitter: z.string().optional().nullable(),
+				instagram: z.string().optional().nullable(),
+				linkedin: z.string().optional().nullable(),
+			})
+			.optional()
+			.nullable(),
 	});
 
-	const fields: GenericFormField<UserTableType>[] = [
+	const fields: GenericFormField<MasterTableType>[] = [
+		{
+			name: "image",
+			label: t("common.image"),
+			type: "image",
+			required: true,
+		},
 		{ name: "name", label: t("common.name"), type: "text", required: true },
 		{
-			name: "email",
-			label: t("common.email"),
+			name: "description",
+			label: t("common.description"),
+			type: "textarea",
+			required: true,
+		},
+		{
+			// biome-ignore lint/suspicious/noExplicitAny: <>
+			name: "socials.facebook" as any,
+			label: t("admin.master.form.socials.facebook"),
 			type: "text",
-			required: true,
 		},
 		{
-			name: "password",
-			label: t("common.password"),
-			type: "password",
-			required: true,
+			// biome-ignore lint/suspicious/noExplicitAny: <>
+			name: "socials.twitter" as any,
+			label: t("admin.master.form.socials.twitter"),
+			type: "text",
 		},
 		{
-			name: "role",
-			label: t("common.role"),
-			type: "select",
-			options: Object.values(["user", "maintainer"] as const),
+			// biome-ignore lint/suspicious/noExplicitAny: <>
+			name: "socials.instagram" as any,
+			label: t("admin.master.form.socials.instagram"),
+			type: "text",
+		},
+		{
+			// biome-ignore lint/suspicious/noExplicitAny: <>
+			name: "socials.linkedin" as any,
+			label: t("admin.master.form.socials.linkedin"),
+			type: "text",
 		},
 	];
 
@@ -167,16 +169,6 @@ export default function UsersPage() {
 						table={props.table}
 					/>
 				)}
-				tableFilters={(props) => (
-					<TableFilters
-						{...props}
-						value={contractFilter}
-						handleChange={(v) => {
-							handleFiltersUpdate([{ id: "role", value: v }]);
-							setContractFilter(v);
-						}}
-					/>
-				)}
 			/>
 			<EntityEditDialog
 				title={modalTitle}
@@ -185,7 +177,7 @@ export default function UsersPage() {
 				onOpenChange={onOpenDialog}
 				contentSlot={
 					<GenericForm
-						schema={userFormSchema}
+						schema={masterFormSchema}
 						fields={fields}
 						entity={entityModel}
 						editionMode={editionMode}
@@ -204,43 +196,6 @@ export default function UsersPage() {
 	);
 }
 
-const TableFilters = <T extends Record<string, unknown>>({
-	handleChange,
-	value,
-}: {
-	table: Table<T>;
-	value: string;
-	handleChange: (v: string) => void;
-}) => {
-	const { t } = useTranslation();
-
-	const contractTypeOptions = useMemo(
-		() =>
-			[
-				{
-					id: "all",
-					label: t("common.all"),
-				},
-				...["user", "maintainer"].map((type) => ({
-					id: type,
-					label: t(`admin.users.form.roles.${type}`),
-				})),
-			] as EntryType[],
-		[t],
-	);
-
-	return (
-		<div className="w-full min-w-(--reka-dropdown-menu-trigger-width) lg:max-w-60">
-			<EntitySelect
-				value={value}
-				entries={contractTypeOptions}
-				placeholder={t("common.all")}
-				onSelected={handleChange}
-			/>
-		</div>
-	);
-};
-
 const TableAssets = <T extends Record<string, unknown>>({
 	openCreateDialog,
 }: {
@@ -254,7 +209,7 @@ const TableAssets = <T extends Record<string, unknown>>({
 				className="text-lg font-bold lg:text-2xl"
 				data-testid="organizations-title"
 			>
-				{t("admin.users.id")}
+				{t("admin.master.id")}
 			</h1>
 			<Button
 				variant="default"

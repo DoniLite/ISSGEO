@@ -1,5 +1,9 @@
 {
 	"common": {
+		"upload_image": "Upload Image",
+		"change_image": "Change Image",
+		"remove_image": "Remove Image",
+		"image": "Image",
 		"mode": {
 			"light": "Light",
 			"dark": "Dark",
@@ -284,6 +288,7 @@
 			"modulesTitle": "Course modules",
 			"details": "Course details",
 			"duration": "Total duration",
+			"master": "Master",
 			"cost": "Course fee",
 			"enrollCta": "Enroll in this course",
 			"form": {
@@ -442,7 +447,8 @@
 		"contact": "Contact",
 		"job": "Job",
 		"users": "Users",
-		"testimonials": "Testimonials"
+		"testimonials": "Testimonials",
+		"master": "Master"
 	},
 	"missions": {
 		"sectionTitle": "Our Missions: Shaping the Future of the Territory",
@@ -518,11 +524,9 @@
 			"appreciation": {
 				"label": "Give us your appreciation",
 				"fields": {
-					"0": "Very Bad",
-					"1": "Bad",
-					"2": "Medium",
-					"3": "Good",
-					"4": "Very Good"
+					"0": "Medium",
+					"1": "Good",
+					"2": "Very Good"
 				}
 			},
 			"cancel": "Cancel",
@@ -647,9 +651,53 @@
 		}
 	},
 	"admin": {
+		"master": {
+			"id": "Master",
+			"form": {
+				"create": {
+					"title": "Create new Master",
+					"description": "Fill the information to create a new Master"
+				},
+				"update": {
+					"title": "Update Master",
+					"description": "Update the Master information"
+				},
+				"name": "Please enter valid information for this field.",
+				"description": "Please enter valid information for this field.",
+				"image": "Please enter valid information for this field.",
+				"socials": {
+					"facebook": "Facebook",
+					"twitter": "Twitter",
+					"instagram": "Instagram",
+					"linkedin": "LinkedIn"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Master created successfully",
+						"description": "The Master has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Master updated successfully",
+						"description": "The Master has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Master deleted successfully",
+						"description": "The Master has been successfully deleted",
+						"titleMultiple": "Masters deleted successfully",
+						"descriptionMultiple": "The selected Masters have been successfully deleted"
+					}
+				}
+			}
+		},
 		"users": {
 			"id": "Users",
-			"description": "Browse the statistics comes from your last inserted users",
+			"description": "Browse the statistics from your last inserted users",
 			"form": {
 				"create": {
 					"title": "Create new user",
@@ -873,17 +921,181 @@
 		},
 		"testimonials": {
 			"id": "Testimonials",
-			"description": "Browse the statistics comes from your last inserted testimonials"
+			"description": "Browse the statistics comes from your last inserted testimonials",
+			"form": {
+				"create": {
+					"title": "Create new Testimonial",
+					"description": "Fill the information to create a new Testimonial"
+				},
+				"update": {
+					"title": "Update Testimonial",
+					"description": "Update the Testimonial information"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Testimonial created successfully",
+						"description": "The Testimonial has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Testimonial updated successfully",
+						"description": "The Testimonial has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Testimonial deleted successfully",
+						"description": "The Testimonial has been successfully deleted",
+						"titleMultiple": "Testimonials deleted successfully",
+						"descriptionMultiple": "The selected Testimonials have been successfully deleted"
+					}
+				}
+			}
 		},
 		"contact": {
 			"id": "Contact",
-			"description": "Browse the statistics comes from your last inserted contacts"
+			"description": "Browse the statistics comes from your last inserted contacts",
+			"form": {
+				"create": {
+					"title": "Create new Contact",
+					"description": "Fill the information to create a new Contact"
+				},
+				"update": {
+					"title": "Update Contact",
+					"description": "Update the Contact information"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Contact created successfully",
+						"description": "The Contact has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Contact updated successfully",
+						"description": "The Contact has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Contact deleted successfully",
+						"description": "The Contact has been successfully deleted",
+						"titleMultiple": "Contacts deleted successfully",
+						"descriptionMultiple": "The selected Contacts have been successfully deleted"
+					}
+				}
+			}
+		},
+		"rolling": {
+			"id": "Rolling",
+			"description": "Join the team",
+			"form": {
+				"create": {
+					"title": "Create new Rolling",
+					"description": "Fill the information to create a new Rolling"
+				},
+				"update": {
+					"title": "Update Rolling",
+					"description": "Update the Rolling information"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Rolling created successfully",
+						"description": "The Rolling has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Rolling updated successfully",
+						"description": "The Rolling has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Rolling deleted successfully",
+						"description": "The Rolling has been successfully deleted",
+						"titleMultiple": "Rollings deleted successfully",
+						"descriptionMultiple": "The selected Rollings have been successfully deleted"
+					}
+				}
+			}
 		},
 		"key_competency": {
-			"id": "Key Competency"
+			"id": "Key Competency",
+			"form": {
+				"create": {
+					"title": "Create new Key Competency",
+					"description": "Fill the information to create a new Key Competency"
+				},
+				"update": {
+					"title": "Update Key Competency",
+					"description": "Update the Key Competency information"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Key Competency created successfully",
+						"description": "The Key Competency has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Key Competency updated successfully",
+						"description": "The Key Competency has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Key Competency deleted successfully",
+						"description": "The Key Competency has been successfully deleted",
+						"titleMultiple": "Key Competencies deleted successfully",
+						"descriptionMultiple": "The selected Key Competencies have been successfully deleted"
+					}
+				}
+			}
 		},
 		"thematic": {
-			"id": "Thematic"
+			"id": "Thematic",
+			"form": {
+				"create": {
+					"title": "Create new Thematic",
+					"description": "Fill the information to create a new Thematic"
+				},
+				"update": {
+					"title": "Update Thematic",
+					"description": "Update the Thematic information"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Thematic created successfully",
+						"description": "The Thematic has been successfully created"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Thematic updated successfully",
+						"description": "The Thematic has been successfully updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Thematic deleted successfully",
+						"description": "The Thematic has been successfully deleted",
+						"titleMultiple": "Thematics deleted successfully",
+						"descriptionMultiple": "The selected Thematics have been successfully deleted"
+					}
+				}
+			}
 		}
 	}
 }

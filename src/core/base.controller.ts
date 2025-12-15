@@ -4,6 +4,7 @@ import type { BaseEntity } from "./types/base";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import buildQuery from "@/api/helpers/buildQuery";
 import type { Variables } from "@/factory/web.factory";
+import { logger, type LogContext } from "./logger";
 
 export interface RouteMiddlewares {
 	all?: MiddlewareHandler[];
@@ -41,6 +42,7 @@ export abstract class BaseController<
 	protected service: Service;
 	protected app: Hono<{ Variables: Variables }>;
 	protected options: ControllerOptions;
+	protected logger = logger;
 
 	constructor(
 		service: Service,
@@ -55,6 +57,38 @@ export abstract class BaseController<
 		};
 
 		this.registerRoutes();
+	}
+
+	// ... (methods) ...
+
+	/**
+	 * Handle errors in a consistent way
+	 */
+	protected handleError(c: Context, error: unknown) {
+		const context: LogContext = {
+			method: c.req.method,
+			path: c.req.path,
+			className: this.constructor.name,
+		};
+
+		this.logger.error("Controller Error", context, error);
+
+		if (error instanceof Error) {
+			return c.json(
+				{
+					error: error.message,
+					name: error.name,
+				},
+				500,
+			);
+		}
+
+		return c.json(
+			{
+				error: "An unexpected error occurred",
+			},
+			500,
+		);
 	}
 
 	protected registerCustomRoutes(): void {}
@@ -277,30 +311,6 @@ export abstract class BaseController<
 		} catch (error) {
 			return this.handleError(c, error);
 		}
-	}
-
-	/**
-	 * Handle errors in a consistent way
-	 */
-	protected handleError(c: Context, error: unknown) {
-		console.error("Controller Error:", error);
-
-		if (error instanceof Error) {
-			return c.json(
-				{
-					error: error.message,
-					name: error.name,
-				},
-				500,
-			);
-		}
-
-		return c.json(
-			{
-				error: "An unexpected error occurred",
-			},
-			500,
-		);
 	}
 
 	/**

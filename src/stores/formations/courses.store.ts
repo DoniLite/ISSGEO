@@ -1,13 +1,13 @@
-/** biome-ignore-all lint/correctness/useHookAtTopLevel: - */
 import type { BaseStore, PaginatedStore } from "../base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
-import { apiClient } from "@/hooks/fetch-api";
+import { apiClient } from "@/lib/fetch-api";
 import { useTableServerPaginationHandler } from "@/lib/table/hooks/useTableServerPaginationHandler";
 import type {
 	KeyCompetencyTableType,
 	ModuleTableType,
 	ThematicTableType,
 	TrainingTableType,
+	MasterTableType,
 } from "@/db";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import { useCallback } from "react";
@@ -22,7 +22,12 @@ interface CoursesStore extends BaseStore {
 	deleteOne: (id: string) => Promise<void>;
 	deleteMultiple: (ids: string[]) => Promise<void>;
 	update: (id: string, data: UpdateCourseDTO) => Promise<void>;
-	findOne: (id: string) => Promise<TrainingTableType | undefined>;
+	findOne: (id: string) => Promise<
+		| (TrainingTableType & {
+				master?: MasterTableType;
+		  })
+		| undefined
+	>;
 	stats: () => Promise<EntityStatistics | undefined>;
 }
 
@@ -32,6 +37,7 @@ export default function useCoursesStore(): CoursesStore &
 			modules: ModuleTableType[];
 			competencies: KeyCompetencyTableType[];
 			thematic?: ThematicTableType;
+			master?: MasterTableType;
 		}
 	> {
 	const { loading, error, withAsyncOperation, resetState } =
@@ -49,6 +55,7 @@ export default function useCoursesStore(): CoursesStore &
 			modules: ModuleTableType[];
 			competencies: KeyCompetencyTableType[];
 			thematic?: ThematicTableType;
+			master?: MasterTableType;
 		},
 		PaginationQuery
 	>({

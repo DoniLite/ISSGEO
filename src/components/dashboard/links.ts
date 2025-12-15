@@ -6,6 +6,7 @@ import {
 	Handshake,
 	User2,
 	HandHeart,
+	UserRoundCog,
 } from "lucide-react";
 
 export const menuLinks = [
@@ -23,6 +24,11 @@ export const menuLinks = [
 		title: "calendar",
 		url: "/admin/calendar",
 		icon: Calendar,
+	},
+	{
+		title: "master",
+		url: "/admin/master",
+		icon: UserRoundCog,
 	},
 	{
 		title: "formations",
