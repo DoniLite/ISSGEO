@@ -5,6 +5,32 @@
 - React + Bun project with server entry (`entry-server.tsx`) supporting SSR/hydration.
 - Routing with TanStack Router, i18n using `react-i18next`, and a backend API structure under `src/api` (Hono + Drizzle).
 
+## Quick setup
+
+To setup your dev environment be sure to have these software installed
+
+- Docker
+- A linux shell (WSL on windows)
+- Bun
+
+Install the dependencies and the database with all migrations
+
+```sh
+bun init:all
+```
+
+After installation build the front bundle
+
+```sh
+bun build:client
+```
+
+Run the dev server
+
+```sh
+bun dev
+```
+
 ## Useful commands
 
 - Development: `bun run dev`
@@ -12,12 +38,6 @@
 - Start local DB (Docker): `bun run wake:db`
 - Run migrations: `bun run migrate:db`
 - Seed DB: `bun run seed:db`
-
-## Install suggested SEO/OG dependencies (using Bun):
-
-```bash
-bun add satori @vercel/og sharp react-helmet-async
-```
 
 ## Internationalization (i18n)
 
@@ -51,19 +71,19 @@ const buffer = await generateOgImage({ title: 'Page title' });
 - Add an API route `GET /api/og?title=...` to serve OG images dynamically.
 - Integrate `react-helmet-async` in `entry-server.tsx` for server-side meta rendering.
 
-## To install dependencies:
+## To install dependencies
 
 ```bash
 bun install
 ```
 
-### To start dev server:
+### To start dev server
 
 ```bash
 bun dev
 ```
 
-## To run in production:
+## To run in production
 
 ```bash
 bun start
