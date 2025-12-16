@@ -5,6 +5,7 @@ import FlexTable, { type Emits } from "@/lib/table/FlexTable";
 import {
 	createActionsColumn,
 	createDateColumn,
+	createExpandRowColumn,
 	createSelectColumn,
 	createTextColumn,
 } from "@/lib/table/helpers/columnFactory";
@@ -23,6 +24,7 @@ import DeleteAlertDialog from "@/components/shared/ConfirDeleteDialog";
 import Layout from "../Layout";
 import useContactStore from "@/stores/contact.store";
 import type { CreateContactDTO, UpdateContactDTO } from "@/api/contact";
+import { GenericRowDetail } from "@/lib/table/components/GenericRowDetail";
 
 export default function ContactPage() {
 	const store = useContactStore();
@@ -70,6 +72,7 @@ export default function ContactPage() {
 			getEntityValue: (v) => <p className="line-clamp-2 w-full">{v}</p>,
 			className: "max-w-lg",
 		}),
+		createExpandRowColumn(t),
 		createDateColumn(t, {
 			accessorKey: "createdAt",
 			headerKey: "common.createdAt",
@@ -107,6 +110,9 @@ export default function ContactPage() {
 						openCreateDialog={openCreateDialog}
 						table={props.table}
 					/>
+				)}
+				tableContentComponent={(props) => (
+					<GenericRowDetail excludedKeys={["createdAt", "updatedAt", "id"]} {...props} />
 				)}
 			/>
 			<DeleteAlertDialog

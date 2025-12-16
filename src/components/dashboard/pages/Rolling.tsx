@@ -26,7 +26,12 @@ export default function RollingPage() {
 	const moduleStore = useModuleStore();
 
 	const printedRollings = useMemo(() => {
-		if (selectedModule === "all") {
+		if (
+			selectedModule === "all" ||
+			selectedModule === undefined ||
+			selectedModule === null ||
+			selectedModule === ""
+		) {
 			return rollingStore.allItems;
 		}
 		return rollingStore.allItems.filter((r) => {

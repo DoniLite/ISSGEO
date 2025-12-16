@@ -5,6 +5,7 @@ import FlexTable, { type Emits } from "@/lib/table/FlexTable";
 import {
 	createActionsColumn,
 	createDateColumn,
+	createExpandRowColumn,
 	createSelectColumn,
 	createTextColumn,
 } from "@/lib/table/helpers/columnFactory";
@@ -26,6 +27,7 @@ import type {
 	CreateTestimonialDTO,
 	UpdateTestimonialDTO,
 } from "@/api/testimonials";
+import { GenericRowDetail } from "@/lib/table/components/GenericRowDetail";
 
 export default function TestimonialsPage() {
 	const store = useTestimonialStore();
@@ -80,6 +82,7 @@ export default function TestimonialsPage() {
 			getEntityValue: (v) => <p className="line-clamp-2 w-full">{v}</p>,
 			className: "max-w-xs md:max-w-lg",
 		}),
+		createExpandRowColumn(t),
 		createDateColumn(t, {
 			accessorKey: "createdAt",
 			headerKey: "common.createdAt",
@@ -117,6 +120,9 @@ export default function TestimonialsPage() {
 						openCreateDialog={openCreateDialog}
 						table={props.table}
 					/>
+				)}
+				tableContentComponent={(props) => (
+					<GenericRowDetail {...props} />
 				)}
 			/>
 			<DeleteAlertDialog

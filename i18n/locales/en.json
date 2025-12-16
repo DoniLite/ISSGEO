@@ -139,7 +139,9 @@
 		"Freelance": "Freelancer",
 		"monthly": "Monthly",
 		"weekly": "Weekly",
-		"yearly": "Yearly"
+		"yearly": "Yearly",
+		"showMore": "Show More",
+		"showLess": "Show Less"
 	},
 	"footer": {
 		"brand": "ISSGEO Institute",
@@ -695,6 +697,26 @@
 				}
 			}
 		},
+		"profile": {
+			"generalInformation": "General Information",
+			"security": "Security",
+			"previousPassword": "Previous Password",
+			"newPassword": "New Password",
+			"updatePassword": "Update Password",
+			"description": "Manage your public profile and private settings.",
+			"form": {
+				"name": "Name",
+				"email": "Email"
+			},
+			"toast": {
+				"updateProfile": {
+					"success": "Profile updated successfully"
+				},
+				"updatePassword": {
+					"success": "Password updated successfully"
+				}
+			}
+		},
 		"users": {
 			"id": "Users",
 			"description": "Browse the statistics from your last inserted users",
@@ -823,6 +845,10 @@
 					"min_price_placeholder": "50000",
 					"max_price_label": "Maximum price (FCFA)",
 					"max_price_placeholder": "100000",
+					"master": {
+						"label": "Master",
+						"placeholder": "Select a master"
+					},
 					"thematic_label": "Thematic",
 					"thematic_placeholder": "Select a thematic",
 					"new_thematic": "New thematic",
