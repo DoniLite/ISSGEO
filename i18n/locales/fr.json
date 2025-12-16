@@ -134,11 +134,13 @@
 		"CDI": "Contrat à durée indéterminée",
 		"Freelance": "Indépendant",
 		"monthly": "Mensuel",
-		"weekly": "Semestriel",
-		"yearly": "Anuel",
+		"weekly": "Hebdomadaire",
+		"yearly": "Annuel",
 		"upload_image": "Charger une image",
-		"change_image": "Changer l'mage",
-		"remove_image": "Supprimer l'mage"
+		"change_image": "Changer l'image",
+		"remove_image": "Supprimer l'image",
+		"showMore": "Voir plus",
+		"showLess": "Voir moins"
 	},
 	"footer": {
 		"brand": "ISSGEO Institute",
@@ -694,6 +696,26 @@
 				}
 			}
 		},
+		"profile": {
+			"generalInformation": "Informations générales",
+			"security": "Sécurité",
+			"previousPassword": "Ancien mot de passe",
+			"newPassword": "Nouveau mot de passe",
+			"updatePassword": "Mettre à jour le mot de passe",
+			"description": "Gérez votre profil public et vos paramètres privés.",
+			"form": {
+				"name": "Nom",
+				"email": "Email"
+			},
+			"toast": {
+				"updateProfile": {
+					"success": "Profil mis à jour avec succès"
+				},
+				"updatePassword": {
+					"success": "Mot de passe mis à jour avec succès"
+				}
+			}
+		},
 		"users": {
 			"id": "Utilisateurs",
 			"description": "Parcourez les derniers statistiques de vos utilisateurs récents",
@@ -822,6 +844,10 @@
 					"min_price_placeholder": "50000",
 					"max_price_label": "Prix maximum (FCFA)",
 					"max_price_placeholder": "100000",
+					"master": {
+						"label": "Formateur",
+						"placeholder": "Selectionner un formateur"
+					},
 					"thematic_label": "Thématique",
 					"thematic_placeholder": "Sélectionnez une thématique",
 					"new_thematic": "Nouvelle thématique",

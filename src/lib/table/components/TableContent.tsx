@@ -38,8 +38,13 @@ export default function TableContent<
 	TData extends Record<string, unknown>,
 	TValue,
 >(config: Props<TData, TValue>) {
-	const { table, columns, noResultsTextKey, getPinnedItemClassDefinition } =
-		config;
+	const {
+		table,
+		columns,
+		noResultsTextKey,
+		getPinnedItemClassDefinition,
+		slotComponent,
+	} = config;
 	const { t } = useTranslation();
 	return (
 		<div>
@@ -78,6 +83,7 @@ export default function TableContent<
 									row={row}
 									table={table}
 									getPinnedItemClassDefinition={getPinnedItemClassDefinition}
+									slotComponent={slotComponent}
 								/>
 							))
 					) : (

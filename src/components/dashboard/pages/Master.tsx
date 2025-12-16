@@ -5,6 +5,7 @@ import FlexTable, { type Emits } from "@/lib/table/FlexTable";
 import {
 	createActionsColumn,
 	createDateColumn,
+	createExpandRowColumn,
 	createSelectColumn,
 	createTextColumn,
 } from "@/lib/table/helpers/columnFactory";
@@ -28,6 +29,7 @@ import GenericForm, {
 } from "@/components/shared/entity/GenericForm";
 import useMasterStore from "@/stores/formations/master.store";
 import type { CreateMasterDTO, UpdateMasterDTO } from "@/api/formations";
+import { GenericRowDetail } from "@/lib/table/components/GenericRowDetail";
 
 export default function MasterPage() {
 	const store = useMasterStore();
@@ -71,6 +73,12 @@ export default function MasterPage() {
 			headerKey: "common.name",
 			className: "lg:max-w-xs line-clamp-2 max-w-[12rem]",
 		}),
+		createTextColumn(t, {
+			accessorKey: "description",
+			headerKey: "common.description",
+			className: "lg:max-w-xs line-clamp-2 max-w-[12rem]",
+		}),
+		createExpandRowColumn(t),
 		createDateColumn(t, {
 			accessorKey: "createdAt",
 			headerKey: "common.createdAt",
@@ -167,6 +175,12 @@ export default function MasterPage() {
 					<TableAssets
 						openCreateDialog={openCreateDialog}
 						table={props.table}
+					/>
+				)}
+				tableContentComponent={(props) => (
+					<GenericRowDetail
+						excludedKeys={["createdAt", "updatedAt", "id", "image"]}
+						{...props}
 					/>
 				)}
 			/>

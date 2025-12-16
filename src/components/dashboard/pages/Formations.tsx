@@ -5,6 +5,7 @@ import FlexTable, { type Emits } from "@/lib/table/FlexTable";
 import {
 	createActionsColumn,
 	createDateColumn,
+	createExpandRowColumn,
 	createNameColumn,
 	createSelectColumn,
 	createTextColumn,
@@ -33,6 +34,7 @@ import type {
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus } from "lucide-react";
+import { GenericRowDetail } from "@/lib/table/components/GenericRowDetail";
 
 export default function CoursesPage() {
 	const store = useCoursesStore();
@@ -109,6 +111,7 @@ export default function CoursesPage() {
 				);
 			},
 		}),
+		createExpandRowColumn(t),	
 		createDateColumn(t, {
 			accessorKey: "createdAt",
 			headerKey: "common.createdAt",
@@ -151,6 +154,7 @@ export default function CoursesPage() {
 						table={props.table}
 					/>
 				)}
+				tableContentComponent={(props) => <GenericRowDetail {...props} />}
 			/>
 			<DeleteAlertDialog
 				open={showDeleteDialog}

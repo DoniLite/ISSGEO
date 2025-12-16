@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { getInitials } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -9,6 +9,7 @@ interface EntityAvatarProps {
 	isSelected?: boolean;
 	fallbackText?: string;
 	altText?: string;
+	className?: string;
 }
 
 export default function EntityAvatar({
@@ -17,6 +18,7 @@ export default function EntityAvatar({
 	isSelected = false,
 	fallbackText,
 	altText,
+	className,
 }: EntityAvatarProps) {
 	const { t } = useTranslation();
 	const [imageHasError, setImageHasError] = useState(false);
@@ -40,7 +42,9 @@ export default function EntityAvatar({
 	const handleImageError = () => setImageHasError(true);
 
 	return (
-		<Avatar className={isSelected ? "border-primary border-2" : ""}>
+		<Avatar
+			className={cn(isSelected ? "border-primary border-2" : "", className)}
+		>
 			{image && isImageDataValid && !imageHasError ? (
 				<AvatarImage
 					src={image}

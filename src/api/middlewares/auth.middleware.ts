@@ -9,7 +9,8 @@ export const authMiddleware = jwt({
 });
 export const adminMiddleware = async (c: Context, next: Next) => {
 	const payload = c.get("jwtPayload");
-	if (payload.role !== "admin") {
+	const roles = ["admin", "maintainer"];
+	if (!roles.includes(payload.role)) {
 		return c.json({ error: "Admin access required" }, 403);
 	}
 	await next();
