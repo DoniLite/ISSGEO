@@ -24,7 +24,12 @@ import type {
 import type { CreateJobDTO, UpdateJobDTO } from "@/api/job";
 import type { CreateRollingDTO, UpdateRollingDTO } from "@/api/rolling";
 import type { CreateTestimonialDTO } from "@/api/testimonials";
-import type { CreateUserDto, LoginDTO, UpdateUserDto } from "@/api/user";
+import type {
+	CreateUserDto,
+	LoginDTO,
+	UpdateUserDto,
+	UpdateUserPasswordDTO,
+} from "@/api/user";
 import type { EntityStatistics } from "@/core/base.repository";
 import type {
 	ContactTableType as Contact,
@@ -108,405 +113,411 @@ interface DefaultDeleteResponse {
 type DeleteMultipleBody = { ids: string[] };
 
 export interface ApiRoutes {
-		session: {
-			"/session": {
-				GET: {
-					response: PaginatedResponse<Session & { module: Course | undefined }>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Session;
-					body: CreateSessionDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+	session: {
+		"/session": {
+			GET: {
+				response: PaginatedResponse<Session & { module: Course | undefined }>;
+				params: PaginationQuery;
 			};
-			"/session/:id": {
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateSessionDTO;
-					params: { id: Session["id"] };
-				};
-				DELETE: {
-					params: { id: Session["id"] };
-					response: DefaultDeleteResponse;
-				};
+			POST: {
+				response: Session;
+				body: CreateSessionDTO;
 			};
-			"/session/all": {
-				GET: {
-					response: (Session & { module: Course | undefined })[];
-					params: PaginationQuery;
-				};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
 			};
 		};
-		thematic: {
-			"/thematic": {
-				GET: {
-					response: PaginatedResponse<Thematic>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Thematic;
-					body: CreateThematicDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+		"/session/:id": {
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateSessionDTO;
+				params: { id: Session["id"] };
 			};
-			"/thematic/:id": {
-				GET: {
-					response: Thematic;
-					params: {
-						id: Thematic["id"];
-					};
-				};
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateThematicDTO;
-					params: { id: Thematic["id"] };
-				};
-				DELETE: {
-					params: { id: Thematic["id"] };
-					response: DefaultDeleteResponse;
-				};
-			};
-			"/thematic/all": {
-				GET: {
-					response: Thematic[];
-					params: Record<string, unknown>;
-				};
+			DELETE: {
+				params: { id: Session["id"] };
+				response: DefaultDeleteResponse;
 			};
 		};
-		courses: {
-			"/courses": {
-				GET: {
-					response: PaginatedResponse<
-						Course & {
-							modules: Module[];
-							competencies: KeyCompetency[];
-							thematic: Thematic;
-						}
-					>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Course;
-					body: CreateCourseDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
+		"/session/all": {
+			GET: {
+				response: (Session & { module: Course | undefined })[];
+				params: PaginationQuery;
+			};
+		};
+	};
+	thematic: {
+		"/thematic": {
+			GET: {
+				response: PaginatedResponse<Thematic>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Thematic;
+				body: CreateThematicDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/thematic/:id": {
+			GET: {
+				response: Thematic;
+				params: {
+					id: Thematic["id"];
 				};
 			};
-			"/courses/stats": {
-				GET: {
-					response: EntityStatistics;
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateThematicDTO;
+				params: { id: Thematic["id"] };
+			};
+			DELETE: {
+				params: { id: Thematic["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+		"/thematic/all": {
+			GET: {
+				response: Thematic[];
+				params: Record<string, unknown>;
+			};
+		};
+	};
+	courses: {
+		"/courses": {
+			GET: {
+				response: PaginatedResponse<
+					Course & {
+						modules: Module[];
+						competencies: KeyCompetency[];
+						thematic: Thematic;
+					}
+				>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Course;
+				body: CreateCourseDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/courses/stats": {
+			GET: {
+				response: EntityStatistics;
+			};
+		};
+		"/courses/:id": {
+			GET: {
+				response: Course;
+				params: {
+					id: Course["id"];
 				};
 			};
-			"/courses/:id": {
-				GET: {
-					response: Course;
-					params: {
-						id: Course["id"];
-					};
-				};
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateCourseDTO;
-					params: { id: Course["id"] };
-				};
-				DELETE: {
-					params: { id: Course["id"] };
-					response: DefaultDeleteResponse;
-				};
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateCourseDTO;
+				params: { id: Course["id"] };
 			};
-			"/courses/key-competency": {
-				GET: {
-					response: PaginatedResponse<KeyCompetency>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: KeyCompetency;
-					body: CreateKeyCompetencyDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+			DELETE: {
+				params: { id: Course["id"] };
+				response: DefaultDeleteResponse;
 			};
-			"/courses/key-competency/:id": {
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateKeyCompetencyDTO;
-					params: { id: KeyCompetency["id"] };
-				};
-				DELETE: {
-					params: { id: KeyCompetency["id"] };
-					response: DefaultDeleteResponse;
-				};
+		};
+		"/courses/key-competency": {
+			GET: {
+				response: PaginatedResponse<KeyCompetency>;
+				params: PaginationQuery;
 			};
-			"/courses/key-competency/all": {
-				GET: {
-					response: KeyCompetency[];
-					params: PaginationQuery;
-				};
+			POST: {
+				response: KeyCompetency;
+				body: CreateKeyCompetencyDTO;
 			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/courses/key-competency/:id": {
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateKeyCompetencyDTO;
+				params: { id: KeyCompetency["id"] };
+			};
+			DELETE: {
+				params: { id: KeyCompetency["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+		"/courses/key-competency/all": {
+			GET: {
+				response: KeyCompetency[];
+				params: PaginationQuery;
+			};
+		};
 
-			"/courses/module": {
-				GET: {
-					response: PaginatedResponse<Module>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Module;
-					body: CreateModuleTDO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+		"/courses/module": {
+			GET: {
+				response: PaginatedResponse<Module>;
+				params: PaginationQuery;
 			};
-			"/courses/module/:id": {
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateModuleDTO;
-					params: { id: Module["id"] };
-				};
-				DELETE: {
-					params: { id: Module["id"] };
-					response: DefaultDeleteResponse;
-				};
+			POST: {
+				response: Module;
+				body: CreateModuleTDO;
 			};
-			"/courses/module/all": {
-				GET: {
-					response: Module[];
-					params: PaginationQuery;
-				};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
 			};
 		};
-		users: {
-			"/users": {
-				GET: {
-					response: PaginatedResponse<User>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: User;
-					body: CreateUserDto;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+		"/courses/module/:id": {
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateModuleDTO;
+				params: { id: Module["id"] };
 			};
-			"/users/stats": {
-				GET: {
-					response: EntityStatistics;
-				};
-			};
-			"/users/login": {
-				POST: {
-					body: LoginDTO;
-					response: Pick<User, "id" | "name" | "email" | "image">;
-				};
-			};
-			"/users/logout": {
-				GET: {
-					response: { authenticated: false };
-				};
-			};
-			"/users/:id": {
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateUserDto;
-					params: { id: User["id"] };
-				};
-				DELETE: {
-					params: { id: User["id"] };
-					response: DefaultDeleteResponse;
-				};
-			};
-			"/users/me": {
-				GET: {
-					response:
-						| Pick<User, "id" | "email" | "name" | "image">
-						| { authenticated: false; code?: number; message?: string };
-				};
+			DELETE: {
+				params: { id: Module["id"] };
+				response: DefaultDeleteResponse;
 			};
 		};
-		contact: {
-			"/contact": {
-				GET: {
-					response: PaginatedResponse<Contact>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Contact;
-					body: CreateContactDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
-			};
-			"/contact/stats": {
-				GET: {
-					response: EntityStatistics;
-				};
-			};
-			"/contact/:id": {
-				DELETE: {
-					params: { id: Contact["id"] };
-					response: DefaultDeleteResponse;
-				};
+		"/courses/module/all": {
+			GET: {
+				response: Module[];
+				params: PaginationQuery;
 			};
 		};
-		testimonials: {
-			"/testimonials": {
-				GET: {
-					response: PaginatedResponse<Testimonials>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Contact;
-					body: CreateTestimonialDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
+	};
+	users: {
+		"/users": {
+			GET: {
+				response: PaginatedResponse<User>;
+				params: PaginationQuery;
 			};
-			"/testimonials/stats": {
-				GET: {
-					response: EntityStatistics;
-				};
+			POST: {
+				response: User;
+				body: CreateUserDto;
 			};
-			"/testimonials/:id": {
-				DELETE: {
-					params: { id: Testimonials["id"] };
-					response: DefaultDeleteResponse;
-				};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
 			};
 		};
-		job: {
-			"/job": {
-				GET: {
-					response: PaginatedResponse<Job>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Job;
-					body: CreateJobDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
-			};
-			"/job/:id": {
-				DELETE: {
-					params: { id: Job["id"] };
-					response: DefaultDeleteResponse;
-				};
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateJobDTO;
-					params: { id: Job["id"] };
-				};
+		"/users/stats": {
+			GET: {
+				response: EntityStatistics;
 			};
 		};
-		rolling: {
-			"/rolling": {
-				GET: {
-					response: PaginatedResponse<Rolling & { modules: Module[] }>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Rolling;
-					body: CreateRollingDTO;
-					params: { ids: string };
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
-			};
-			"/rolling/:id": {
-				DELETE: {
-					params: { id: Rolling["id"] };
-					response: DefaultDeleteResponse;
-				};
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateRollingDTO;
-					params: { id: Rolling["id"] };
-				};
-			};
-			"/rolling/all": {
-				GET: {
-					response: (Rolling & { modules: Module[] })[];
-					params: PaginationQuery;
-				};
+		"/users/login": {
+			POST: {
+				body: LoginDTO;
+				response: Pick<User, "id" | "name" | "email" | "image">;
 			};
 		};
-		checkout: {
-			"/checkout": {
-				GET: {
-					response: PaginatedResponse<Checkout>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Checkout;
-					body: CreateCheckoutDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
-			};
-			"/checkout/:id": {
-				DELETE: {
-					params: { id: Checkout["id"] };
-					response: DefaultDeleteResponse;
-				};
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateCheckoutDTO;
-					params: { id: Checkout["id"] };
-				};
+		"/users/password": {
+			POST: {
+				body: UpdateUserPasswordDTO;
+				response: DefaultPatchResponse;
 			};
 		};
-		master: {
-			"/master": {
-				GET: {
-					response: PaginatedResponse<Master>;
-					params: PaginationQuery;
-				};
-				POST: {
-					response: Master;
-					body: CreateMasterDTO;
-				};
-				DELETE: {
-					body: DeleteMultipleBody;
-					response: number;
-				};
-			};
-			"/master/:id": {
-				PATCH: {
-					response: DefaultPatchResponse;
-					body: UpdateMasterDTO;
-					params: { id: Master["id"] };
-				};
-				DELETE: {
-					params: { id: Master["id"] };
-					response: DefaultDeleteResponse;
-				};
+		"/users/logout": {
+			GET: {
+				response: { authenticated: false };
 			};
 		};
-	}
+		"/users/:id": {
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateUserDto;
+				params: { id: User["id"] };
+			};
+			DELETE: {
+				params: { id: User["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+		"/users/me": {
+			GET: {
+				response:
+					| Pick<User, "id" | "email" | "name" | "image">
+					| { authenticated: false; code?: number; message?: string };
+			};
+		};
+	};
+	contact: {
+		"/contact": {
+			GET: {
+				response: PaginatedResponse<Contact>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Contact;
+				body: CreateContactDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/contact/stats": {
+			GET: {
+				response: EntityStatistics;
+			};
+		};
+		"/contact/:id": {
+			DELETE: {
+				params: { id: Contact["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+	};
+	testimonials: {
+		"/testimonials": {
+			GET: {
+				response: PaginatedResponse<Testimonials>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Contact;
+				body: CreateTestimonialDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/testimonials/stats": {
+			GET: {
+				response: EntityStatistics;
+			};
+		};
+		"/testimonials/:id": {
+			DELETE: {
+				params: { id: Testimonials["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+	};
+	job: {
+		"/job": {
+			GET: {
+				response: PaginatedResponse<Job>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Job;
+				body: CreateJobDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/job/:id": {
+			DELETE: {
+				params: { id: Job["id"] };
+				response: DefaultDeleteResponse;
+			};
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateJobDTO;
+				params: { id: Job["id"] };
+			};
+		};
+	};
+	rolling: {
+		"/rolling": {
+			GET: {
+				response: PaginatedResponse<Rolling & { modules: Module[] }>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Rolling;
+				body: CreateRollingDTO;
+				params: { ids: string };
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/rolling/:id": {
+			DELETE: {
+				params: { id: Rolling["id"] };
+				response: DefaultDeleteResponse;
+			};
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateRollingDTO;
+				params: { id: Rolling["id"] };
+			};
+		};
+		"/rolling/all": {
+			GET: {
+				response: (Rolling & { modules: Module[] })[];
+				params: PaginationQuery;
+			};
+		};
+	};
+	checkout: {
+		"/checkout": {
+			GET: {
+				response: PaginatedResponse<Checkout>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Checkout;
+				body: CreateCheckoutDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/checkout/:id": {
+			DELETE: {
+				params: { id: Checkout["id"] };
+				response: DefaultDeleteResponse;
+			};
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateCheckoutDTO;
+				params: { id: Checkout["id"] };
+			};
+		};
+	};
+	master: {
+		"/master": {
+			GET: {
+				response: PaginatedResponse<Master>;
+				params: PaginationQuery;
+			};
+			POST: {
+				response: Master;
+				body: CreateMasterDTO;
+			};
+			DELETE: {
+				body: DeleteMultipleBody;
+				response: number;
+			};
+		};
+		"/master/:id": {
+			PATCH: {
+				response: DefaultPatchResponse;
+				body: UpdateMasterDTO;
+				params: { id: Master["id"] };
+			};
+			DELETE: {
+				params: { id: Master["id"] };
+				response: DefaultDeleteResponse;
+			};
+		};
+	};
+}
 
 // Utilitaires de types
 export type ExtractResponse<T> = T extends { response: infer R } ? R : never;

@@ -11,7 +11,7 @@ import EntityTitle from "@/components/shared/entity/TitleWithDesc";
 import { Badge } from "@/components/ui/badge";
 import { useDateFormat } from "@/hooks/useDateFormat";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, ChevronRight, ChevronDown } from "lucide-react";
 import EntityActionsMenu from "@/components/shared/entity/ActionDropdown";
 
 interface BaseColumnOptions<T = unknown> {
@@ -232,6 +232,28 @@ export function createNameColumn<
 				</div>
 			);
 		},
+	};
+}
+
+export function createExpandRowColumn<T extends BaseEntity>(
+	t: (key: string) => string,
+): ColumnDef<T> {
+	return {
+		id: "expand",
+		header: t("common.details"),
+		cell: ({ row }) => (
+			<Button
+				variant="ghost"
+				className="-ml-2"
+				size="sm"
+				onClick={() => row.toggleExpanded()}
+			>
+				{t('common.expand')} {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
+			</Button>
+		),
+		enableSorting: false,
+		enableHiding: false,
+		size: 50,
 	};
 }
 
