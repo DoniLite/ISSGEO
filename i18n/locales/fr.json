@@ -13,6 +13,7 @@
 		"select_field": "Selectionner un élément",
 		"cancel": "Annuler",
 		"hours": "Heures",
+		"image": "Image",
 		"deleting": "Suppression…",
 		"toast": {
 			"generalAlreadySubmitted": "Le formulaire général a déjà été soumis.",
@@ -656,12 +657,12 @@
 			"id": "Master",
 			"form": {
 				"create": {
-					"title": "Créer un nouveau Master",
-					"description": "Remplissez les informations pour créer un nouveau Master"
+					"title": "Créer un nouveau Formateur",
+					"description": "Remplissez les informations pour créer un nouveau Formateur"
 				},
 				"update": {
-					"title": "Mettre à jour le Master",
-					"description": "Mettre à jour les informations du Master"
+					"title": "Mettre à jour le Formateur",
+					"description": "Mettre à jour les informations du Formateur"
 				},
 				"name": "Veuillez entrer une information valide pour ce champ.",
 				"description": "Veuillez entrer une information valide pour ce champ.",
@@ -676,22 +677,22 @@
 			"toast": {
 				"create": {
 					"success": {
-						"title": "Master créé avec succès",
+						"title": "Formateur créé avec succès",
 						"description": "Le Master a été créé avec succès"
 					}
 				},
 				"update": {
 					"success": {
-						"title": "Master mis à jour avec succès",
+						"title": "Formateur mis à jour avec succès",
 						"description": "Le Master a été mis à jour avec succès"
 					}
 				},
 				"delete": {
 					"success": {
-						"title": "Master supprimé avec succès",
-						"description": "Le Master a été supprimé avec succès",
-						"titleMultiple": "Masters supprimés avec succès",
-						"descriptionMultiple": "Les Masters sélectionnés ont été supprimés avec succès"
+						"title": "Formateur supprimé avec succès",
+						"description": "Le Formateur a été supprimé avec succès",
+						"titleMultiple": "Formateurs supprimés avec succès",
+						"descriptionMultiple": "Les Formateurs sélectionnés ont été supprimés avec succès"
 					}
 				}
 			}
@@ -844,10 +845,8 @@
 					"min_price_placeholder": "50000",
 					"max_price_label": "Prix maximum (FCFA)",
 					"max_price_placeholder": "100000",
-					"master": {
-						"label": "Formateur",
-						"placeholder": "Selectionner un formateur"
-					},
+					"master_label": "Formateur",
+					"master_placeholder": "Selectionner un formateur",
 					"thematic_label": "Thématique",
 					"thematic_placeholder": "Sélectionnez une thématique",
 					"new_thematic": "Nouvelle thématique",
@@ -880,6 +879,7 @@
 					"competency_advantages_label": "Avantages",
 					"competency_advantages_placeholder": "Ajouter un avantage",
 					"key_competency_placeholder": "Selectionner des compétences clées",
+					"select_existing_placeholder": "Selectionner une compétence existante",
 					"add_button": "Ajouter",
 					"cancel_button": "Annuler"
 				},
@@ -891,12 +891,35 @@
 					"module_title_label": "Titre",
 					"module_price_label": "Prix",
 					"module_duration_label": "Durée",
+					"select_existing_placeholder": "Selectionner un module existant",
 					"save_button": "Sauvegarder",
 					"cancel_button": "Annuler"
 				},
 				"icons": {
 					"selection_label": "Sélectionnez une icône",
 					"search_icons_label": "Rechercher une icône…"
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Cours créé avec succès!",
+						"description": "Vous avez un nouveau cours dans votre base de données"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Cours mis à jour avec succès!",
+						"description": "Le cours a été mis à jour"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Cours supprimé avec succès!",
+						"titleMultiple": "Cours supprimés avec succès!",
+						"descriptionMultiple": "Les cours ont été supprimés",
+						"description": "Le cours a été supprimé"
+					}
 				}
 			}
 		},

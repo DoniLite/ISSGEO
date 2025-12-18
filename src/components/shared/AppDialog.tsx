@@ -6,6 +6,7 @@ import {
 	DialogDescription,
 	Dialog,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 interface DialogProps {
 	title: string;
@@ -46,7 +47,7 @@ export const EntityEditDialog: React.FC<DialogProps> = ({
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange} modal>
 			<DialogContent
-				className={contentClassName}
+				className={cn('h-screen overflow-y-auto', contentClassName)}
 				onPointerDownOutside={handlePointerDownOutside}
 				onInteractOutside={handleInteractOutside}
 				onEscapeKeyDown={handleEscapeKeyDown}

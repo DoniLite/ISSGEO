@@ -126,7 +126,7 @@ export default function GenericForm<
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit as SubmitHandler<T>)}
-				className="space-y-6"
+				className="space-y-6 overflow-y-auto"
 			>
 				{fields
 					.filter((f) => {
