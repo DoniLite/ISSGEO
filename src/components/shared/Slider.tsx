@@ -11,6 +11,7 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import type React from "react";
 import { useMemo } from "react";
 
 interface BaseProps {
@@ -21,6 +22,7 @@ interface BaseProps {
 		prev?: React.ComponentProps<typeof CarouselPrevious>["variant"];
 	};
 	showNavigation?: boolean;
+	opts?: React.ComponentProps<typeof Carousel>["opts"];
 }
 
 export interface SliderProps extends BaseProps {
@@ -32,12 +34,13 @@ export function Slider({
 	className,
 	pluginOptions = {},
 	iconsVariants,
+	opts = {},
 	showNavigation = true,
 }: SliderProps) {
 	const plugins = useMemo(() => [Autoplay(pluginOptions)], [pluginOptions]);
 
 	return (
-		<Carousel className="w-full" plugins={plugins}>
+		<Carousel className="w-full" plugins={plugins} opts={opts}>
 			<CarouselContent>
 				{items.map((item, idx) => (
 					<CarouselItem
@@ -68,11 +71,12 @@ export function AnimatedSlider({
 	pluginOptions = {},
 	iconsVariants,
 	showNavigation = true,
+	opts = {},
 }: AnimatedSliderProps) {
 	const plugins = useMemo(() => [AutoScroll(pluginOptions)], [pluginOptions]);
 
 	return (
-		<Carousel className="w-full" plugins={plugins}>
+		<Carousel className="w-full" plugins={plugins} opts={opts}>
 			<CarouselContent>
 				{items.map((item, idx) => (
 					<CarouselItem

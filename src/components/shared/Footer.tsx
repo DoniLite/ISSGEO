@@ -1,4 +1,5 @@
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { socials } from "const/links.const";
+import { Facebook } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
@@ -29,13 +30,7 @@ export default function Footer() {
 						{t("footer.links.about")}
 					</a>
 					<a
-						href="/blog"
-						className="text-muted-foreground hover:text-primary transition-colors"
-					>
-						{t("footer.links.blog")}
-					</a>
-					<a
-						href="/contact"
+						href="/#contact"
 						className="text-muted-foreground hover:text-primary transition-colors"
 					>
 						{t("footer.links.contact")}
@@ -55,7 +50,7 @@ export default function Footer() {
 					</h3>
 					<div className="flex gap-4">
 						<a
-							href="https://facebook.com"
+							href={socials.facebook}
 							className="text-muted-foreground hover:text-primary transition-colors"
 							aria-label={t("footer.social.facebook")}
 							target="_blank"
@@ -63,7 +58,7 @@ export default function Footer() {
 						>
 							<Facebook size={20} />
 						</a>
-						<a
+						{/* <a
 							href="https://twitter.com"
 							className="text-muted-foreground hover:text-primary transition-colors"
 							aria-label={t("footer.social.twitter")}
@@ -89,7 +84,7 @@ export default function Footer() {
 							rel="noopener noreferrer"
 						>
 							<Linkedin size={20} />
-						</a>
+						</a> */}
 					</div>
 				</div>
 			</div>

@@ -34,6 +34,8 @@ export default function Testimonials() {
 									<TestimonialsCard key={t.name} {...t} />
 								))}
 								showNavigation={false}
+								pluginOptions={{ speed: 0.5, startDelay: 3000, stopOnInteraction: false }}
+								opts={{ loop: true }}
 							/>
 						)}
 					</div>
@@ -59,7 +61,6 @@ export default function Testimonials() {
 	);
 }
 
-// biome-ignore lint/suspicious/noEmptyInterface: <>
 interface  TestimonialsCardProps extends Base<TestimonialsTableType> {}
 
 function TestimonialsCard({
