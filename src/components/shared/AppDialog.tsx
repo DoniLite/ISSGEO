@@ -47,7 +47,7 @@ export const EntityEditDialog: React.FC<DialogProps> = ({
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange} modal>
 			<DialogContent
-				className={cn('h-screen overflow-y-auto', contentClassName)}
+				className={cn('max-h-screen overflow-y-auto', contentClassName)}
 				onPointerDownOutside={handlePointerDownOutside}
 				onInteractOutside={handleInteractOutside}
 				onEscapeKeyDown={handleEscapeKeyDown}
