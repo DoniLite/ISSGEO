@@ -1,11 +1,10 @@
-import { Link } from "@tanstack/react-router";
 import {
 	Facebook,
-	Instagram,
-	Linkedin,
+	// Instagram,
+	// Linkedin,
 	Mail,
 	Phone,
-	Twitter,
+	// Twitter,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "../ui/badge";
@@ -15,6 +14,7 @@ import { useState, type MouseEvent } from "react";
 import type { CreateContactDTO } from "@/api/contact";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { address, socials } from "const/links.const";
 
 export default function Contact() {
 	const { t } = useTranslation();
@@ -37,12 +37,14 @@ export default function Contact() {
 								<div className="flex gap-1 items-center">
 									<Mail className="w-5 h-5 text-muted-foreground" />
 									<span className="text-muted-foreground">
-										info@example.com
+										{address.email}
 									</span>
 								</div>
 								<div className="flex gap-1 items-center">
 									<Phone className="w-5 h-5 text-muted-foreground" />
-									<span className="text-muted-foreground">+226 78 81 25 61 / +226 75 52 29 59</span>
+									<span className="text-muted-foreground">
+										{address.phone}
+									</span>
 								</div>
 							</div>
 
@@ -50,12 +52,12 @@ export default function Contact() {
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									href={"https://web.facebook.com/profile.php?id=61578967744739"}
+									href={socials.facebook}
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Facebook className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
 								</a>
-								<Link
+								{/* <Link
 									target="_blank"
 									rel="noopener noreferrer"
 									to={"/"}
@@ -78,7 +80,7 @@ export default function Contact() {
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Twitter className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
-								</Link>
+								</Link> */}
 							</div>
 						</div>
 					</div>
