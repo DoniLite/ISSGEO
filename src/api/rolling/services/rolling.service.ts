@@ -21,7 +21,11 @@ export class RollingService extends BaseService<
 		dto: CreateRollingDTO,
 		context: Context,
 	): Promise<RollingTableType> {
-		const moduleIds = context.req.query("ids")?.split(",") ?? [];
+		const moduleIds =
+			context.req
+				.query("ids")
+				?.split(",")
+				.filter((id) => id.trim() !== "") ?? [];
 		return this.repository.createWithModuleIds(dto, moduleIds);
 	}
 

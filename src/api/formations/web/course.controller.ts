@@ -34,6 +34,33 @@ export class CourseController extends BaseController<
 	}
 
 	protected override registerCustomRoutes(): void {
+
+		this.app.patch('/update-course-competencies/:id', async (c) => {
+			try {
+				const id = c.req.param("id");
+				const res = await this.service.updateCourseCompetencies(id, c);
+				if (!res) {
+					return c.notFound();
+				}
+				return c.json({ updated: true, rows: [res]});
+			} catch (error) {
+				return this.handleError(c, error);
+			}
+		})
+
+		this.app.patch('/update-course-modules/:id', async (c) => {
+			try {
+				const id = c.req.param("id");
+				const res = await this.service.updateCourseModules(id, c);
+				if (!res) {
+					return c.notFound();
+				}
+				return c.json({ updated: true, rows: [res]});
+			} catch (error) {
+				return this.handleError(c, error);
+			}
+		})
+
 		this.app.get("/key-competency", async (c) => {
 			try {
 				const query = buildQuery(c.req.query());
@@ -64,7 +91,10 @@ export class CourseController extends BaseController<
 				// Try to get IDs from query params first
 				const queryIds = c.req.query("ids");
 				if (queryIds) {
-					ids = queryIds.split(",").map((id) => id.trim());
+					ids = queryIds
+						.split(",")
+						.map((id) => id.trim())
+						.filter((id) => id !== "");
 				} else {
 					// Try to get IDs from body
 					const body = await c.req.json();
@@ -103,6 +133,16 @@ export class CourseController extends BaseController<
 				const result = await this.service.findAllCompetency(
 					query as Partial<KeyCompetencyTableType>,
 				);
+				return c.json(result);
+			} catch (error) {
+				return this.handleError(c, error);
+			}
+		});
+
+		this.app.get("/key-competency/:id", async (c) => {
+			try {
+				const id = c.req.param("id");
+				const result = await this.service.findCompetency(id);
 				return c.json(result);
 			} catch (error) {
 				return this.handleError(c, error);
@@ -166,7 +206,10 @@ export class CourseController extends BaseController<
 				// Try to get IDs from query params first
 				const queryIds = c.req.query("ids");
 				if (queryIds) {
-					ids = queryIds.split(",").map((id) => id.trim());
+					ids = queryIds
+						.split(",")
+						.map((id) => id.trim())
+						.filter((id) => id !== "");
 				} else {
 					// Try to get IDs from body
 					const body = await c.req.json();
@@ -205,6 +248,16 @@ export class CourseController extends BaseController<
 				const result = await this.service.findAllModule(
 					query as Partial<KeyCompetencyTableType>,
 				);
+				return c.json(result);
+			} catch (error) {
+				return this.handleError(c, error);
+			}
+		});
+
+		this.app.get("/module/:id", async (c) => {
+			try {
+				const id = c.req.param("id");
+				const result = await this.service.findModule(id);
 				return c.json(result);
 			} catch (error) {
 				return this.handleError(c, error);
