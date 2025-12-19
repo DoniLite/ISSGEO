@@ -34,6 +34,7 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/src src
 COPY --from=prerelease /usr/src/app/static static
 COPY --from=prerelease /usr/src/app/i18n i18n
+COPY --from=prerelease /usr/src/app/const const
 COPY --from=prerelease /usr/src/app/package.json .
 COPY --from=prerelease /usr/src/app/tsconfig.json .
 COPY --from=prerelease /usr/src/app/drizzle.config.ts .
