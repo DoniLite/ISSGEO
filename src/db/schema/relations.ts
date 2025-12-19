@@ -4,6 +4,8 @@ import {
 	MasterTable,
 	ModuleTable,
 	TrainingTable,
+	TrainingToKeyCompetencyTable,
+	TrainingToModuleTable,
 } from "./training.schema";
 import { ThematicTable } from "./thematic.schema";
 import { TrainingSessionTable } from "./session.schema";
@@ -22,8 +24,8 @@ export const TrainingTableRelations = relations(
 			references: [MasterTable.id],
 		}),
 		sessions: many(TrainingSessionTable),
-		competences: many(KeyCompetencyTable),
-		modules: many(ModuleTable),
+		trainingToCompetencies: many(TrainingToKeyCompetencyTable),
+		trainingToModules: many(TrainingToModuleTable),
 		rollings: many(RollingTable),
 	}),
 );
@@ -32,13 +34,38 @@ export const MasterTableRelations = relations(MasterTable, ({ many }) => ({
 	courses: many(TrainingTable),
 }));
 
-export const ModuleTableRelations = relations(ModuleTable, ({ one, many }) => ({
-	training: one(TrainingTable, {
-		fields: [ModuleTable.courseId],
-		references: [TrainingTable.id],
-	}),
+export const ModuleTableRelations = relations(ModuleTable, ({ many }) => ({
+	moduleToTrainings: many(TrainingToModuleTable),
 	rollingToModules: many(RollingToModuleTable),
 }));
+
+export const TrainingToModuleRelations = relations(
+	TrainingToModuleTable,
+	({ one }) => ({
+		training: one(TrainingTable, {
+			fields: [TrainingToModuleTable.trainingId],
+			references: [TrainingTable.id],
+		}),
+		module: one(ModuleTable, {
+			fields: [TrainingToModuleTable.moduleId],
+			references: [ModuleTable.id],
+		}),
+	}),
+);
+
+export const TrainingToKeyCompetencyRelations = relations(
+	TrainingToKeyCompetencyTable,
+	({ one }) => ({
+		training: one(TrainingTable, {
+			fields: [TrainingToKeyCompetencyTable.trainingId],
+			references: [TrainingTable.id],
+		}),
+		competency: one(KeyCompetencyTable, {
+			fields: [TrainingToKeyCompetencyTable.competencyId],
+			references: [KeyCompetencyTable.id],
+		}),
+	}),
+);
 
 export const RollingTableRelations = relations(
 	RollingTable,
@@ -89,10 +116,7 @@ export const TrainingSessionTableRelations = relations(
 
 export const KeyCompetencesTableRelations = relations(
 	KeyCompetencyTable,
-	({ one }) => ({
-		module: one(TrainingTable, {
-			fields: [KeyCompetencyTable.moduleId],
-			references: [TrainingTable.id],
-		}),
+	({ many }) => ({
+		competencyToTrainings: many(TrainingToKeyCompetencyTable),
 	}),
 );

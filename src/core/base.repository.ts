@@ -56,22 +56,41 @@ export abstract class BaseRepository<
 	protected db = DatabaseConnection.getInstance().getDatabase();
 	protected abstract table: Tb;
 	protected logger = logger;
+	protected populateChildren = false;
 
-	async create(dto: CreateDTO): Promise<T> {
+	async create(dto: CreateDTO): Promise<R> {
 		this.logger.debug("Creating entity in DB", {
 			table: (this.table as any)[Symbol.for("drizzle:Name")] || "unknown",
 		});
 		const [result] = await this.db.insert(this.table).values(dto).returning();
-		return result as unknown as T;
+		const entity = result as unknown as T;
+
+		if (this.populateChildren) {
+			const populated = await this.populateChildrenForItems([entity]);
+			return (populated[0] as R) || (entity as unknown as R);
+		}
+
+		return entity as unknown as R;
 	}
 
-	async findById(id: string | number): Promise<T | null> {
+	async findById(
+		id: string | number,
+	): Promise<R | null> {
 		const [result] = await this.db
 			.select()
 			.from(this.table as PgTable)
 			.where(eq(this.table.id, id))
 			.limit(1);
-		return (result as T) || null;
+
+		if (!result) return null;
+
+		const entity = result as T;
+		if (this.populateChildren) {
+			const populated = await this.populateChildrenForItems([entity]);
+			return (populated[0] as R) || (entity as unknown as R);
+		}
+
+		return entity as unknown as R;
 	}
 
 	async findPaginated(
@@ -244,8 +263,12 @@ export abstract class BaseRepository<
 		return query as Promise<T[]>;
 	}
 
-	async findOne(filters?: Partial<T>): Promise<T> {
+	async findOne(
+		filters?: Partial<T>,
+	): Promise<R | null> {
 		const query = this.db.select().from(this.table as PgTable);
+
+		let entity: T | null = null;
 
 		if (filters) {
 			const conditions = Object.entries(filters)
@@ -254,33 +277,61 @@ export abstract class BaseRepository<
 
 			if (conditions.length > 0) {
 				const [result] = await query.where(and(...conditions)).limit(1);
-				return result as T;
+				entity = result as T;
 			}
 		}
 
-		const [queryResult] = await query;
+		if (!entity) {
+			const [queryResult] = await query.limit(1);
+			entity = queryResult as T;
+		}
 
-		return queryResult as T;
+		if (!entity) return null;
+
+		if (this.populateChildren) {
+			const [populated] = await this.populateChildrenForItems([entity]);
+			return populated as R;
+		}
+
+		return entity as unknown as R;
 	}
 
-	async update(id: string | number, dto: UpdateDTO): Promise<T[] | null> {
+	async update(
+		id: string | number,
+		dto: UpdateDTO,
+	): Promise<R[] | null> {
 		this.logger.debug(`Updating entity ${id} in DB`, {
 			// table: (this.table as any)[Symbol.for("drizzle:Name")] || "unknown",
 			id,
 		});
-		const result = await this.db
+		const result = (await this.db
 			.update(this.table)
 			.set(dto)
 			.where(eq(this.table.id, id))
-			.returning();
-		return (result as T[]) || null;
+			.returning()) as T[];
+
+		if (!result || result.length === 0) return null;
+		return result as unknown as R[];
 	}
 
 	async delete(id: string | number): Promise<boolean> {
-		const result = await this.db
-			.delete(this.table)
-			.where(eq(this.table.id, id));
-		return result.rowCount ? result.rowCount > 0 : true;
+		try {
+			const result = await this.db
+				.delete(this.table)
+				.where(eq(this.table.id, id));
+			return result.rowCount ? result.rowCount > 0 : true;
+		} catch (error) {
+			this.logger.error(
+				`Failed to delete entity ${id} from ${(this.table as any)[Symbol.for("drizzle:Name")] || "unknown"}`,
+				{
+					className: this.constructor.name,
+					method: "delete",
+					id,
+				},
+				error,
+			);
+			throw error;
+		}
 	}
 
 	/**
