@@ -1,5 +1,5 @@
 import { socials } from "const/links.const";
-import { Facebook } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
@@ -25,19 +25,19 @@ export default function Footer() {
 					</h3>
 					<a
 						href="/about"
-						className="text-muted-foreground hover:text-primary transition-colors"
+						className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 					>
 						{t("footer.links.about")}
 					</a>
 					<a
 						href="/#contact"
-						className="text-muted-foreground hover:text-primary transition-colors"
+						className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 					>
 						{t("footer.links.contact")}
 					</a>
 					<a
 						href="/faq"
-						className="text-muted-foreground hover:text-primary transition-colors"
+						className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 					>
 						{t("footer.links.faq")}
 					</a>
@@ -51,16 +51,17 @@ export default function Footer() {
 					<div className="flex gap-4">
 						<a
 							href={socials.facebook}
-							className="text-muted-foreground hover:text-primary transition-colors"
+							className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 							aria-label={t("footer.social.facebook")}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<Facebook size={20} />
 						</a>
-						{/* <a
-							href="https://twitter.com"
-							className="text-muted-foreground hover:text-primary transition-colors"
+						<a
+							// biome-ignore lint/a11y/useValidAnchor: <>
+							href="#"
+							className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 							aria-label={t("footer.social.twitter")}
 							target="_blank"
 							rel="noopener noreferrer"
@@ -68,8 +69,9 @@ export default function Footer() {
 							<Twitter size={20} />
 						</a>
 						<a
-							href="https://instagram.com"
-							className="text-muted-foreground hover:text-primary transition-colors"
+							// biome-ignore lint/a11y/useValidAnchor: <>
+							href="#"
+							className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 							aria-label={t("footer.social.instagram")}
 							target="_blank"
 							rel="noopener noreferrer"
@@ -77,14 +79,15 @@ export default function Footer() {
 							<Instagram size={20} />
 						</a>
 						<a
-							href="https://linkedin.com"
-							className="text-muted-foreground hover:text-primary transition-colors"
+							// biome-ignore lint/a11y/useValidAnchor: <>
+							href="#"
+							className="text-muted-foreground hover:text-primary dark:hover:text-secondary transition-colors"
 							aria-label={t("footer.social.linkedin")}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<Linkedin size={20} />
-						</a> */}
+						</a>
 					</div>
 				</div>
 			</div>

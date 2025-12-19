@@ -1,10 +1,10 @@
 import {
 	Facebook,
-	// Instagram,
-	// Linkedin,
+	Instagram,
+	Linkedin,
 	Mail,
 	Phone,
-	// Twitter,
+	Twitter,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "../ui/badge";
@@ -57,30 +57,33 @@ export default function Contact() {
 								>
 									<Facebook className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
 								</a>
-								{/* <Link
+								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									to={"/"}
+									// biome-ignore lint/a11y/useValidAnchor: <>
+									href={"#"}
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Instagram className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
-								</Link>
-								<Link
+								</a>
+								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									to={"/"}
+									// biome-ignore lint/a11y/useValidAnchor: <>
+									href={"#"}
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Linkedin className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
-								</Link>
-								<Link
+								</a>
+								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									to={"/"}
+									// biome-ignore lint/a11y/useValidAnchor: <>
+									href={"#"}
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Twitter className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
-								</Link> */}
+								</a>
 							</div>
 						</div>
 					</div>
