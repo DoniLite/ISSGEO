@@ -21,7 +21,7 @@ export const TrainingTable = pgTable("Training", {
 	thematicId: T.text("thematic").references(() => ThematicTable.id),
 	learningOutcomes: T.text("learning_outcomes").array(),
 	targetAudience: T.text("target_audience"),
-	masterId: T.text('master_id').references(() => MasterTable.id)
+	masterId: T.text("master_id").references(() => MasterTable.id),
 });
 
 export const KeyCompetencyTable = pgTable("Key_competency", {
@@ -31,7 +31,6 @@ export const KeyCompetencyTable = pgTable("Key_competency", {
 	icon: T.text("icon").notNull(),
 	sectors: T.text("sectors").array(),
 	advantages: T.text("advantages").array(),
-	moduleId: T.text("module_id").references(() => TrainingTable.id),
 });
 
 export const ModuleTable = pgTable("Module", {
@@ -39,13 +38,35 @@ export const ModuleTable = pgTable("Module", {
 	title: T.text("title").notNull(),
 	price: T.integer("price").notNull(),
 	duration: T.integer("duration").notNull(),
-	courseId: T.text("course_id").references(() => TrainingTable.id),
 });
 
-export const MasterTable = pgTable('Master', {
+export const TrainingToModuleTable = pgTable("Training_to_module", {
 	...BaseRow,
-	name: T.text('name').notNull(),
-	description: T.text('description'),
-	image: T.text('image'),
-	socials: T.json('socials')
-})
+	trainingId: T.text("training_id")
+		.notNull()
+		.references(() => TrainingTable.id, { onDelete: "cascade" }),
+	moduleId: T.text("module_id")
+		.notNull()
+		.references(() => ModuleTable.id, { onDelete: "cascade" }),
+});
+
+export const TrainingToKeyCompetencyTable = pgTable(
+	"Training_to_key_competency",
+	{
+		...BaseRow,
+		trainingId: T.text("training_id")
+			.notNull()
+			.references(() => TrainingTable.id, { onDelete: "cascade" }),
+		competencyId: T.text("competency_id")
+			.notNull()
+			.references(() => KeyCompetencyTable.id, { onDelete: "cascade" }),
+	},
+);
+
+export const MasterTable = pgTable("Master", {
+	...BaseRow,
+	name: T.text("name").notNull(),
+	description: T.text("description"),
+	image: T.text("image"),
+	socials: T.json("socials"),
+});

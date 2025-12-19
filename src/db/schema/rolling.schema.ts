@@ -11,11 +11,17 @@ export const RollingTable = pgTable("Rolling", {
 	profession: T.text("profession"),
 	schoolLevel: T.text("school_level"),
 	experience: T.text("experience"),
-	courseId: T.text("course_id").references(() => TrainingTable.id),
+	courseId: T.text("course_id").references(() => TrainingTable.id, {
+		onDelete: "cascade",
+	}),
 });
 
 export const RollingToModuleTable = pgTable("Rolling_to_module", {
 	...BaseRow,
-	moduleId: T.text("module_id").references(() => ModuleTable.id),
-	rollingId: T.text("rolling_id").references(() => RollingTable.id),
+	moduleId: T.text("module_id").references(() => ModuleTable.id, {
+		onDelete: "cascade",
+	}),
+	rollingId: T.text("rolling_id").references(() => RollingTable.id, {
+		onDelete: "cascade",
+	}),
 });
