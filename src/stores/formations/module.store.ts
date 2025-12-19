@@ -18,6 +18,7 @@ interface ModuleStore extends BaseStore {
 	deleteOne: (id: string) => Promise<void>;
 	deleteMultiple: (ids: string[]) => Promise<void>;
 	update: (id: string, data: UpdateModuleDTO) => Promise<void>;
+	findOne: (id: string) => Promise<ModuleTableType | undefined>;
 	fetchAll: (
 		query?: Record<string, unknown>,
 		options?: FetchAllDataOptions,
@@ -118,6 +119,18 @@ export default function useModuleStore(): ModuleStore &
 		},
 	);
 
+	const findOne = withAsyncOperation(async (id: string) => {
+		const res = await apiClient.call(
+			"courses",
+			"/courses/module/:id",
+			"GET",
+			{
+				params: { id },
+			},
+		);
+		return res.data;
+	});
+
 	return {
 		loading,
 		error,
@@ -138,6 +151,7 @@ export default function useModuleStore(): ModuleStore &
 		deleteOne,
 		deleteMultiple,
 		update,
+		findOne,
 		goToPage,
 		updateFilters,
 		updatePageSize,

@@ -18,15 +18,12 @@ import useThematicStoreStore from "@/stores/formations/thematic.store";
 import useKeyCompetencyStore from "@/stores/formations/keyCompetency.store";
 import useModuleStore from "@/stores/formations/module.store";
 import useMasterStore from "@/stores/formations/master.store";
-import type { TrainingTableType, ModuleTableType } from "@/db";
-import type {
-	CreateModuleTDO,
-	UpdateModuleDTO,
-} from "@/api/formations/DTO/modules.dto";
+import type { ModuleTableType } from "@/db";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { EditionMode } from "@/lib/table/hooks/forms/useEntityEditor";
 import { toast } from "sonner";
 import Layout from "../Layout";
+import type { CourseResponse } from "@/lib/interfaces/response/course.response";
 
 // Schema de validation
 const trainingSchema = z.object({
@@ -34,9 +31,11 @@ const trainingSchema = z.object({
 	description: z
 		.string()
 		.min(10, "La description doit contenir au moins 10 caractères"),
-	targetAudience: z.string(),
-	thematicId: z.string(),
-	learningOutcomes: z.array(z.string()),
+	targetAudience: z.string().min(1, "Le public cible est requis"),
+	thematicId: z.string().min(1, "La thématique est requise"),
+	learningOutcomes: z
+		.array(z.string())
+		.min(1, "Au moins un objectif est requis"),
 	masterId: z.string().optional(),
 });
 
@@ -209,6 +208,7 @@ export default function TrainingCreationForm() {
 	const courseStore = useCoursesStore();
 	const thematicStore = useThematicStoreStore();
 	const keyCompetencyStore = useKeyCompetencyStore();
+	const moduleStore = useModuleStore();
 	const masterStore = useMasterStore();
 	const navigate = useNavigate();
 	const { courseId } = useSearch({
@@ -216,10 +216,45 @@ export default function TrainingCreationForm() {
 		from: "/admin/courses/form",
 	});
 
+	const { t } = useTranslation();
+	const [currentCompetency, setCurrentCompetency] =
+		useState<CompetencyFormData | null>(null);
+	const [showNewThematic, setShowNewThematic] = useState(false);
+	const [newThematicName, setNewThematicName] = useState("");
+	const [newThematicIcon, setNewThematicIcon] = useState("");
+	const [newModule, setModule] = useState<CourseResponse>();
+	const [currentModuleForm, setCurrentModuleForm] = useState<{
+		title: string;
+		price: number;
+		duration: number;
+		id?: string;
+	} | null>(null);
+
+	const [editionState, setEditionState] = useState<EditionMode>(
+		EditionMode.CREATE,
+	);
+
+	const {
+		register,
+		formState: { errors },
+		control,
+		watch,
+		trigger,
+		reset,
+		clearErrors,
+	} = useForm<TrainingFormData>({
+		resolver: zodResolver(trainingSchema),
+		defaultValues: {
+			learningOutcomes: [],
+		},
+	});
+
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <>
 	useEffect(() => {
 		thematicStore.fetchData();
 		masterStore.fetchData();
+		keyCompetencyStore.fetchData();
+		moduleStore.fetchData();
 		if (typeof courseId === "string" && courseId !== "undefined") {
 			courseStore.findOne(courseId).then((d) => {
 				if (d) {
@@ -235,39 +270,8 @@ export default function TrainingCreationForm() {
 					setEditionState(EditionMode.UPDATE);
 				}
 			});
-			keyCompetencyStore.fetchAll({ moduleId: courseId }, { force: true });
-			// fetch modules for this course and keep locally
-			moduleStore.fetchAll({ courseId }, { force: true });
 		}
 	}, []);
-
-	const { t } = useTranslation();
-	const [currentCompetency, setCurrentCompetency] =
-		useState<CompetencyFormData | null>(null);
-	const [showNewThematic, setShowNewThematic] = useState(false);
-	const [newThematicName, setNewThematicName] = useState("");
-	const [newThematicIcon, setNewThematicIcon] = useState("");
-	const [newModule, setModule] = useState<TrainingTableType>();
-	const moduleStore = useModuleStore();
-	const [currentModuleForm, setCurrentModuleForm] = useState<{
-		title: string;
-		price: number;
-		duration: number;
-		id?: string;
-	} | null>(null);
-
-	const [editionState, setEditionState] = useState<EditionMode>(
-		EditionMode.CREATE,
-	);
-
-	const printedModules = useMemo(
-		() => moduleStore.allItems,
-		[moduleStore.allItems],
-	);
-	const printedCompetency = useMemo(
-		() => keyCompetencyStore.allItems,
-		[keyCompetencyStore.allItems],
-	);
 
 	const thematicEntries = useMemo(
 		() =>
@@ -287,18 +291,23 @@ export default function TrainingCreationForm() {
 		[masterStore.items],
 	);
 
-	const {
-		register,
-		control,
-		reset,
-		watch,
-		formState: { errors },
-	} = useForm<TrainingFormData>({
-		resolver: zodResolver(trainingSchema),
-		defaultValues: {
-			learningOutcomes: [],
-		},
-	});
+	const moduleEntries = useMemo(
+		() =>
+			moduleStore.items.map((e) => ({
+				label: e.title,
+				id: e.id as string,
+			})),
+		[moduleStore.items],
+	);
+
+	const keyCompetencyEntries = useMemo(
+		() =>
+			keyCompetencyStore.items.map((e) => ({
+				label: e.title,
+				id: e.id as string,
+			})),
+		[keyCompetencyStore.items],
+	);
 
 	const addThematic = async () => {
 		if (newThematicName && newThematicIcon) {
@@ -313,16 +322,17 @@ export default function TrainingCreationForm() {
 	};
 
 	const updateCourseMeta = async () => {
-		let totalDuration: number = 0;
-		let priceMax: number = 0;
+		let totalDuration = 0;
+		let priceMax = 0;
 
-		for (const module of printedModules) {
+		for (const module of newModule?.modules || []) {
 			totalDuration += module.duration;
 			priceMax += module.price;
 		}
 
 		const priceMin =
-			printedModules.sort((a, b) => a.price - b.price)[0]?.price ?? 0;
+			[...(newModule?.modules || [])].sort((a, b) => a.price - b.price)[0]
+				?.price ?? 0;
 
 		if (newModule?.id) {
 			await courseStore.update(newModule.id, {
@@ -334,16 +344,12 @@ export default function TrainingCreationForm() {
 	};
 
 	const addCompetency = async (competency: CompetencyFormData) => {
-		if (newModule?.id) {
-			await keyCompetencyStore.create({
-				...competency,
-				moduleId: newModule?.id,
-			});
-			setCurrentCompetency(null);
-		}
+		await keyCompetencyStore.create({
+			...competency,
+		});
+		setCurrentCompetency(null);
 	};
 
-	/** Modules management for Step 5 */
 	const startEditModule = (m: ModuleTableType) => {
 		setCurrentModuleForm({
 			title: m.title,
@@ -357,585 +363,726 @@ export default function TrainingCreationForm() {
 
 	const saveModule = async () => {
 		if (!newModule?.id || !currentModuleForm) return;
-		// prepare payloads with proper DTO types
-		const createPayload: CreateModuleTDO = {
-			title: currentModuleForm.title,
-			price: currentModuleForm.price,
-			duration: currentModuleForm.duration,
-			courseId: newModule.id,
-		};
+		let moduleData: ModuleTableType;
 
-		const updatePayload: UpdateModuleDTO = {
-			title: currentModuleForm.title,
-			price: currentModuleForm.price,
-			duration: currentModuleForm.duration,
-		};
-
-		// If id present -> update
 		if (currentModuleForm.id) {
-			await moduleStore.update(currentModuleForm.id, updatePayload);
+			await moduleStore.update(currentModuleForm.id, {
+				title: currentModuleForm.title,
+				price: currentModuleForm.price,
+				duration: currentModuleForm.duration,
+			});
+			const res = await moduleStore.findOne(currentModuleForm.id);
+			if (res) {
+				moduleData = res;
+			}
 		} else {
-			// create
-			await moduleStore.create(createPayload);
+			const res = await moduleStore.create({
+				title: currentModuleForm.title,
+				price: currentModuleForm.price,
+				duration: currentModuleForm.duration,
+			});
+			if (res) {
+				moduleData = res;
+			}
 		}
 
 		setCurrentModuleForm(null);
+		setModule((prev) => {
+			if (!prev) return prev;
+			return {
+				...prev,
+				modules: [...(prev.modules || []), moduleData],
+			};
+		});
 	};
 
 	const removeModuleLocal = async (id?: string) => {
-		if (!id) return;
-		await moduleStore.deleteOne(id);
+		if (!id && !newModule) return;
+		const updatedModules = newModule?.modules?.filter((m) => m.id !== id);
+		setModule((prev) => {
+			if (!prev) return prev;
+			return {
+				...prev,
+				modules: updatedModules,
+			};
+		});
 	};
 
 	const removeCompetency = async (id?: string) => {
-		if (!id) return;
+		if (!id && !newModule) return;
+		const updatedCompetencies = newModule?.competencies?.filter(
+			(c) => c.id !== id,
+		);
+		setModule((prev) => {
+			if (!prev) return prev;
+			return {
+				...prev,
+				competencies: updatedCompetencies,
+			};
+		});
+	};
 
-		await keyCompetencyStore.deleteOne(id);
+	const handleSelectExistingModule = async (moduleId: string) => {
+		if (!newModule || !moduleId) return;
+		const module = await moduleStore.findOne(moduleId);
+		if (module) {
+			setModule((prev) => {
+				if (!prev) return prev;
+				return {
+					...prev,
+					modules: [...(prev.modules || []), module],
+				};
+			});
+		}
+	};
+
+	const handleSelectExistingCompetency = async (competencyId: string) => {
+		if (!newModule || !competencyId) return;
+		const competency = await keyCompetencyStore.findOne(competencyId);
+		if (competency) {
+			setModule((prev) => {
+				if (!prev) return prev;
+				return {
+					...prev,
+					competencies: [...(prev.competencies || []), competency],
+				};
+			});
+		}
+	};
+
+	const handleBeforeNext = async (step: number) => {
+		if (step === 1) {
+			return await trigger(["title", "description"]);
+		}
+		if (step === 2) {
+			return await trigger(["thematicId"]);
+		}
+		if (step === 3) {
+			return await trigger(["targetAudience", "learningOutcomes"]);
+		}
+		return true;
 	};
 
 	return (
 		<Layout>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-				}}
-			>
-				<Stepper
-					initialStep={1}
-					onFinalStepCompleted={() => {
-						console.log("final step");
-						updateCourseMeta()
-							.then(() =>
-								navigate({
-									to: "/admin/courses",
-								}),
-							)
-							.catch((e) => {
-								console.error(e);
-								toast.error(t("common.toast.error.unexpected.title"), {
-									description: t("common.toast.error.unexpected.description"),
-								});
-							});
+			<div className="w-full h-full relative flex justify-center items-center">
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
 					}}
-					onStepChange={(stepNumber) => {
-						const formData = watch();
-						if (stepNumber === 4) {
-							if (editionState === EditionMode.CREATE) {
-								courseStore
-									.create(formData)
-									.then((course) => setModule(course));
-							} else if (newModule?.id) {
-								courseStore.update(newModule?.id, formData);
-							}
-						}
-					}}
-					stepCircleContainerClassName="bg-card"
+					className="w-[99%] lg:w-[95%]"
 				>
-					{/* Base information */}
-					<Step>
-						<div className="space-y-4">
-							<h3 className="text-lg font-semibold">
-								{t("admin.formations.form.step1.title")}
-							</h3>
+					<Stepper
+						initialStep={1}
+						onBeforeNext={handleBeforeNext}
+						onFinalStepCompleted={() => {
+							if (newModule?.id) {
+								courseStore.updateCourseModules(
+									newModule.id,
+									newModule?.modules?.map((m) => m.id as string) || [],
+								);
+							}
+							updateCourseMeta()
+								.then(() =>
+									navigate({
+										to: "/admin/courses",
+									}),
+								)
+								.catch((e) => {
+									console.error(e);
+									toast.error(t("common.toast.error.unexpected.title"), {
+										description: t("common.toast.error.unexpected.description"),
+									});
+								});
+						}}
+						onStepChange={(stepNumber) => {
+							const valid = handleBeforeNext(stepNumber);
+							if (!valid) return;
+							const formData = watch();
+							if (stepNumber === 4) {
+								if (editionState === EditionMode.CREATE) {
+									courseStore.create(formData).then((course) => {
+										setModule(course);
+										setEditionState(EditionMode.UPDATE);
+									});
+								} else if (newModule?.id) {
+									courseStore.update(newModule?.id, formData);
+								}
+							}
+							if (stepNumber === 5) {
+								if (newModule?.id) {
+									courseStore.updateCourseCompetencies(
+										newModule?.id,
+										newModule?.competencies?.map((c) => c.id as string) || [],
+									);
+								}
+							}
+						}}
+						stepCircleContainerClassName="bg-card"
+					>
+						{/* Step 1: Base information */}
+						<Step>
+							<div className="space-y-4">
+								<h3 className="text-lg font-semibold">
+									{t("admin.formations.form.step1.title")}
+								</h3>
 
-							<div className="space-y-2">
-								<Label htmlFor="title">
-									{t("admin.formations.form.step1.title_label")}
-									<span className="text-red-500 ml-1">*</span>
-								</Label>
-								<Input
-									id="title"
-									{...register("title")}
-									placeholder={t(
-										"admin.formations.form.step1.title_placeholder",
+								<div className="space-y-2">
+									<Label htmlFor="title">
+										{t("admin.formations.form.step1.title_label")}
+										<span className="text-red-500 ml-1">*</span>
+									</Label>
+									<Input
+										id="title"
+										{...register("title", {
+											onChange: () => clearErrors("title"),
+										})}
+										placeholder={t(
+											"admin.formations.form.step1.title_placeholder",
+										)}
+									/>
+									{errors.title && (
+										<p className="text-sm text-destructive">
+											{errors.title.message}
+										</p>
 									)}
-								/>
-								{errors.title && (
-									<p className="text-sm text-destructive">
-										{errors.title.message}
-									</p>
-								)}
-							</div>
+								</div>
 
-							<div className="space-y-2">
-								<Label htmlFor="description">
-									{t("admin.formations.form.step1.description_label")}
-									<span className="text-red-500 ml-1">*</span>
-								</Label>
-								<textarea
-									id="description"
-									{...register("description")}
-									className="w-full min-h-[100px] px-3 py-2 border rounded-md"
-									placeholder={t(
-										"admin.formations.form.step1.description_placeholder",
+								<div className="space-y-2">
+									<Label htmlFor="description">
+										{t("admin.formations.form.step1.description_label")}
+										<span className="text-red-500 ml-1">*</span>
+									</Label>
+									<textarea
+										{...register("description", {
+											onChange: () => clearErrors("description"),
+										})}
+										id="description"
+										className="w-full min-h-[100px] px-3 py-2 border rounded-md"
+										placeholder={t(
+											"admin.formations.form.step1.description_placeholder",
+										)}
+									></textarea>
+									{errors.description && (
+										<p className="text-sm text-destructive">
+											{errors.description.message}
+										</p>
 									)}
-								/>
-								{errors.description && (
-									<p className="text-sm text-destructive">
-										{errors.description.message}
-									</p>
-								)}
+								</div>
 							</div>
-						</div>
-					</Step>
+						</Step>
 
-					{/* Step 2: Thematic */}
-					<Step>
-						<div className="space-y-4">
-							<h3 className="text-lg font-semibold">
-								{t("admin.formations.form.step2.title")}
-							</h3>
+						{/* Step 2: Thematic */}
+						<Step>
+							<div className="space-y-4">
+								<h3 className="text-lg font-semibold">
+									{t("admin.formations.form.step2.title")}
+								</h3>
 
-							<div className="space-y-2">
-								<Label>
-									{t("admin.formations.form.step2.thematic_label")}
-									<span className="text-red-500 ml-1">*</span>
-								</Label>
-								<Controller
-									name="thematicId"
-									control={control}
-									render={({ field }) => (
-										<EntitySelect
-											entries={thematicEntries}
-											placeholder={t(
-												"admin.formations.form.step2.thematic_placeholder",
-											)}
-											value={field.value}
-											onSelected={field.onChange}
-											onSearch={(query) =>
-												thematicStore.fetchData({ search: query })
-											}
-											clearable
-										/>
+								<div className="space-y-2">
+									<Label>
+										{t("admin.formations.form.step2.thematic_label")}
+										<span className="text-red-500 ml-1">*</span>
+									</Label>
+									<Controller
+										name="thematicId"
+										control={control}
+										render={({ field }) => (
+											<EntitySelect
+												entries={thematicEntries}
+												placeholder={t(
+													"admin.formations.form.step2.thematic_placeholder",
+												)}
+												value={field.value}
+												onSelected={(val) => {
+													field.onChange(val);
+													clearErrors("thematicId");
+												}}
+												onSearch={(query) =>
+													thematicStore.fetchData({ search: query })
+												}
+												clearable
+											/>
+										)}
+									/>
+									{errors.thematicId && (
+										<p className="text-sm text-destructive">
+											{errors.thematicId.message}
+										</p>
 									)}
-								/>
-								<Button
-									type="button"
-									variant="outline"
-									size="sm"
-									onClick={() => setShowNewThematic(!showNewThematic)}
-								>
-									<Plus className="w-4 h-4 mr-2" />
-									{t("admin.formations.form.step2.new_thematic")}
-								</Button>
-							</div>
-
-							<div className="space-y-2">
-								<Label>{t("admin.formations.form.step2.master_label")}</Label>
-								<Controller
-									name="masterId"
-									control={control}
-									render={({ field }) => (
-										<EntitySelect
-											entries={masterEntries}
-											placeholder={t(
-												"admin.formations.form.step2.master_placeholder",
-											)}
-											value={field.value}
-											onSelected={field.onChange}
-											onSearch={(query) =>
-												masterStore.fetchData({ search: query })
-											}
-											clearable
-										/>
-									)}
-								/>
-							</div>
-
-							{showNewThematic && (
-								<Card className="p-4 space-y-4">
-									<div className="space-y-2">
-										<Label>
-											{t(
-												"admin.formations.form.step2.create_thematic.title_label",
-											)}
-										</Label>
-										<Input
-											value={newThematicName}
-											onChange={(e) => setNewThematicName(e.target.value)}
-											placeholder={t(
-												"admin.formations.form.step2.create_thematic.title_placeholder",
-											)}
-										/>
-									</div>
-									<div className="space-y-2">
-										<Label>
-											{t(
-												"admin.formations.form.step2.create_thematic.icon_label",
-											)}
-										</Label>
-										<IconSelector
-											value={newThematicIcon as (typeof iconNames)[number]}
-											onChange={setNewThematicIcon}
-										/>
-									</div>
 									<Button
 										type="button"
-										onClick={addThematic}
-										className="w-full"
+										variant="outline"
+										size="sm"
+										onClick={() => setShowNewThematic(!showNewThematic)}
 									>
-										{t("admin.formations.form.step2.create_thematic.submit")}
+										<Plus className="w-4 h-4 mr-2" />
+										{t("admin.formations.form.step2.new_thematic")}
 									</Button>
-								</Card>
-							)}
-						</div>
-					</Step>
+								</div>
 
-					{/* Step 3: Target public and modules */}
-					<Step>
-						<div className="space-y-4 overflow-y-scroll h-[25rem]">
-							<h3 className="text-lg font-semibold">
-								{t("admin.formations.form.step3.title")}
-							</h3>
-
-							<div className="space-y-2">
-								<Label htmlFor="targetAudience">
-									{t("admin.formations.form.step3.target_label")}
-								</Label>
-								<Input
-									id="targetAudience"
-									{...register("targetAudience")}
-									placeholder={t(
-										"admin.formations.form.step3.target_placeholder",
-									)}
-								/>
-							</div>
-
-							<div className="space-y-2">
-								<Label>
-									{t("admin.formations.form.step3.objectives_label")}
-								</Label>
-								<Controller
-									name="learningOutcomes"
-									control={control}
-									render={({ field }) => (
-										<ArrayInput
-											value={field.value || []}
-											onChange={field.onChange}
-											placeholder={t(
-												"admin.formations.form.step3.objectives_placeholder",
-											)}
-										/>
-									)}
-								/>
-							</div>
-						</div>
-					</Step>
-
-					{/* Step 4: Key competency */}
-					<Step>
-						<div className="space-y-4 overflow-y-scroll h-[30rem]">
-							<h3 className="text-lg font-semibold">
-								{t("admin.formations.form.step4.title")}
-							</h3>
-
-							<div className="space-y-4">
-								{printedCompetency.map((comp) => (
-									<Card key={comp.title} className="p-4">
-										<div className="flex items-start justify-between">
-											<div className="flex items-start gap-3">
-												{comp.icon && (
-													<DynamicIcon
-														name={comp.icon as (typeof iconList)[number]}
-													/>
+								{showNewThematic && (
+									<Card className="p-4 space-y-4">
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step2.create_thematic.title_label",
 												)}
-												<div>
-													<h4 className="font-semibold">{comp.title}</h4>
-													<p className="text-sm text-muted-foreground">
-														{comp.description}
-													</p>
-													{comp.sectors && comp?.sectors?.length > 0 && (
-														<div className="flex gap-1 mt-2 flex-wrap">
-															{comp.sectors.map((sector) => (
-																<span
-																	key={sector}
-																	className="px-2 py-1 bg-accent text-xs rounded"
-																>
-																	{sector}
-																</span>
-															))}
-														</div>
-													)}
-												</div>
-											</div>
-											<Button
-												type="button"
-												variant="ghost"
-												size="icon-sm"
-												onClick={() => removeCompetency(comp.id)}
-											>
-												<Trash2 className="w-4 h-4" />
-											</Button>
+											</Label>
+											<Input
+												value={newThematicName}
+												onChange={(e) => setNewThematicName(e.target.value)}
+												placeholder={t(
+													"admin.formations.form.step2.create_thematic.title_placeholder",
+												)}
+											/>
 										</div>
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step2.create_thematic.icon_label",
+												)}
+											</Label>
+											<IconSelector
+												value={newThematicIcon as (typeof iconNames)[number]}
+												onChange={setNewThematicIcon}
+											/>
+										</div>
+										<Button
+											type="button"
+											onClick={addThematic}
+											className="w-full"
+										>
+											{t("admin.formations.form.step2.create_thematic.submit")}
+										</Button>
 									</Card>
-								))}
-							</div>
+								)}
 
-							{!currentCompetency ? (
-								<Button
-									type="button"
-									variant="outline"
-									onClick={() =>
-										setCurrentCompetency({
-											title: "",
-											description: "",
-											icon: "",
-											sectors: [],
-											advantages: [],
-										})
-									}
-									className="w-full"
-								>
-									<Plus className="w-4 h-4 mr-2" />
-									{t("admin.formations.form.step4.add_competency")}
-								</Button>
-							) : (
-								<Card className="p-4 space-y-4">
-									<div className="space-y-2">
-										<Label>
-											{t("admin.formations.form.step4.competency_title_label")}
-										</Label>
-										<Input
-											value={currentCompetency.title}
-											onChange={(e) =>
-												setCurrentCompetency({
-													...currentCompetency,
-													title: e.target.value,
-												})
-											}
-											placeholder={t(
-												"admin.formations.form.step4.competency_title_placeholder",
-											)}
-										/>
-									</div>
-
-									<div className="space-y-2">
-										<Label>
-											{t(
-												"admin.formations.form.step4.competency_description_label",
-											)}
-										</Label>
-										<textarea
-											value={currentCompetency.description}
-											onChange={(e) =>
-												setCurrentCompetency({
-													...currentCompetency,
-													description: e.target.value,
-												})
-											}
-											className="w-full min-h-[80px] px-3 py-2 border rounded-md"
-											placeholder={t(
-												"admin.formations.form.step4.competency_description_placeholder",
-											)}
-										/>
-									</div>
-
-									<div className="space-y-2">
-										<Label>
-											{t("admin.formations.form.step4.competency_icon_label")}
-										</Label>
-										<IconSelector
-											value={
-												currentCompetency.icon as (typeof iconList)[number]
-											}
-											onChange={(icon) =>
-												setCurrentCompetency({ ...currentCompetency, icon })
-											}
-										/>
-									</div>
-
-									<div className="space-y-2">
-										<Label>
-											{t(
-												"admin.formations.form.step4.competency_sectors_label",
-											)}
-										</Label>
-										<ArrayInput
-											value={currentCompetency.sectors}
-											onChange={(sectors) =>
-												setCurrentCompetency({
-													...currentCompetency,
-													sectors,
-												})
-											}
-											placeholder={t(
-												"admin.formations.form.step4.competency_sectors_placeholder",
-											)}
-										/>
-									</div>
-
-									<div className="space-y-2">
-										<Label>
-											{t(
-												"admin.formations.form.step4.competency_advantages_label",
-											)}
-										</Label>
-										<ArrayInput
-											value={currentCompetency.advantages}
-											onChange={(advantages) =>
-												setCurrentCompetency({
-													...currentCompetency,
-													advantages,
-												})
-											}
-											placeholder={t(
-												"admin.formations.form.step4.competency_advantages_placeholder",
-											)}
-										/>
-									</div>
-
-									<div className="flex gap-2">
-										<Button
-											type="button"
-											onClick={() => {
-												if (
-													currentCompetency.title &&
-													currentCompetency.description
-												) {
-													addCompetency(currentCompetency);
+								<div className="space-y-2">
+									<Label>{t("admin.formations.form.step2.master_label")}</Label>
+									<Controller
+										name="masterId"
+										control={control}
+										render={({ field }) => (
+											<EntitySelect
+												entries={masterEntries}
+												placeholder={t(
+													"admin.formations.form.step2.master_placeholder",
+												)}
+												value={field.value}
+												onSelected={field.onChange}
+												onSearch={(query) =>
+													masterStore.fetchData({ search: query })
 												}
-											}}
-											className="flex-1"
-										>
-											{t("admin.formations.form.step4.add_button")}
-										</Button>
-										<Button
-											type="button"
-											variant="outline"
-											onClick={() => setCurrentCompetency(null)}
-										>
-											{t("admin.formations.form.step4.cancel_button")}
-										</Button>
-									</div>
-								</Card>
-							)}
-						</div>
-					</Step>
+												clearable
+											/>
+										)}
+									/>
+								</div>
+							</div>
+						</Step>
 
-					{/* Step 5 Modules */}
-					<Step>
-						<div className="space-y-4 overflow-y-scroll h-[30rem]">
-							<h3 className="text-lg font-semibold">
-								{t("admin.formations.form.step5.title")}
-							</h3>
+						{/* Step 3: Target public and objectives */}
+						<Step>
+							<div className="space-y-4 overflow-y-auto h-[25rem]">
+								<h3 className="text-lg font-semibold">
+									{t("admin.formations.form.step3.title")}
+								</h3>
 
-							<div className="space-y-4">
-								{printedModules.map((mod) => (
-									<Card key={mod.id} className="p-4">
-										<div className="flex items-start justify-between">
-											<div>
-												<h4 className="font-semibold">{mod.title}</h4>
-												<p className="text-sm text-muted-foreground">
-													{t("admin.formations.form.step5.module_meta", {
-														duration: mod.duration,
-														price: mod.price,
-													})}
-												</p>
-											</div>
-											<div className="flex gap-2">
+								<div className="space-y-2">
+									<Label htmlFor="targetAudience">
+										{t("admin.formations.form.step3.target_label")}
+									</Label>
+									<Input
+										id="targetAudience"
+										{...register("targetAudience", {
+											onChange: () => clearErrors("targetAudience"),
+										})}
+										placeholder={t(
+											"admin.formations.form.step3.target_placeholder",
+										)}
+									/>
+									{errors.targetAudience && (
+										<p className="text-sm text-destructive">
+											{errors.targetAudience.message}
+										</p>
+									)}
+								</div>
+
+								<div className="space-y-2">
+									<Label>
+										{t("admin.formations.form.step3.objectives_label")}
+									</Label>
+									<Controller
+										name="learningOutcomes"
+										control={control}
+										render={({ field }) => (
+											<ArrayInput
+												value={field.value || []}
+												onChange={(val) => {
+													field.onChange(val);
+													clearErrors("learningOutcomes");
+												}}
+												placeholder={t(
+													"admin.formations.form.step3.objectives_placeholder",
+												)}
+											/>
+										)}
+									/>
+									{errors.learningOutcomes && (
+										<p className="text-sm text-destructive">
+											{errors.learningOutcomes.message}
+										</p>
+									)}
+								</div>
+							</div>
+						</Step>
+
+						{/* Step 4: Key competency */}
+						<Step>
+							<div className="space-y-4 overflow-y-auto h-[30rem]">
+								<h3 className="text-lg font-semibold">
+									{t("admin.formations.form.step4.title")}
+								</h3>
+
+								<div className="space-y-4">
+									{newModule?.competencies?.map((comp) => (
+										<Card key={comp.id} className="p-4">
+											<div className="flex items-start justify-between">
+												<div className="flex items-start gap-3">
+													{comp.icon && (
+														<DynamicIcon
+															name={comp.icon as (typeof iconList)[number]}
+														/>
+													)}
+													<div>
+														<h4 className="font-semibold">{comp.title}</h4>
+														<p className="text-sm text-muted-foreground">
+															{comp.description}
+														</p>
+														{comp.sectors && comp.sectors.length > 0 && (
+															<div className="flex gap-1 mt-2 flex-wrap">
+																{comp.sectors.map((sector) => (
+																	<span
+																		key={sector}
+																		className="px-2 py-1 bg-accent text-xs rounded"
+																	>
+																		{sector}
+																	</span>
+																))}
+															</div>
+														)}
+													</div>
+												</div>
 												<Button
 													type="button"
 													variant="ghost"
 													size="icon-sm"
-													onClick={() => startEditModule(mod)}
-												>
-													{t("admin.formations.form.step5.edit")}
-												</Button>
-												<Button
-													type="button"
-													variant="ghost"
-													size="icon-sm"
-													onClick={() => removeModuleLocal(mod.id)}
+													onClick={() => removeCompetency(comp.id)}
 												>
 													<Trash2 className="w-4 h-4" />
 												</Button>
 											</div>
+										</Card>
+									))}
+								</div>
+
+								<div className="flex gap-2 flex-col">
+									<div className="flex-1">
+										<EntitySelect
+											entries={keyCompetencyEntries}
+											placeholder={t(
+												"admin.formations.form.step4.select_existing_placeholder",
+											)}
+											onSelected={(id) => handleSelectExistingCompetency(id)}
+											onSearch={(query) =>
+												keyCompetencyStore.fetchData({ search: query })
+											}
+											clearable
+										/>
+									</div>
+									<Button
+										type="button"
+										variant="outline"
+										onClick={() =>
+											setCurrentCompetency({
+												title: "",
+												description: "",
+												icon: "",
+												sectors: [],
+												advantages: [],
+											})
+										}
+									>
+										<Plus className="w-4 h-4 mr-2" />
+										{t("admin.formations.form.step4.add_competency")}
+									</Button>
+								</div>
+
+								{currentCompetency && (
+									<Card className="p-4 space-y-4">
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step4.competency_title_label",
+												)}
+											</Label>
+											<Input
+												value={currentCompetency.title}
+												onChange={(e) =>
+													setCurrentCompetency({
+														...currentCompetency,
+														title: e.target.value,
+													})
+												}
+												placeholder={t(
+													"admin.formations.form.step4.competency_title_placeholder",
+												)}
+											/>
+										</div>
+
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step4.competency_description_label",
+												)}
+											</Label>
+											<textarea
+												value={currentCompetency.description}
+												onChange={(e) =>
+													setCurrentCompetency({
+														...currentCompetency,
+														description: e.target.value,
+													})
+												}
+												className="w-full min-h-[80px] px-3 py-2 border rounded-md"
+												placeholder={t(
+													"admin.formations.form.step4.competency_description_placeholder",
+												)}
+											/>
+										</div>
+
+										<div className="space-y-2">
+											<Label>
+												{t("admin.formations.form.step4.competency_icon_label")}
+											</Label>
+											<IconSelector
+												value={
+													currentCompetency.icon as (typeof iconList)[number]
+												}
+												onChange={(icon) =>
+													setCurrentCompetency({ ...currentCompetency, icon })
+												}
+											/>
+										</div>
+
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step4.competency_sectors_label",
+												)}
+											</Label>
+											<ArrayInput
+												value={currentCompetency.sectors}
+												onChange={(sectors) =>
+													setCurrentCompetency({
+														...currentCompetency,
+														sectors,
+													})
+												}
+												placeholder={t(
+													"admin.formations.form.step4.competency_sectors_placeholder",
+												)}
+											/>
+										</div>
+
+										<div className="space-y-2">
+											<Label>
+												{t(
+													"admin.formations.form.step4.competency_advantages_label",
+												)}
+											</Label>
+											<ArrayInput
+												value={currentCompetency.advantages}
+												onChange={(advantages) =>
+													setCurrentCompetency({
+														...currentCompetency,
+														advantages,
+													})
+												}
+												placeholder={t(
+													"admin.formations.form.step4.competency_advantages_placeholder",
+												)}
+											/>
+										</div>
+
+										<div className="flex gap-2">
+											<Button
+												type="button"
+												onClick={() => {
+													if (
+														currentCompetency.title &&
+														currentCompetency.description
+													) {
+														addCompetency(currentCompetency);
+													}
+												}}
+												className="flex-1"
+											>
+												{t("admin.formations.form.step4.add_button")}
+											</Button>
+											<Button
+												type="button"
+												variant="outline"
+												onClick={() => setCurrentCompetency(null)}
+											>
+												{t("admin.formations.form.step4.cancel_button")}
+											</Button>
 										</div>
 									</Card>
-								))}
+								)}
 							</div>
+						</Step>
 
-							{!currentModuleForm ? (
-								<Button
-									type="button"
-									variant="outline"
-									onClick={() =>
-										setCurrentModuleForm({ title: "", price: 0, duration: 0 })
-									}
-									className="w-full"
-								>
-									<Plus className="w-4 h-4 mr-2" />
-									{t("admin.formations.form.step5.add_module")}
-								</Button>
-							) : (
-								<Card className="p-4 space-y-4">
-									<div className="space-y-2">
-										<Label>
-											{t("admin.formations.form.step5.module_title_label")}
-										</Label>
-										<Input
-											value={currentModuleForm.title}
-											onChange={(e) =>
-												setCurrentModuleForm({
-													...currentModuleForm,
-													title: e.target.value,
-												})
+						{/* Step 5: Modules */}
+						<Step>
+							<div className="space-y-4 overflow-y-auto h-[30rem]">
+								<h3 className="text-lg font-semibold">
+									{t("admin.formations.form.step5.title")}
+								</h3>
+
+								<div className="space-y-4">
+									{newModule?.modules?.map((mod) => (
+										<Card key={mod.id} className="p-4">
+											<div className="flex items-start justify-between">
+												<div>
+													<h4 className="font-semibold">{mod.title}</h4>
+													<p className="text-sm text-muted-foreground">
+														{t("admin.formations.form.step5.module_meta", {
+															duration: mod.duration,
+															price: mod.price,
+														})}
+													</p>
+												</div>
+												<div className="flex gap-2">
+													<Button
+														type="button"
+														variant="ghost"
+														size="icon-sm"
+														onClick={() => startEditModule(mod)}
+													>
+														{t("admin.formations.form.step5.edit")}
+													</Button>
+													<Button
+														type="button"
+														variant="ghost"
+														size="icon-sm"
+														onClick={() => removeModuleLocal(mod.id)}
+													>
+														<Trash2 className="w-4 h-4" />
+													</Button>
+												</div>
+											</div>
+										</Card>
+									))}
+								</div>
+
+								<div className="flex gap-2 flex-col">
+									<div className="flex-1">
+										<EntitySelect
+											entries={moduleEntries}
+											placeholder={t(
+												"admin.formations.form.step5.select_existing_placeholder",
+											)}
+											onSelected={(id) => handleSelectExistingModule(id)}
+											onSearch={(query) =>
+												moduleStore.fetchData({ search: query })
 											}
+											clearable
 										/>
 									</div>
+									<Button
+										type="button"
+										variant="outline"
+										onClick={() =>
+											setCurrentModuleForm({ title: "", price: 0, duration: 0 })
+										}
+									>
+										<Plus className="w-4 h-4 mr-2" />
+										{t("admin.formations.form.step5.add_module")}
+									</Button>
+								</div>
 
-									<div className="space-y-2">
-										<Label>
-											{t("admin.formations.form.step5.module_price_label")}
-										</Label>
-										<Input
-											value={String(currentModuleForm.price)}
-											onChange={(e) =>
-												setCurrentModuleForm({
-													...currentModuleForm,
-													price: Number(e.target.value),
-												})
-											}
-										/>
-									</div>
+								{currentModuleForm && (
+									<Card className="p-4 space-y-4">
+										<div className="space-y-2">
+											<Label>
+												{t("admin.formations.form.step5.module_title_label")}
+											</Label>
+											<Input
+												value={currentModuleForm.title}
+												onChange={(e) =>
+													setCurrentModuleForm({
+														...currentModuleForm,
+														title: e.target.value,
+													})
+												}
+											/>
+										</div>
 
-									<div className="space-y-2">
-										<Label>
-											{t("admin.formations.form.step5.module_duration_label")}
-										</Label>
-										<Input
-											value={String(currentModuleForm.duration)}
-											onChange={(e) =>
-												setCurrentModuleForm({
-													...currentModuleForm,
-													duration: Number(e.target.value),
-												})
-											}
-										/>
-									</div>
+										<div className="space-y-2">
+											<Label>
+												{t("admin.formations.form.step5.module_price_label")}
+											</Label>
+											<Input
+												value={String(currentModuleForm.price)}
+												onChange={(e) =>
+													setCurrentModuleForm({
+														...currentModuleForm,
+														price: Number(e.target.value),
+													})
+												}
+											/>
+										</div>
 
-									<div className="flex gap-2">
-										<Button
-											type="button"
-											onClick={saveModule}
-											className="flex-1"
-										>
-											{t("admin.formations.form.step5.save_button")}
-										</Button>
-										<Button
-											type="button"
-											variant="outline"
-											onClick={cancelEditModule}
-										>
-											{t("admin.formations.form.step5.cancel_button")}
-										</Button>
-									</div>
-								</Card>
-							)}
-						</div>
-					</Step>
-				</Stepper>
-			</form>
+										<div className="space-y-2">
+											<Label>
+												{t("admin.formations.form.step5.module_duration_label")}
+											</Label>
+											<Input
+												value={String(currentModuleForm.duration)}
+												onChange={(e) =>
+													setCurrentModuleForm({
+														...currentModuleForm,
+														duration: Number(e.target.value),
+													})
+												}
+											/>
+										</div>
+
+										<div className="flex gap-2">
+											<Button
+												type="button"
+												onClick={saveModule}
+												className="flex-1"
+											>
+												{t("admin.formations.form.step5.save_button")}
+											</Button>
+											<Button
+												type="button"
+												variant="outline"
+												onClick={cancelEditModule}
+											>
+												{t("admin.formations.form.step5.cancel_button")}
+											</Button>
+										</div>
+									</Card>
+								)}
+							</div>
+						</Step>
+					</Stepper>
+				</form>
+			</div>
 		</Layout>
 	);
 }

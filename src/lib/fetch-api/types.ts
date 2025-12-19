@@ -49,6 +49,7 @@ import type {
 	PaginatedResponse,
 	PaginationQuery,
 } from "@/lib/interfaces/pagination";
+import type { CourseResponse } from "../interfaces/response/course.response";
 
 export interface ApiResponse<T = unknown> {
 	data: T;
@@ -188,18 +189,13 @@ export interface ApiRoutes {
 	courses: {
 		"/courses": {
 			GET: {
-				response: PaginatedResponse<
-					Course & {
-						modules: Module[];
-						competencies: KeyCompetency[];
-						thematic: Thematic;
-					}
-				>;
+				response: PaginatedResponse<CourseResponse>;
 				params: PaginationQuery;
 			};
 			POST: {
-				response: Course;
+				response: CourseResponse;
 				body: CreateCourseDTO;
+				params: { moduleIds: string; competencyIds: string };
 			};
 			DELETE: {
 				body: DeleteMultipleBody;
@@ -213,19 +209,37 @@ export interface ApiRoutes {
 		};
 		"/courses/:id": {
 			GET: {
-				response: Course;
+				response: CourseResponse;
 				params: {
-					id: Course["id"];
+					id: CourseResponse["id"];
 				};
 			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateCourseDTO;
-				params: { id: Course["id"] };
+				params: { id: CourseResponse["id"] };
 			};
 			DELETE: {
-				params: { id: Course["id"] };
+				params: { id: CourseResponse["id"] };
 				response: DefaultDeleteResponse;
+			};
+		};
+		"/courses/update-course-competencies/:id": {
+			PATCH: {
+				response: {
+					updated: boolean;
+					rows: Array<CourseResponse & { competencies?: KeyCompetency[] }>;
+				};
+				params: { id: CourseResponse["id"]; competencyIds: string };
+			};
+		};
+		"/courses/update-course-modules/:id": {
+			PATCH: {
+				response: {
+					updated: boolean;
+					rows: Array<CourseResponse & { modules?: Module[] }>;
+				};
+				params: { id: CourseResponse["id"]; moduleIds: string };
 			};
 		};
 		"/courses/key-competency": {
@@ -243,6 +257,12 @@ export interface ApiRoutes {
 			};
 		};
 		"/courses/key-competency/:id": {
+			GET: {
+				response: KeyCompetency;
+				params: {
+					id: KeyCompetency["id"];
+				};
+			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateKeyCompetencyDTO;
@@ -275,6 +295,12 @@ export interface ApiRoutes {
 			};
 		};
 		"/courses/module/:id": {
+			GET: {
+				response: Module;
+				params: {
+					id: Module["id"];
+				};
+			};
 			PATCH: {
 				response: DefaultPatchResponse;
 				body: UpdateModuleDTO;

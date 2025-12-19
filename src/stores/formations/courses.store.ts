@@ -2,13 +2,6 @@ import type { BaseStore, PaginatedStore } from "../base.store";
 import { useStoreAsyncOperations } from "@/lib/table/hooks/store/useStoreAsyncOperations";
 import { apiClient } from "@/lib/fetch-api";
 import { useTableServerPaginationHandler } from "@/lib/table/hooks/useTableServerPaginationHandler";
-import type {
-	KeyCompetencyTableType,
-	ModuleTableType,
-	ThematicTableType,
-	TrainingTableType,
-	MasterTableType,
-} from "@/db";
 import type { PaginationQuery } from "@/lib/interfaces/pagination";
 import { useCallback } from "react";
 import type {
@@ -16,30 +9,59 @@ import type {
 	UpdateCourseDTO,
 } from "@/api/formations/DTO/courses.dto";
 import type { EntityStatistics } from "@/core/base.repository";
+import type { CourseResponse } from "@/lib/interfaces/response/course.response";
+import type {
+	KeyCompetencyTableType,
+	ModuleTableType,
+} from "@/db/schema/types";
+
+interface ParamsQuery {
+	moduleIds?: string[];
+	competencyIds?: string[];
+}
 
 interface CoursesStore extends BaseStore {
-	create: (data: CreateCourseDTO) => Promise<TrainingTableType | undefined>;
+	create: (
+		data: CreateCourseDTO,
+		options?: ParamsQuery,
+	) => Promise<CourseResponse | undefined>;
 	deleteOne: (id: string) => Promise<void>;
 	deleteMultiple: (ids: string[]) => Promise<void>;
 	update: (id: string, data: UpdateCourseDTO) => Promise<void>;
-	findOne: (id: string) => Promise<
-		| (TrainingTableType & {
-				master?: MasterTableType;
-		  })
+	findOne: (id: string) => Promise<CourseResponse | undefined>;
+	stats: () => Promise<EntityStatistics | undefined>;
+	updateCourseCompetencies: (
+		courseId: string,
+		competencyIds: string[],
+	) => Promise<
+		| {
+				updated: boolean;
+				rows: Array<
+					CourseResponse & {
+						competencies?: KeyCompetencyTableType[];
+					}
+				>;
+		  }
 		| undefined
 	>;
-	stats: () => Promise<EntityStatistics | undefined>;
+	updateCourseModules: (
+		courseId: string,
+		moduleIds: string[],
+	) => Promise<
+		| {
+				updated: boolean;
+				rows: Array<
+					CourseResponse & {
+						modules?: ModuleTableType[];
+					}
+				>;
+		  }
+		| undefined
+	>;
 }
 
 export default function useCoursesStore(): CoursesStore &
-	PaginatedStore<
-		TrainingTableType & {
-			modules: ModuleTableType[];
-			competencies: KeyCompetencyTableType[];
-			thematic?: ThematicTableType;
-			master?: MasterTableType;
-		}
-	> {
+	PaginatedStore<CourseResponse> {
 	const { loading, error, withAsyncOperation, resetState } =
 		useStoreAsyncOperations();
 
@@ -51,15 +73,11 @@ export default function useCoursesStore(): CoursesStore &
 	}, []);
 
 	const paginationHandler = useTableServerPaginationHandler<
-		TrainingTableType & {
-			modules: ModuleTableType[];
-			competencies: KeyCompetencyTableType[];
-			thematic?: ThematicTableType;
-			master?: MasterTableType;
-		},
+		CourseResponse,
 		PaginationQuery
 	>({
 		refetchFunction,
+		initialQuery: { populateChildren: true },
 	});
 
 	const fetchData = withAsyncOperation(
@@ -68,28 +86,64 @@ export default function useCoursesStore(): CoursesStore &
 		},
 	);
 
-	const create = withAsyncOperation(async (data: CreateCourseDTO) => {
-		const res = await apiClient.call("courses", "/courses", "POST", {
-			body: data,
-		});
-		const newJob = res.data;
-		paginationHandler.handlePostCreate({
-			...newJob,
-			modules: [],
-			competencies: [],
-		});
-		return newJob;
-	});
+	const create = withAsyncOperation(
+		async (data: CreateCourseDTO, options?: ParamsQuery) => {
+			const res = await apiClient.call("courses", "/courses", "POST", {
+				body: data,
+				params: {
+					moduleIds: options?.moduleIds?.join(",") || "",
+					competencyIds: options?.competencyIds?.join(",") || "",
+				},
+				forceQueries: true,
+			});
+			const newJob = res.data;
+			paginationHandler.handlePostCreate(newJob);
+			return newJob;
+		},
+	);
 
 	const update = withAsyncOperation(
 		async (id: string, data: UpdateCourseDTO) => {
 			const res = await apiClient.call("courses", "/courses/:id", "PATCH", {
 				body: data,
-				params: { id },
+				params: {
+					id,
+				},
+				forceQueries: true,
 			});
 			if (res.status >= 200 && res.status < 300) {
 				paginationHandler.handlePostUpdatePartial(id, data);
 			}
+		},
+	);
+
+	const updateCourseCompetencies = withAsyncOperation(
+		async (courseId: string, competencyIds: string[]) => {
+			const res = await apiClient.call(
+				"courses",
+				"/courses/update-course-competencies/:id",
+				"PATCH",
+				{
+					params: { id: courseId, competencyIds: competencyIds.join(",") },
+					forceQueries: true,
+				},
+			);
+			return res.data;
+		},
+	);
+
+	const updateCourseModules = withAsyncOperation(
+		async (courseId: string, moduleIds: string[]) => {
+			const res = await apiClient.call(
+				"courses",
+				"/courses/update-course-modules/:id",
+				"PATCH",
+				{
+					params: { id: courseId, moduleIds: moduleIds.join(",") },
+					forceQueries: true,
+				},
+			);
+			return res.data;
 		},
 	);
 
@@ -162,6 +216,8 @@ export default function useCoursesStore(): CoursesStore &
 		deleteMultiple,
 		findOne,
 		update,
+		updateCourseCompetencies,
+		updateCourseModules,
 		goToPage,
 		updateFilters,
 		updatePageSize,
