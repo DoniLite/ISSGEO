@@ -11,7 +11,9 @@ export const CheckoutTable = pgTable("Checkout", {
 	isValidated: T.boolean("is_validated")
 		.notNull()
 		.$default(() => false),
-	rollingId: T.text("rolling_id").references(() => RollingTable.id),
+	rollingId: T.text("rolling_id").references(() => RollingTable.id, {
+		onDelete: "cascade",
+	}),
 	amount: T.integer("amount").notNull(),
 	metaData: T.json("meta_data"),
 });

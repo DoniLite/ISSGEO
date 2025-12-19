@@ -22,6 +22,7 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
 	backButtonText?: string;
 	nextButtonText?: string;
 	disableStepIndicators?: boolean;
+	onBeforeNext?: (currentStep: number) => Promise<boolean> | boolean;
 	renderStepIndicator?: (props: {
 		step: number;
 		currentStep: number;
@@ -43,6 +44,7 @@ export default function Stepper({
 	backButtonText = "Back",
 	nextButtonText = "Continue",
 	disableStepIndicators = false,
+	onBeforeNext,
 	renderStepIndicator,
 	...rest
 }: StepperProps) {
@@ -53,7 +55,11 @@ export default function Stepper({
 	const isCompleted = currentStep > totalSteps;
 	const isLastStep = currentStep === totalSteps;
 
-	const updateStep = (newStep: number) => {
+	const updateStep = async (newStep: number) => {
+		if (onBeforeNext && newStep > currentStep) {
+			const canProceed = await onBeforeNext(currentStep);
+			if (!canProceed) return;
+		}
 		setCurrentStep(newStep);
 		if (newStep > totalSteps) {
 			onFinalStepCompleted();
@@ -69,14 +75,22 @@ export default function Stepper({
 		}
 	};
 
-	const handleNext = () => {
+	const handleNext = async () => {
+		if (onBeforeNext) {
+			const canProceed = await onBeforeNext(currentStep);
+			if (!canProceed) return;
+		}
 		if (!isLastStep) {
 			setDirection(1);
 			updateStep(currentStep + 1);
 		}
 	};
 
-	const handleComplete = () => {
+	const handleComplete = async () => {
+		if (onBeforeNext) {
+			const canProceed = await onBeforeNext(currentStep);
+			if (!canProceed) return;
+		}
 		setDirection(1);
 		updateStep(totalSteps + 1);
 	};
@@ -353,6 +367,7 @@ function CheckIcon(props: CheckIconProps) {
 			strokeWidth={2}
 			viewBox="0 0 24 24"
 		>
+			<title>Icon</title>
 			<motion.path
 				initial={{ pathLength: 0 }}
 				animate={{ pathLength: 1 }}

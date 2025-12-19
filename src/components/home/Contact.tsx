@@ -42,19 +42,19 @@ export default function Contact() {
 								</div>
 								<div className="flex gap-1 items-center">
 									<Phone className="w-5 h-5 text-muted-foreground" />
-									<span className="text-muted-foreground">(123) 456-7890</span>
+									<span className="text-muted-foreground">+226 78 81 25 61 / +226 75 52 29 59</span>
 								</div>
 							</div>
 
 							<div className="mt-4 w-full flex gap-4">
-								<Link
+								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									to={"/"}
+									href={"https://web.facebook.com/profile.php?id=61578967744739"}
 									className="p-2 rounded-full bg-primary flex justify-center items-center transition-colors"
 								>
 									<Facebook className="w-6 h-6 text-primary-foreground hover:text-accent transition-colors" />
-								</Link>
+								</a>
 								<Link
 									target="_blank"
 									rel="noopener noreferrer"

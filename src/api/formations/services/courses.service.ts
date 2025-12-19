@@ -1,6 +1,7 @@
 import { BaseService } from "@/core/base.service";
 import type {
 	KeyCompetencyTableType,
+	MasterTableType,
 	ModuleTableType,
 	ThematicTableType,
 	TrainingTableType,
@@ -26,9 +27,10 @@ export class CourseService extends BaseService<
 	UpdateCourseDTO,
 	CoursesRepository,
 	TrainingTableType & {
-		modules: ModuleTableType[];
-		competencies: KeyCompetencyTableType[];
-		thematic: ThematicTableType;
+		modules?: ModuleTableType[];
+		competencies?: KeyCompetencyTableType[];
+		thematic?: ThematicTableType;
+		master?: MasterTableType;
 	}
 > {
 	constructor() {
@@ -38,9 +40,27 @@ export class CourseService extends BaseService<
 	@ValidateDTO(CreateCourseDTO)
 	override async create(
 		dto: CreateCourseDTO,
-		_context: Context,
-	): Promise<TrainingTableType> {
-		return this.repository.create(dto);
+		context: Context,
+	): Promise<
+		TrainingTableType & {
+			modules?: ModuleTableType[];
+			competencies?: KeyCompetencyTableType[];
+			thematic?: ThematicTableType;
+			master?: MasterTableType;
+		}
+	> {
+		const moduleIds =
+			context.req
+				.query("moduleIds")
+				?.split(",")
+				.filter((id) => id.trim() !== "") ?? [];
+		const competencyIds =
+			context.req
+				.query("competencyIds")
+				?.split(",")
+				.filter((id) => id.trim() !== "") ?? [];
+
+		return this.repository.createWithRelations(dto, moduleIds, competencyIds);
 	}
 
 	@ValidateDTO(UpdateCourseDTO)
@@ -48,8 +68,48 @@ export class CourseService extends BaseService<
 		id: string | number,
 		dto: UpdateCourseDTO,
 		_context: Context,
-	): Promise<TrainingTableType[] | null> {
-		return this.repository.update(id, dto);
+	): Promise<
+		| (TrainingTableType & {
+				modules?: ModuleTableType[];
+				competencies?: KeyCompetencyTableType[];
+				thematic?: ThematicTableType;
+				master?: MasterTableType;
+		  })[]
+		| null
+	> {
+		return this.repository.update(String(id), dto);
+	}
+
+	async updateCourseCompetencies(
+		id: string,
+		context: Context,
+	): Promise<
+		TrainingTableType & {
+			competencies?: KeyCompetencyTableType[];
+		}
+	> {
+		const competencyIds =
+			context.req
+				.query("competencyIds")
+				?.split(",")
+				.filter((id) => id.trim() !== "") ?? [];
+		return this.repository.updateCourseCompetencies(id, competencyIds);
+	}
+
+	async updateCourseModules(
+		id: string,
+		context: Context,
+	): Promise<
+		TrainingTableType & {
+			modules?: ModuleTableType[];
+		}
+	> {
+		const moduleIds =
+			context.req
+				.query("moduleIds")
+				?.split(",")
+				.filter((id) => id.trim() !== "") ?? [];
+		return this.repository.updateCourseModules(id, moduleIds);
 	}
 
 	@ValidateDTO(CreateKeyCompetencyDTO)
@@ -57,7 +117,8 @@ export class CourseService extends BaseService<
 		dto: CreateKeyCompetencyDTO,
 		_context: Context,
 	): Promise<KeyCompetencyTableType> {
-		return this.repository.createCompetency(dto);
+		const competency = await this.repository.createCompetency(dto);
+		return competency;
 	}
 
 	@ValidateDTO(UpdateKeyCompetencyDTO)
@@ -67,6 +128,10 @@ export class CourseService extends BaseService<
 		_context: Context,
 	): Promise<KeyCompetencyTableType[] | null> {
 		return this.repository.updateCompetency(id, dto);
+	}
+
+	async findCompetency(id: string): Promise<KeyCompetencyTableType | null> {
+		return this.repository.findCompetency(id);
 	}
 
 	async deleteCompetency(id: string): Promise<boolean> {
@@ -112,7 +177,12 @@ export class CourseService extends BaseService<
 		dto: CreateModuleTDO,
 		_context: Context,
 	): Promise<ModuleTableType> {
-		return this.repository.createModule(dto);
+		const module = await this.repository.createModule(dto);
+		return module;
+	}
+
+	async findModule(id: string): Promise<ModuleTableType | null> {
+		return this.repository.findModule(id);
 	}
 
 	@ValidateDTO(UpdateModuleDTO)

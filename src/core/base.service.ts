@@ -6,18 +6,19 @@ import type {
 	PaginatedResponse,
 	PaginationQuery,
 } from "@/lib/interfaces/pagination";
-import { logger, type LogContext } from "./logger";
+import { logger } from "./logger";
 
 export abstract class BaseService<
 	T extends BaseEntity,
 	CreateDTO extends object,
 	UpdateDTO extends object,
-	// biome-ignore lint/suspicious/noExplicitAny: <>
 	Repository extends BaseRepository<
 		T,
 		CreateDTO,
 		UpdateDTO,
+		// biome-ignore lint/suspicious/noExplicitAny: <>
 		any,
+		// biome-ignore lint/suspicious/noExplicitAny: <>
 		any
 	> = BaseRepository<T, CreateDTO, UpdateDTO>,
 	R extends T = T,
@@ -31,7 +32,10 @@ export abstract class BaseService<
 	 * @param _context - The Hono context, required for validation.
 	 */
 	@ValidateDTO()
-	async create(dto: CreateDTO, _context: Context): Promise<T> {
+	async create(
+		dto: CreateDTO,
+		_context: Context,
+	): Promise<R> {
 		this.logger.debug(`Creating entity in ${this.constructor.name}`, {
 			className: this.constructor.name,
 			method: "create",
@@ -39,11 +43,15 @@ export abstract class BaseService<
 		return this.repository.create(dto);
 	}
 
-	async findById(id: string | number): Promise<T | null> {
+	async findById(
+		id: string | number,
+	): Promise<R | null> {
 		return this.repository.findById(id);
 	}
 
-	async findAll(filters?: Partial<T>): Promise<T[]> {
+	async findAll(
+		filters?: Partial<T>,
+	): Promise<T[]> {
 		return this.repository.findAll(filters);
 	}
 
@@ -56,7 +64,7 @@ export abstract class BaseService<
 		id: string | number,
 		dto: UpdateDTO,
 		_context: Context,
-	): Promise<T[] | null> {
+	): Promise<R[] | null> {
 		this.logger.debug(`Updating entity ${id} in ${this.constructor.name}`, {
 			className: this.constructor.name,
 			method: "update",
@@ -123,8 +131,17 @@ export abstract class BaseService<
 		return this.repository.findBy(field, value);
 	}
 
-	async findOneBy<V>(field: keyof T, value: V): Promise<T | null> {
-		return this.repository.findOneBy(field, value);
+	async findOneBy<V>(
+		field: keyof T,
+		value: V,
+	): Promise<R | null> {
+		return this.repository.findOneBy(field, value) as unknown as R;
+	}
+
+	async findOne(
+		filters?: Partial<T>,
+	): Promise<R | null> {
+		return this.repository.findOne(filters);
 	}
 
 	async count(filters?: Partial<T>): Promise<number> {

@@ -11,7 +11,7 @@ export interface LogContext {
 
 export class Logger {
 	private static instance: Logger;
-	private logLevel: LogLevel = "info";
+	private logLevel: LogLevel = "debug";
 
 	private constructor() {
 		const envLevel = process.env.LOG_LEVEL as LogLevel;
@@ -25,12 +25,17 @@ export class Logger {
 			Logger.instance = new Logger();
 		}
 		if (withLevel) {
-			Logger.instance.setLogLevel(withLevel);
+			Logger.instance.level = withLevel;
 		}
 		return Logger.instance;
 	}
+	
+	public get level() : string {
+		return this.logLevel;
+	}
+	
 
-	public setLogLevel(level: LogLevel) {
+	public set level(level: LogLevel) {
 		this.logLevel = level;
 	}
 

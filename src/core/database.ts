@@ -7,7 +7,7 @@ import { Logger } from "./logger";
 
 class CustomDrizzleLogger implements DrizzleLogger {
 	logQuery(query: string, params: unknown[]): void {
-		Logger.getInstance("debug").debug("SQL Query", {
+		Logger.getInstance().debug("SQL Query", {
 			query,
 			params: JSON.stringify(params),
 		});

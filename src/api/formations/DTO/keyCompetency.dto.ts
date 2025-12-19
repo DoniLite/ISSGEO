@@ -18,9 +18,6 @@ export class CreateKeyCompetencyDTO extends BaseCreateDTO {
 
 	@IsArray()
 	advantages!: string[];
-
-	@IsString()
-	moduleId!: string;
 }
 
 @DTO()
@@ -44,8 +41,4 @@ export class UpdateKeyCompetencyDTO extends BaseUpdateDTO {
 	@IsOptional()
 	@IsArray()
 	advantages?: string[];
-
-	@IsOptional()
-	@IsString()
-	moduleId?: string;
 }

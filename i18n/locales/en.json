@@ -840,15 +840,13 @@
 					"duration_placeholder": "40"
 				},
 				"step2": {
-					"title": "Price and Thematic",
+					"title": "Master and Thematic",
 					"min_price_label": "Minimum price (FCFA)",
 					"min_price_placeholder": "50000",
 					"max_price_label": "Maximum price (FCFA)",
 					"max_price_placeholder": "100000",
-					"master": {
-						"label": "Master",
-						"placeholder": "Select a master"
-					},
+					"master_label": "Master",
+					"master_placeholder": "Select a master",
 					"thematic_label": "Thematic",
 					"thematic_placeholder": "Select a thematic",
 					"new_thematic": "New thematic",
@@ -881,6 +879,7 @@
 					"competency_advantages_label": "Advantages",
 					"competency_advantages_placeholder": "Add an advantage",
 					"key_competency_placeholder": "Select key competencies",
+					"select_existing_placeholder": "Select existing competency",
 					"add_button": "Add",
 					"cancel_button": "Cancel"
 				},
@@ -892,12 +891,35 @@
 					"module_title_label": "Title",
 					"module_price_label": "Price",
 					"module_duration_label": "Duration",
+					"select_existing_placeholder": "Select existing module",
 					"save_button": "Save",
 					"cancel_button": "Cancel"
 				},
 				"icons": {
 					"selection_label": "Select an icon",
 					"search_icons_label": "Search for an icon..."
+				}
+			},
+			"toast": {
+				"create": {
+					"success": {
+						"title": "Course created successfully!",
+						"description": "You have a new course in your database now"
+					}
+				},
+				"update": {
+					"success": {
+						"title": "Course updated successfully!",
+						"description": "The course have been updated"
+					}
+				},
+				"delete": {
+					"success": {
+						"title": "Course deleted successfully!",
+						"titleMultiple": "Courses deleted successfully!",
+						"descriptionMultiple": "The courses have been deleted",
+						"description": "The course have been deleted"
+					}
 				}
 			}
 		},

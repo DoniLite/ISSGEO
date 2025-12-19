@@ -10,6 +10,8 @@ import type {
 	MasterTable,
 	ModuleTable,
 	TrainingTable,
+	TrainingToKeyCompetencyTable,
+	TrainingToModuleTable,
 } from "./training.schema";
 import type { UserTable } from "./user.schema";
 
@@ -25,4 +27,8 @@ export type ModuleTableType = typeof ModuleTable.$inferInsert;
 export type RollingTableType = typeof RollingTable.$inferInsert;
 export type CheckoutTableType = typeof CheckoutTable.$inferInsert;
 export type RollingToModuleTableType = typeof RollingToModuleTable.$inferInsert;
+export type TrainingToModuleTableType =
+	typeof TrainingToModuleTable.$inferInsert;
+export type TrainingToKeyCompetencyTableType =
+	typeof TrainingToKeyCompetencyTable.$inferInsert;
 export type MasterTableType = typeof MasterTable.$inferInsert;

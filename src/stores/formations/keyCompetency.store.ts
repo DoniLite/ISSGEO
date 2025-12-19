@@ -20,6 +20,7 @@ interface KeyCompetencyStore extends BaseStore {
 	deleteOne: (id: string) => Promise<void>;
 	deleteMultiple: (ids: string[]) => Promise<void>;
 	update: (id: string, data: UpdateKeyCompetencyDTO) => Promise<void>;
+	findOne: (id: string) => Promise<KeyCompetencyTableType | undefined>;
 	fetchAll: (
 		query?: Record<string, unknown>,
 		options?: FetchAllDataOptions,
@@ -130,6 +131,18 @@ export default function useKeyCompetencyStore(): KeyCompetencyStore &
 		},
 	);
 
+	const findOne = withAsyncOperation(async (id: string) => {
+		const res = await apiClient.call(
+			"courses",
+			"/courses/key-competency/:id",
+			"GET",
+			{
+				params: { id },
+			},
+		);
+		return res.data;
+	});
+
 	return {
 		loading,
 		error,
@@ -150,6 +163,7 @@ export default function useKeyCompetencyStore(): KeyCompetencyStore &
 		deleteOne,
 		deleteMultiple,
 		update,
+		findOne,
 		goToPage,
 		updateFilters,
 		updatePageSize,

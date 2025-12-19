@@ -7,5 +7,7 @@ export const TrainingSessionTable = pgTable("Session", {
 	...BaseRow,
 	startDate: T.date("start_date").notNull(),
 	location: T.text("location").notNull(),
-	moduleId: T.text("module_id").references(() => TrainingTable.id),
+	moduleId: T.text("module_id").references(() => TrainingTable.id, {
+		onDelete: "cascade",
+	}),
 });

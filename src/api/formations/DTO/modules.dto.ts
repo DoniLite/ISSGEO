@@ -12,9 +12,6 @@ export class CreateModuleTDO extends BaseCreateDTO {
 
 	@IsNumber()
 	duration!: number;
-
-	@IsString()
-	courseId!: string;
 }
 
 @DTO()
