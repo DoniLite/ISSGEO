@@ -68,13 +68,11 @@ export class CoursesRepository extends BaseRepository<
 
 		if (moduleIds) {
 			for (const id of moduleIds) {
-				const newLink = await this.TrainingToModuleRepo.create({
+				await this.TrainingToModuleRepo.create({
 					moduleId: id,
 					trainingId: newCourse.id as string,
 				});
-				console.log('newLink for module on course ======>', newLink)
 				const targetModule = await this.ModuleRepo.findById(id);
-				console.log('targetModule for module on course ======>', targetModule)
 				if (targetModule) {
 					modules.push(targetModule);
 				}
@@ -83,13 +81,11 @@ export class CoursesRepository extends BaseRepository<
 
 		if (competencyIds) {
 			for (const id of competencyIds) {
-				const newLink = await this.TrainingToKeyCompRepo.create({
+				await this.TrainingToKeyCompRepo.create({
 					competencyId: id,
 					trainingId: newCourse.id as string,
 				});
-				console.log('newLink for competency on course ======>', newLink)
 				const targetComp = await this.keyCompetencyRepo.findById(id);
-				console.log('targetComp for competency on course ======>', targetComp)
 				if (targetComp) {
 					competencies.push(targetComp);
 				}
@@ -122,7 +118,6 @@ export class CoursesRepository extends BaseRepository<
 				"trainingId",
 				id,
 			);
-			console.log('existingLinks for competency on course ======>', existingLinks)
 			for (const link of existingLinks) {
 				await this.TrainingToKeyCompRepo.delete(link.id as string);
 			}
@@ -167,7 +162,6 @@ export class CoursesRepository extends BaseRepository<
 				"trainingId",
 				id,
 			);
-			console.log('existingLinks for module on course ======>', existingLinks)
 			for (const link of existingLinks) {
 				await this.TrainingToModuleRepo.delete(link.id as string);
 			}
@@ -206,7 +200,6 @@ export class CoursesRepository extends BaseRepository<
 	> {
 		return Promise.all(
 			items.map(async (item) => {
-				console.log('item', item)	
 				const id = item.id as string;
 
 				// Fetch modules via junction repository
@@ -214,9 +207,6 @@ export class CoursesRepository extends BaseRepository<
 					"trainingId",
 					id,
 				);
-				const allModules = await this.TrainingToModuleRepo.findAll();
-				console.log('moduleLinks', moduleLinks)
-				console.log('allModules', allModules)
 				const modules: ModuleTableType[] = [];
 				for (const link of moduleLinks) {
 					const m = await this.ModuleRepo.findById(link.moduleId as string);
@@ -228,7 +218,6 @@ export class CoursesRepository extends BaseRepository<
 					"trainingId",
 					id,
 				);
-				console.log('compLinks', compLinks)
 				const competencies: KeyCompetencyTableType[] = [];
 				for (const link of compLinks) {
 					const c = await this.keyCompetencyRepo.findById(

@@ -20,6 +20,10 @@ export class CreateCourseDTO extends BaseCreateDTO {
 	@IsOptional()
 	@IsString()
 	masterId?: string;
+
+	@IsOptional()
+	@IsString()
+	thematicId?: string;
 }
 
 @DTO()
