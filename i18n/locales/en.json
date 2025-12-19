@@ -840,7 +840,7 @@
 					"duration_placeholder": "40"
 				},
 				"step2": {
-					"title": "Price and Thematic",
+					"title": "Master and Thematic",
 					"min_price_label": "Minimum price (FCFA)",
 					"min_price_placeholder": "50000",
 					"max_price_label": "Maximum price (FCFA)",

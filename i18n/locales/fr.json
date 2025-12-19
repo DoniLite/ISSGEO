@@ -840,7 +840,7 @@
 					"duration_placeholder": "40"
 				},
 				"step2": {
-					"title": "Tarif et thématique",
+					"title": "Formateur et thématique",
 					"min_price_label": "Prix minimum (FCFA)",
 					"min_price_placeholder": "50000",
 					"max_price_label": "Prix maximum (FCFA)",
