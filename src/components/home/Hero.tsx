@@ -15,10 +15,10 @@ export default function Hero() {
 		<div className="absolute inset-0 top-[25%] lg:top-0 flex items-center justify-center p-4">
 			<div className="flex gap-4 lg:gap-6 flex-col lg:flex-row">
 				<div className="flex flex-col relative lg:-left-48 lg:gap-4 xl:gap-8">
-					<h1 className="lg:text-4xl font-bold max-w-xl">
+					<h1 className="xl:text-4xl font-bold max-w-xl">
 						{t("pages.home.title")}
 					</h1>
-					<span className="text-foreground max-w-xl font-bold mt-4 lg:mt-0 text-xs lg:text-[16px]">
+					<span className="text-foreground max-w-xl font-bold mt-4 lg:mt-0 text-xs xl:text-[16px]">
 						{t("pages.home.description")}
 					</span>
 					<div className="flex w-full items-center gap-2 lg:gap-4 mt-4">
@@ -78,7 +78,7 @@ export function HeroForm() {
 	};
 
 	return (
-		<form className="w-full lg:w-[30rem] flex flex-col rounded-md p-2 lg:p-4 shadow h-auto lg:h-[32rem] bg-card lg:absolute lg:right-[1rem] xl:right-[6rem] 2xl:right-[16rem] lg:top-1/5 2xl:top-1/4">
+		<form className="w-full lg:w-[30rem] flex flex-col rounded-md p-2 lg:p-4 shadow mx-4 h-auto bg-card lg:absolute lg:right-[1rem] xl:right-[6rem] 2xl:right-[16rem] lg:top-1/3">
 			<div className="w-full flex flex-col gap-1 mt-2 lg:mt-4">
 				<span className="lg:text-lg font-bold relative left-3">
 					{t("pages.home.form.formation.label")}
@@ -120,7 +120,7 @@ export function HeroForm() {
 
 			<button
 				type="button"
-				className="bg-primary w-full mt-4 lg:mt-auto cursor-pointer text-primary-foreground font-medium px-4 py-2 rounded-md hover:bg-primary/90"
+				className="bg-primary w-full mt-4 cursor-pointer text-primary-foreground font-medium px-4 py-2 rounded-md hover:bg-primary/90"
 				onClick={(e) => {
 					e.preventDefault();
 					const session = computedSessions.find((s) => s.moduleId === course);
