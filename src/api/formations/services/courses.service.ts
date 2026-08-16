@@ -227,7 +227,7 @@ export class CourseService extends BaseService<
 	}
 
 	async findAllModule(
-		filters?: Partial<ModuleTableType>,
+		filters?: Partial<ModuleTableType> & { courseId?: string },
 	): Promise<ModuleTableType[]> {
 		return this.repository.findAllModule(filters);
 	}

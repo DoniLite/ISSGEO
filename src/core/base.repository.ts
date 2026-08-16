@@ -119,8 +119,9 @@ export abstract class BaseRepository<
 			for (const [key, value] of Object.entries(filters)) {
 				if (value !== undefined) {
 					if (Array.isArray(value)) {
-						// Handle array filters (IN clause)
-						conditions.push(eq((this.table as any)[key], value[0]));
+						// Handle array filters (IN clause).
+						// A junction-table lookup can legitimately yield several IDs.
+						conditions.push(inArray((this.table as any)[key], value));
 					} else if (typeof value === "string" || typeof value === "number") {
 						conditions.push(eq((this.table as any)[key], value));
 					} else if (typeof value === "boolean") {
@@ -229,16 +230,20 @@ export abstract class BaseRepository<
 	}
 
 	async findAll(
-		filters?: Partial<T> & { populateChildren?: boolean },
+		filters?: (Partial<T> & { populateChildren?: boolean }) | Record<string, unknown>,
 	): Promise<T[]> {
 		const query = this.db.select().from(this.table as PgTable);
 
 		if (filters) {
-			const { populateChildren, ...rest } = filters;
+			const { populateChildren, ...rest } = filters as Record<string, unknown>;
 
 			const conditions = Object.entries(rest)
 				.filter(([_, value]) => value !== undefined)
-				.map(([key, value]) => eq((this.table as any)[key], value));
+				.map(([key, value]) =>
+					Array.isArray(value)
+						? inArray((this.table as any)[key], value)
+						: eq((this.table as any)[key], value),
+				);
 
 			if (conditions.length > 0) {
 				const filteredQuery = await query.where(and(...conditions));

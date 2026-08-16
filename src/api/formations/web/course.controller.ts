@@ -4,7 +4,11 @@ import {
 	authMiddleware,
 } from "@/api/middlewares/auth.middleware";
 import { BaseController } from "@/core/base.controller";
-import type { KeyCompetencyTableType, TrainingTableType } from "@/db";
+import type {
+	KeyCompetencyTableType,
+	ModuleTableType,
+	TrainingTableType,
+} from "@/db";
 import { ServiceFactory } from "@/factory/service.factory";
 import { webFactory } from "@/factory/web.factory";
 import type { CreateCourseDTO, UpdateCourseDTO } from "../DTO/courses.dto";
@@ -246,7 +250,7 @@ export class CourseController extends BaseController<
 			try {
 				const query = c.req.query();
 				const result = await this.service.findAllModule(
-					query as Partial<KeyCompetencyTableType>,
+					query as Partial<ModuleTableType> & { courseId?: string },
 				);
 				return c.json(result);
 			} catch (error) {
